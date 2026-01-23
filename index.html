@@ -32,7 +32,7 @@
             </div>
             <div>
                 <h2 class="text-white font-black tracking-widest uppercase text-lg italic-custom">BAYINDIR MEDYA ERP</h2>
-                <p id="loader-status" class="text-indigo-400 text-[10px] font-bold mt-1 animate-pulse italic-custom tracking-[2px]">GÜVENLİ BAĞLANTI KURULUYOR...</p>
+                <p id="loader-status" class="text-indigo-400 text-[10px] font-bold mt-1 animate-pulse italic-custom tracking-[2px]">BULUT VERİLERİ SENKRONİZE EDİLİYOR...</p>
             </div>
         </div>
     </div>
@@ -49,34 +49,34 @@
             
             <nav class="space-y-1 text-left">
                 <button onclick="window.switchView('dashboard')" id="nav-dashboard" class="nav-item sidebar-item w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-slate-500 font-bold text-sm sidebar-active transition-all">
-                    <svg class="w-5 h-5 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"></path></svg> Dashboard
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"></path></svg> Dashboard
                 </button>
                 <button onclick="window.switchView('clients')" id="nav-clients" class="nav-item sidebar-item w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-slate-500 font-bold text-sm transition-all text-left">
-                    <svg class="w-5 h-5 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7"></path></svg> Müşteri Karnesi
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7"></path></svg> Müşteriler
                 </button>
                 <button onclick="window.switchView('workflow')" id="nav-workflow" class="nav-item sidebar-item w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-slate-500 font-bold text-sm transition-all text-left">
-                    <svg class="w-5 h-5 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path></svg> İş Akışı
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path></svg> İş Akışı
                 </button>
-                <button onclick="window.switchView('finance')" id="nav-finance" class="nav-item sidebar-item w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-slate-500 font-bold text-sm transition-all text-left">
-                    <svg class="w-5 h-5 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2z"></path></svg> Muhasebe
+                <button onclick="window.switchView('finance')" id="nav-finance" class="nav-item sidebar-item w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-slate-500 font-bold text-sm transition-all text-left text-left">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2z"></path></svg> Muhasebe
                 </button>
                 <button onclick="window.switchView('settings')" id="nav-settings" class="nav-item sidebar-item w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-slate-500 font-bold text-sm transition-all text-left">
-                    <svg class="w-5 h-5 text-left text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0"></path></svg> Ayarlar
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0"></path></svg> Ayarlar
                 </button>
             </nav>
         </div>
     </aside>
 
-    <!-- MAIN AREA -->
+    <!-- MAIN CONTENT -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left">
         <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 md:px-10 py-5 flex items-center justify-between shrink-0 z-40 text-left">
             <div>
-                <h2 id="view-title" class="text-xl font-black text-slate-800 italic-custom leading-none text-left uppercase tracking-tighter">Panel</h2>
-                <p id="view-subtitle" class="text-[10px] text-slate-400 font-black uppercase tracking-[2px] mt-1 italic-custom text-left">Bayındır Medya Operasyon</p>
+                <h2 id="view-title" class="text-xl font-black text-slate-800 italic-custom leading-none text-left uppercase tracking-tighter italic">Panel</h2>
+                <p id="view-subtitle" class="text-[10px] text-slate-400 font-black uppercase tracking-[2px] mt-1 italic-custom text-left">Bayındır Medya Operasyon Merkezi</p>
             </div>
             <button onclick="window.openModal('clientModal')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-black shadow-lg hover:bg-indigo-700 transition-all active:scale-95 flex items-center gap-2 italic-custom">
-                <i data-lucide="plus"></i>
-                Marka Ekle
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M12 4v16m8-8H4"></path></svg>
+                Müşteri Ekle
             </button>
         </header>
 
@@ -86,26 +86,26 @@
             <div id="view-dashboard" class="view-content space-y-10 view-animate text-left">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center md:text-left">
                     <div class="bg-indigo-600 p-8 rounded-[40px] text-white shadow-2xl relative overflow-hidden group text-left italic-custom">
-                        <p class="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2 italic-custom">Aylık Tahsilat</p>
+                        <p class="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Aylık Tahsilat</p>
                         <h3 class="text-4xl font-black tracking-tighter" id="stat-revenue">₺0</h3>
                     </div>
                     <div class="bg-white p-8 rounded-[40px] border border-slate-100 shadow-sm text-left italic-custom">
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic-custom">Giderler</p>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Toplam Gider</p>
                         <h3 class="text-3xl font-black text-red-500" id="stat-expense">₺0</h3>
                     </div>
                     <div class="bg-white p-8 rounded-[40px] border border-slate-100 shadow-sm text-left italic-custom">
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic-custom">Marka Sayısı</p>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Müşteri Sayısı</p>
                         <h3 class="text-3xl font-black text-slate-800" id="stat-clients">0</h3>
                     </div>
                     <div class="bg-slate-900 p-8 rounded-[40px] text-white shadow-xl text-left italic-custom">
-                        <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 italic-custom">Net Kazanç</p>
+                        <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Net Kazanç</p>
                         <h3 class="text-3xl font-black text-emerald-400" id="stat-profit">₺0</h3>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 text-left">
                     <div class="lg:col-span-2 bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm relative text-left">
-                        <h4 class="font-black text-slate-800 mb-8 italic-custom flex items-center gap-2 text-sm uppercase text-left tracking-[2px]">Gelir Trend Analizi</h4>
+                        <h4 class="font-black text-slate-800 mb-8 italic-custom flex items-center gap-2 text-sm uppercase text-left tracking-[2px]">Gelir Akışı Analizi</h4>
                         <canvas id="mainChart" height="150"></canvas>
                     </div>
                     <div class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm text-left">
@@ -126,22 +126,22 @@
 
             <!-- WORKFLOW VIEW -->
             <div id="view-workflow" class="view-content hidden space-y-10 view-animate text-left italic-custom">
-                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 text-center md:text-left italic-custom">
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 text-center md:text-left italic-custom text-left">
                     <div class="space-y-4">
-                        <span class="text-[10px] font-black uppercase tracking-[2px] text-slate-400 italic px-2">Planlama</span>
-                        <div id="column-plan" class="space-y-4 min-h-[500px] bg-slate-100/30 rounded-3xl p-2 italic-custom"></div>
+                        <span class="text-[10px] font-black uppercase tracking-[2px] text-slate-400 italic-custom px-2">Planlama</span>
+                        <div id="column-plan" class="space-y-4 min-h-[500px] bg-slate-100/30 rounded-[40px] p-4 italic-custom"></div>
                     </div>
                     <div class="space-y-4 text-left">
-                        <span class="text-[10px] font-black uppercase tracking-[2px] text-blue-500 italic px-2">Üretim</span>
-                        <div id="column-design" class="space-y-4 min-h-[500px] bg-blue-50/30 rounded-3xl p-2 italic-custom"></div>
+                        <span class="text-[10px] font-black uppercase tracking-[2px] text-blue-500 italic-custom px-2">Üretim</span>
+                        <div id="column-design" class="space-y-4 min-h-[500px] bg-blue-50/30 rounded-[40px] p-4 italic-custom"></div>
                     </div>
                     <div class="space-y-4 text-left">
-                        <span class="text-[10px] font-black uppercase tracking-[2px] text-amber-500 italic px-2">Onay</span>
-                        <div id="column-review" class="space-y-4 min-h-[500px] bg-amber-50/30 rounded-3xl p-2 italic-custom"></div>
+                        <span class="text-[10px] font-black uppercase tracking-[2px] text-amber-500 italic-custom px-2">Onay</span>
+                        <div id="column-review" class="space-y-4 min-h-[500px] bg-amber-50/30 rounded-[40px] p-4 italic-custom"></div>
                     </div>
                     <div class="space-y-4 text-left">
-                        <span class="text-[10px] font-black uppercase tracking-[2px] text-emerald-500 italic px-2">Yayında</span>
-                        <div id="column-live" class="space-y-4 min-h-[500px] bg-emerald-50/30 rounded-3xl p-2 italic-custom"></div>
+                        <span class="text-[10px] font-black uppercase tracking-[2px] text-emerald-500 italic-custom px-2">Yayında</span>
+                        <div id="column-live" class="space-y-4 min-h-[500px] bg-emerald-50/30 rounded-[40px] p-4 italic-custom"></div>
                     </div>
                 </div>
             </div>
@@ -160,15 +160,15 @@
                          <h3 class="text-xl font-black mb-12 uppercase tracking-widest text-left italic-custom">Bayındır Medya <br><span class="text-indigo-400">Mali Özet</span></h3>
                          <div class="space-y-6 text-left italic-custom">
                             <div class="flex justify-between items-center pb-6 border-b border-white/5 text-left italic-custom">
-                                <span class="text-slate-400 font-bold uppercase text-[10px]">Net Tahsilat</span>
+                                <span class="text-slate-400 font-bold uppercase text-[10px]">Toplam Tahsilat</span>
                                 <span class="font-black text-2xl text-emerald-400" id="fin-revenue">₺0</span>
                             </div>
                             <div class="flex justify-between items-center pb-6 border-b border-white/5 text-left italic-custom">
-                                <span class="text-slate-400 font-bold uppercase text-[10px]">Giderler</span>
+                                <span class="text-slate-400 font-bold uppercase text-[10px]">Toplam Giderler</span>
                                 <span class="font-black text-2xl text-red-400" id="fin-expense">₺0</span>
                             </div>
                             <div class="pt-8 text-left italic-custom">
-                                <p class="text-emerald-400 font-black uppercase text-[12px] tracking-[6px] mb-2 italic text-left">Ajans Net Karı</p>
+                                <p class="text-emerald-400 font-black uppercase text-[12px] tracking-[6px] mb-2 italic text-left">Saf Kazanç</p>
                                 <h2 class="text-7xl font-black text-left tracking-tighter italic-custom" id="fin-profit">₺0</h2>
                             </div>
                          </div>
@@ -179,9 +179,9 @@
             <!-- SETTINGS VIEW -->
             <div id="view-settings" class="view-content hidden space-y-8 view-animate text-left italic-custom">
                 <div class="bg-white p-12 rounded-[50px] border border-slate-100 shadow-sm max-w-2xl mx-auto italic text-left leading-none">
-                    <h3 class="text-3xl font-black mb-10 text-indigo-600 italic tracking-tighter text-left uppercase">Ajans Bilgileri</h3>
+                    <h3 class="text-3xl font-black mb-10 text-indigo-600 italic tracking-tighter text-left uppercase leading-none">Ajans Bilgileri</h3>
                     <form id="configForm" class="space-y-8 text-left leading-none">
-                        <input type="text" id="conf-name" placeholder="Ajans İsmi (Bayındır Medya)" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold shadow-inner text-sm outline-none text-left">
+                        <input type="text" id="conf-name" placeholder="Resmi Ajans İsmi (Bayındır Medya)" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold shadow-inner text-sm outline-none text-left">
                         <div class="grid grid-cols-2 gap-6 text-left leading-none">
                             <input type="text" id="conf-iban-name" placeholder="IBAN Alıcı Adı" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold shadow-inner text-sm outline-none text-left">
                             <input type="text" id="conf-iban" placeholder="TR00..." class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold shadow-inner text-sm outline-none text-left">
@@ -193,21 +193,22 @@
             </div>
         </div>
 
-        <!-- MOBILE BOTTOM NAV -->
+        <!-- MOBILE NAV -->
         <nav class="md:hidden flex justify-between items-center bg-white border-t border-slate-100 px-10 py-3 z-50 shadow-lg text-left">
-            <button onclick="window.switchView('dashboard')" class="text-indigo-600 text-left"><svg class="w-6 h-6 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h7"></path></svg></button>
-            <button onclick="window.switchView('clients')" class="text-slate-400 text-left"><svg class="w-6 h-6 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857"></path></svg></button>
-            <button onclick="window.switchView('workflow')" class="text-slate-400 text-left"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path></svg></button>
-            <button onclick="window.switchView('finance')" class="text-slate-400 text-left"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2"></path></svg></button>
+            <button onclick="window.switchView('dashboard')" class="text-indigo-600 text-left"><svg class="w-6 h-6 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"></path></svg></button>
+            <button onclick="window.switchView('clients')" class="text-slate-400 text-left"><svg class="w-6 h-6 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7"></path></svg></button>
+            <button onclick="window.switchView('workflow')" class="text-slate-400 text-left"><svg class="w-6 h-6 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path></svg></button>
+            <button onclick="window.switchView('finance')" class="text-slate-400 text-left"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2z"></path></svg></button>
         </nav>
     </main>
 
-    <!-- CLIENT DETAIL MODAL -->
+    <!-- MODALS -->
+    <!-- Client Detail Modal -->
     <div id="clientDetailModal" class="fixed inset-0 z-[60] modal-bg hidden flex items-end md:items-center justify-center p-4 text-left italic">
         <div class="bg-white w-full max-w-6xl rounded-t-[70px] md:rounded-[70px] p-12 md:p-16 shadow-2xl max-h-[94vh] overflow-y-auto custom-scrollbar border border-white/20 text-left">
             <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-16 italic text-left leading-none">
                 <div class="text-left leading-none">
-                    <h3 class="text-5xl font-black text-slate-900 tracking-tighter italic-custom text-left leading-none" id="det-name">Marka</h3>
+                    <h3 class="text-5xl font-black text-slate-900 tracking-tighter italic-custom text-left leading-none uppercase italic" id="det-name">Marka</h3>
                     <div class="flex flex-wrap items-center gap-4 mt-8 text-left leading-none">
                         <span class="text-[11px] font-black bg-indigo-600 text-white px-5 py-2 rounded-full shadow-lg text-left italic-custom" id="det-start">--</span>
                         <p id="det-person" class="text-[11px] font-black text-slate-400 bg-slate-50 px-5 py-2 rounded-full border border-slate-100 uppercase tracking-widest italic-custom text-left leading-none">--</p>
@@ -252,26 +253,75 @@
                     </section>
                     <textarea id="det-notes" onblur="window.saveClientNotes()" class="w-full p-8 bg-white border border-slate-100 rounded-[50px] text-xs font-bold text-slate-600 h-64 shadow-sm outline-none italic-custom text-left italic-custom leading-relaxed" placeholder="Stratejik marka notlarını buraya alın..."></textarea>
                     
-                    <!-- MARKA SİL BUTONU - KRİTİK FİX -->
                     <button onclick="window.deleteClient()" class="w-full py-5 rounded-[30px] border-2 border-dashed border-red-100 text-[10px] font-black text-red-300 uppercase hover:bg-red-50 hover:text-red-500 transition-all italic-custom text-center">Markayı Tamamen Sil</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODALS (Forms) -->
-    <div id="clientModal" class="fixed inset-0 z-[70] modal-bg hidden flex items-center justify-center p-4 text-left">
-        <div class="bg-white w-full max-w-lg rounded-[60px] p-12 shadow-2xl view-animate italic-custom text-left">
-            <h3 class="text-3xl font-black mb-10 italic-custom text-indigo-600 tracking-tighter text-left leading-none uppercase">Yeni Müşteri</h3>
-            <form id="clientForm" class="space-y-6 text-left">
-                <input type="text" id="c_name" required placeholder="Marka İsmi" class="w-full p-5 bg-slate-50 border-none rounded-[25px] font-bold shadow-inner outline-none text-left italic-custom">
+    <!-- CREATE FORMS MODALS -->
+    <div id="clientModal" class="fixed inset-0 z-[70] modal-bg hidden flex items-center justify-center p-4 text-left italic-custom">
+        <div class="bg-white w-full max-w-lg rounded-[60px] p-12 shadow-2xl view-animate italic-custom text-left leading-none uppercase">
+            <h3 class="text-3xl font-black mb-10 italic-custom text-indigo-600 tracking-tighter text-left leading-none italic-custom uppercase">Yeni Müşteri Kaydı</h3>
+            <form id="clientForm" class="space-y-6 text-left italic-custom leading-none">
+                <input type="text" id="c_name" required placeholder="Firma / Marka Adı" class="w-full p-5 bg-slate-50 border-none rounded-[25px] font-bold shadow-inner outline-none text-left italic-custom">
                 <div class="grid grid-cols-2 gap-4 text-left leading-none italic-custom">
                     <input type="text" id="c_person" required placeholder="Yetkili" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold text-sm shadow-inner outline-none text-left italic-custom">
                     <input type="date" id="c_start" required class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold text-sm shadow-inner outline-none text-left italic-custom">
                 </div>
                 <input type="text" id="c_phone" required placeholder="Telefon (05XX...)" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold text-sm shadow-inner outline-none text-left italic-custom">
-                <button type="submit" class="w-full bg-indigo-600 text-white py-6 rounded-[35px] font-black text-lg uppercase italic-custom active:scale-95 transition-all text-center shadow-lg shadow-indigo-100 italic-custom">Kaydet</button>
-                <button type="button" onclick="window.closeModal('clientModal')" class="w-full text-slate-400 font-bold text-[10px] mt-2 uppercase tracking-widest text-center">Vazgeç</button>
+                <button type="submit" class="w-full bg-indigo-600 text-white py-6 rounded-[35px] font-black text-lg shadow-xl italic-custom active:scale-95 transition-all text-center italic-custom shadow-lg shadow-indigo-100">Müşteriyi Kaydet</button>
+                <button type="button" onclick="window.closeModal('clientModal')" class="w-full text-slate-400 font-bold text-[10px] mt-2 uppercase tracking-widest text-center italic-custom leading-none">Vazgeç</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="addServiceModal" class="fixed inset-0 z-[80] modal-bg hidden flex items-center justify-center p-4 text-left italic-custom">
+        <div class="bg-white w-full max-w-md rounded-[50px] p-12 shadow-2xl text-left italic-custom italic-custom">
+            <h3 class="text-2xl font-black mb-8 text-indigo-600 italic-custom text-left leading-none uppercase italic-custom">Hizmet Tanımı</h3>
+            <form id="serviceForm" class="space-y-5 text-left leading-none italic-custom">
+                <select id="s_type" onchange="window.togglePayDay(this.value)" class="w-full p-4 bg-slate-50 border-none rounded-2xl font-bold text-sm outline-none appearance-none italic-custom text-left leading-none italic-custom">
+                    <option value="monthly">Aylık Yönetim (Retainer)</option>
+                    <option value="onetime">Tek Seferlik İş (Proje)</option>
+                </select>
+                <input type="text" id="s_name" required placeholder="Hizmet Adı (Örn: Web Tasarım)" class="w-full p-4 bg-slate-50 border-none rounded-2xl font-bold text-sm shadow-inner outline-none text-left leading-none italic-custom">
+                <div id="s_payday_box" class="space-y-1 text-left leading-none italic-custom">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-3 text-left leading-none italic-custom">Ayın Kaçında Ödenir?</label>
+                    <input type="number" id="s_payday" min="1" max="31" class="w-full p-4 bg-slate-50 border-none rounded-2xl font-bold text-sm shadow-inner outline-none text-left leading-none italic-custom">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-black text-indigo-500 uppercase tracking-widest ml-3 italic-custom">Net Bütçe Bedeli (₺)</label>
+                    <input type="number" id="s_fee" required class="w-full p-6 bg-indigo-50 text-indigo-900 font-black text-3xl rounded-[30px] border-none outline-none shadow-sm text-left leading-none italic-custom">
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 text-white py-5 rounded-[30px] font-black italic-custom shadow-xl text-center leading-none uppercase italic-custom">Hizmeti Başlat</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="expenseModal" class="fixed inset-0 z-[70] modal-bg hidden flex items-center justify-center p-4 text-left italic-custom italic-custom">
+        <div class="bg-white w-full max-w-sm rounded-[50px] p-10 shadow-2xl view-animate italic-custom text-left italic-custom italic-custom">
+            <h3 class="text-xl font-black mb-8 text-red-600 italic-custom text-left leading-none uppercase italic-custom">Gider Kaydı</h3>
+            <form id="expenseForm" class="space-y-5 text-left italic-custom leading-none italic-custom">
+                <select id="e_cat" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold italic-custom outline-none text-left leading-none appearance-none italic-custom">
+                    <option>Yazılım / Tool</option><option>Ekip / Maaş</option><option>Ofis / Genel</option>
+                </select>
+                <input type="text" id="e_desc" required placeholder="Açıklama" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold outline-none text-left leading-none italic-custom">
+                <input type="number" id="e_amount" required placeholder="Tutar (₺)" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold outline-none text-left leading-none italic-custom">
+                <button type="submit" class="w-full bg-red-600 text-white py-6 rounded-[35px] font-black uppercase italic-custom shadow-xl text-center leading-none italic-custom">Gideri Kaydet</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="paymentModal" class="fixed inset-0 z-[70] modal-bg hidden flex items-end justify-center p-4 italic-custom text-left italic-custom">
+        <div class="bg-white w-full max-w-lg rounded-t-[60px] p-12 shadow-2xl animate-slide-up italic-custom text-left italic-custom">
+            <h3 class="text-3xl font-black mb-10 italic-custom text-indigo-600 text-left leading-none uppercase italic-custom">Tahsilat İşlemi</h3>
+            <form id="paymentForm" class="space-y-6 italic-custom text-left leading-none italic-custom">
+                <select id="p_service" required class="w-full p-5 bg-slate-100 border-none rounded-[30px] font-bold outline-none shadow-inner italic-custom text-left appearance-none leading-none italic-custom"></select>
+                <div class="grid grid-cols-2 gap-4 italic-custom text-left leading-none italic-custom italic-custom">
+                    <input type="date" id="p_date" required class="w-full p-5 bg-slate-100 border-none rounded-[30px] font-bold text-sm outline-none italic-custom text-left leading-none italic-custom">
+                    <input type="number" id="p_amount" required placeholder="Tutar (₺)" class="w-full p-5 bg-slate-100 border-none rounded-[30px] font-bold text-sm outline-none italic-custom text-left leading-none italic-custom">
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 text-white py-6 rounded-[40px] font-black text-xl shadow-xl uppercase italic-custom active:scale-95 transition-all text-center italic-custom">Tahsilatı Bitir</button>
             </form>
         </div>
     </div>
@@ -281,7 +331,6 @@
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-        // CONFIG & DB
         const firebaseConfig = {
             apiKey: "AIzaSyDkIprfe4Yu4cnL0FA7H0KjUBPQMZkAUUc",
             authDomain: "ajans-yonetimi.firebaseapp.com",
@@ -302,7 +351,7 @@
         const safeHTML = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
         const safeVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
 
-        // GLOBAL WRAPPERS (Fix for Scope Errors)
+        // GLOBAL WRAPPERS
         window.switchView = (v) => {
             document.querySelectorAll('.view-content').forEach(el => el.classList.add('hidden'));
             const target = document.getElementById('view-' + v); if(target) target.classList.remove('hidden');
@@ -311,13 +360,13 @@
             if(v === 'dashboard') window.updateChart();
         };
 
-        window.openModal = (id) => { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); };
-        window.closeModal = (id) => { const el = document.getElementById(id); if(el) el.classList.add('hidden'); };
+        window.openModal = (id) => document.getElementById(id).classList.remove('hidden');
+        window.closeModal = (id) => document.getElementById(id).classList.add('hidden');
         window.togglePayDay = (val) => { const box = document.getElementById('s_payday_box'); if(box) box.classList.toggle('hidden', val === 'onetime'); };
 
         window.openClientDetail = (id) => {
             currentClientId = id; const c = clients.find(x => x.id === id); if(!c) return;
-            safeText('det-name', c.name); safeText('det-start', `BAŞL: ${c.start}`); safeText('det-person', c.person);
+            safeText('det-name', c.name); safeText('det-start', `ANLAŞMA: ${c.start}`); safeText('det-person', c.person);
             const wa = document.getElementById('det-wa-link'); if(wa) wa.href = `https://wa.me/${c.phone.replace(/\D/g,'')}`;
             safeVal('det-notes', c.notes || "");
             safeVal('det-asset-drive', c.assets?.drive || "");
@@ -332,9 +381,9 @@
                         <p class="font-black text-indigo-600 text-xl tracking-tighter leading-none italic-custom">₺${s.fee.toLocaleString()}</p>
                     </div>
                     ${s.type === 'onetime' ? `<div class="space-y-2 italic-custom"><div class="flex justify-between text-[8px] font-black uppercase text-slate-400 italic-custom"><span>Bakiye Durumu</span><span>%${Math.round(percent)}</span></div><div class="w-full bg-white h-2 rounded-full overflow-hidden shadow-inner"><div class="bg-indigo-600 h-full transition-all duration-1000" style="width:${percent}%"></div></div></div>` : ''}
-                    <div class="flex items-center gap-2 italic-custom">
+                    <div class="flex items-center gap-2 italic-custom leading-none">
                         <select onchange="window.updateWorkflowStatus('${c.id}', ${s.sid}, this.value)" class="bg-white border-none text-[9px] font-black uppercase rounded-lg px-2 py-1 shadow-sm italic-custom outline-none leading-none"><option ${s.status==='Planlanıyor'?'selected':''}>Planlanıyor</option><option ${s.status==='Tasarım & Üretim'?'selected':''}>Tasarım & Üretim</option><option ${s.status==='Onay Bekliyor'?'selected':''}>Onay Bekliyor</option><option ${s.status==='Tamamlandı'?'selected':''}>Tamamlandı</option></select>
-                        <button onclick="window.openProposal(${s.sid})" class="flex-1 bg-white border border-slate-100 py-2.5 rounded-xl text-[8px] font-black uppercase italic-custom leading-none">Teklif Al</button>
+                        <button onclick="window.openProposal(${s.sid})" class="flex-1 bg-white border border-slate-100 py-2.5 rounded-xl text-[8px] font-black uppercase italic-custom leading-none shadow-sm">Teklif / Proforma</button>
                         <button onclick="window.removeService('${c.id}', ${s.sid})" class="p-2 bg-red-50 text-red-200 hover:text-red-500 rounded-xl transition-all active:scale-90"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
                     </div>
                 </div>`;
@@ -342,8 +391,8 @@
 
             safeHTML('det-payments', (c.payments || []).sort((a,b) => b.pid - a.pid).map(p => `
                 <div class="flex justify-between items-center p-5 bg-white border border-slate-100 rounded-[30px] group shadow-sm italic-custom text-left">
-                    <div class="text-left italic-custom"><p class="text-xs font-black text-slate-800 italic-custom leading-none text-left">₺${p.amount.toLocaleString()}</p><p class="text-[8px] font-bold text-slate-300 uppercase mt-1 tracking-widest leading-none italic-custom text-left">${p.date} • ${p.serviceName}</p></div>
-                    <div class="flex gap-2 text-left">
+                    <div class="text-left italic-custom leading-none"><p class="text-xs font-black text-slate-800 italic-custom leading-none text-left">₺${p.amount.toLocaleString()}</p><p class="text-[8px] font-bold text-slate-300 uppercase mt-1 tracking-widest leading-none italic-custom text-left leading-none">${p.date} • ${p.serviceName}</p></div>
+                    <div class="flex gap-2">
                         <button onclick="window.sendThankYouMessage('${c.id}', '${p.pid}')" class="p-3 text-emerald-600 bg-emerald-50 rounded-2xl active:scale-90 transition-all shadow-sm" title="WhatsApp Teşekkür"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.551 4.197 1.594 6.039L0 24l6.105-1.597a11.826 11.826 0 005.945 1.598h.005c6.637 0 12.05-5.414 12.05-12.05a11.824 11.824 0 00-3.417-8.411z"/></svg></button>
                         <button onclick="window.generateReceipt('${p.pid}')" class="p-3 text-indigo-400 bg-indigo-50/50 rounded-2xl active:scale-90 transition-all text-left italic-custom leading-none shadow-inner"><svg class="w-4 h-4 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg></button>
                     </div>
@@ -351,50 +400,35 @@
             window.openModal('clientDetailModal');
         };
 
-        // BAYINDIR MEDYA - TEŞEKKÜR MESAJI
-        window.sendThankYouMessage = (cid, pid) => {
-            const client = clients.find(x => x.id === cid); if(!client) return;
-            const pay = client.payments.find(x => x.pid === parseInt(pid)); if(!pay) return;
-            
-            const dateObj = new Date(pay.date);
-            const gun = dateObj.getDate();
-            const aylar = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
-            const ay = aylar[dateObj.getMonth()];
-            
-            const rawPhone = client.phone.replace(/\D/g,'');
-            let finalPhone = rawPhone;
-            if(finalPhone.length === 10) finalPhone = '90' + finalPhone;
-            else if(finalPhone.length === 11 && finalPhone.startsWith('0')) finalPhone = '90' + finalPhone.substring(1);
-            
-            const message = `Sayın ${client.person},\n\n${gun} ${ay} tarihindeki ${pay.amount.toLocaleString('tr-TR')} TL tutarındaki ödemeniz başarıyla tahsil edilmiştir.\n\nBayındır Medya olarak iş birliğiniz için teşekkür ederiz. 🤝`;
-            const encoded = encodeURIComponent(message);
-            window.open(`https://wa.me/${finalPhone}?text=${encoded}`, '_blank');
-        };
-
-        // MARKA SİLME - FİXED
-        window.deleteClient = async () => {
-            if(!currentClientId) return;
-            if(confirm('Müşteriyi ve tüm geçmiş verilerini (ödemeler, notlar vb.) kalıcı olarak silmek istediğinizden emin misiniz?')) {
-                try {
-                    const clientRef = doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId);
-                    await deleteDoc(clientRef);
-                    window.closeModal('clientDetailModal');
-                    console.log("Silme işlemi başarılı.");
-                } catch (error) {
-                    console.error("Silme hatası:", error);
-                    alert("Silme işlemi sırasında bir hata oluştu.");
-                }
-            }
-        };
-
         window.openPaymentModalFromDetail = () => {
             const c = clients.find(x => x.id === currentClientId); if(!c) return;
             const sel = document.getElementById('p_service');
             if(sel) {
-                sel.innerHTML = c.services.map(s => `<option value="${s.sid}">${s.name} (Net: ₺${s.fee.toLocaleString()})</option>`).join('');
+                sel.innerHTML = c.services.map(s => `<option value="${s.sid}">${s.name} (Bütçe: ₺${s.fee.toLocaleString()})</option>`).join('');
                 safeVal('p_date', new Date().toISOString().split('T')[0]);
                 if(c.services.length > 0) safeVal('p_amount', c.services[0].fee);
                 window.openModal('paymentModal');
+            }
+        };
+
+        window.sendThankYouMessage = (cid, pid) => {
+            const client = clients.find(x => x.id === cid); if(!client) return;
+            const pay = client.payments.find(x => x.pid === parseInt(pid)); if(!pay) return;
+            const d = new Date(pay.date);
+            const dateStr = d.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' });
+            const rawPhone = client.phone.replace(/\D/g,'');
+            let finalPhone = rawPhone;
+            if(finalPhone.length === 10) finalPhone = '90' + finalPhone;
+            else if(finalPhone.length === 11 && finalPhone.startsWith('0')) finalPhone = '90' + finalPhone.substring(1);
+            const message = `Sayın ${client.person},\n\n${dateStr} tarihindeki ${pay.amount.toLocaleString('tr-TR')} TL tutarındaki ödemeniz başarıyla tahsil edilmiştir.\n\nBayındır Medya olarak iş birliğiniz için teşekkür ederiz. 🤝`;
+            window.open(`https://wa.me/${finalPhone}?text=${encodeURIComponent(message)}`, '_blank');
+        };
+
+        window.deleteClient = async () => {
+            if(!currentClientId) return;
+            if(confirm('Müşteriyi ve tüm verilerini silmek üzeresiniz? Bu işlem geri alınamaz.')) {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId));
+                window.closeModal('clientDetailModal');
             }
         };
 
@@ -404,33 +438,41 @@
             await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', cid), { services });
         };
 
-        window.saveAssets = async () => { if(!currentClientId) return; await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { assets: { drive: document.getElementById('det-asset-drive').value, colors: document.getElementById('det-asset-colors').value } }); };
-        window.saveClientNotes = async () => { if(!currentClientId) return; await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { notes: document.getElementById('det-notes').value }); };
-        window.removeService = async (cid, sid) => { if(confirm('Hizmeti silmek istediğinizden emin misiniz?')) { const c = clients.find(x => x.id === cid); const updated = c.services.filter(s => s.sid !== sid); await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', cid), { services: updated }); } };
+        window.removeService = async (cid, sid) => {
+            if(confirm('Hizmeti silmek istiyor musunuz?')) {
+                const c = clients.find(x => x.id === cid);
+                const updated = c.services.filter(s => s.sid !== sid);
+                await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', cid), { services: updated });
+            }
+        };
+
+        window.saveAssets = async () => { if(currentClientId) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { assets: { drive: document.getElementById('det-asset-drive').value, colors: document.getElementById('det-asset-colors').value } }); };
+        window.saveClientNotes = async () => { if(currentClientId) await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { notes: document.getElementById('det-notes').value }); };
 
         window.generateReceipt = (pid) => {
             const c = clients.find(x => x.id === currentClientId); const p = c.payments.find(x => x.pid === parseInt(pid));
             const { jsPDF } = window.jspdf; const docRes = new jsPDF();
             docRes.setFillColor(79, 70, 229); docRes.rect(0, 0, 210, 45, 'F');
             docRes.setTextColor(255, 255, 255); docRes.setFontSize(26); docRes.text("BAYINDIR MEDYA", 20, 25);
-            docRes.setTextColor(50, 50, 50); docRes.text(`Müşteri: ${c.name}`, 20, 80); docRes.text(`Tarih: ${p.date}`, 20, 90); docRes.text(`Tahsilat: ₺${p.amount.toLocaleString()}`, 20, 100);
+            docRes.setTextColor(50, 50, 50); docRes.text(`Musteri: ${c.name}`, 20, 80); docRes.text(`Tutar: ₺${p.amount.toLocaleString()}`, 20, 90);
             docRes.save(`Makbuz_${c.name}.pdf`);
-        };
+        }
 
         window.openProposal = (sid) => {
             const c = clients.find(x=>x.id===currentClientId); const s = c.services.find(i=>i.sid===sid);
             const { jsPDF } = window.jspdf; const docRes = new jsPDF();
             docRes.setFillColor(30, 41, 59); docRes.rect(0, 0, 210, 60, 'F');
             docRes.setTextColor(255, 255, 255); docRes.text("BAYINDIR MEDYA", 20, 35);
-            docRes.text(`Marka: ${c.name}`, 20, 95); docRes.text(`Teklif: ${s.fee.toLocaleString()} TL`, 20, 105);
+            docRes.text(`Firma: ${c.name}`, 20, 95); docRes.text(`Tutar: ${s.fee.toLocaleString()} TL`, 20, 105);
             docRes.save(`Teklif_${c.name}.pdf`);
         };
 
         window.searchClients = (q) => {
             const filtered = clients.filter(c => c.name.toLowerCase().includes(q.toLowerCase()) || c.person.toLowerCase().includes(q.toLowerCase()));
-            safeHTML('client-cards', filtered.map(c => `<div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm active:scale-95 cursor-pointer italic-custom transition-all hover:border-indigo-600 italic text-left"><h3 class="font-black text-xl italic-custom text-left uppercase leading-none">${c.name}</h3><p class="text-[10px] text-slate-400 mt-3 uppercase text-left leading-none italic tracking-widest leading-none">Detaya Git →</p></div>`).join(''));
+            safeHTML('client-cards', filtered.map(c => `<div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm active:scale-95 cursor-pointer italic transition-all hover:border-indigo-600 italic text-left"><h3 class="font-black text-xl italic-custom text-left leading-none uppercase">${c.name}</h3><p class="text-[10px] text-slate-400 mt-4 uppercase text-left leading-none italic-custom">Karnesine Git →</p></div>`).join(''));
         };
 
+        // RENDER LOGIC
         window.renderClients = () => {
             safeHTML('client-cards', clients.map(c => `
                 <div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm active:scale-98 transition-all flex flex-col group hover:shadow-2xl hover:shadow-indigo-500/5 cursor-pointer relative overflow-hidden italic text-left leading-none">
@@ -443,32 +485,6 @@
         };
 
         window.updateChart = () => { if(!chart) return; const rev = clients.reduce((a,c)=>a+(c.payments||[]).reduce((s,p)=>s+p.amount,0),0); chart.data.datasets[0].data = [rev*0.2, rev*0.4, rev*0.3, rev*0.7, rev*0.8, rev]; chart.update(); };
-
-        // AUTH & START
-        const startAppInit = async () => {
-            try {
-                await signInAnonymously(auth);
-                safeText('user-uid', auth.currentUser.uid.substring(0,12) + '...');
-                
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'clients'), snap => {
-                    clients = snap.docs.map(d => ({id: d.id, ...d.data()}));
-                    renderAll();
-                    if(currentClientId) window.openClientDetail(currentClientId);
-                    const ldr = document.getElementById('loader'); if(ldr) ldr.style.display = 'none';
-                });
-
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'), snap => {
-                    expenses = snap.docs.map(d => ({id: d.id, ...d.data()}));
-                    renderFinance();
-                });
-
-                onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'agency'), d => {
-                    if(d.exists()) { config = d.data(); fillConfig(); }
-                });
-
-                initChart();
-            } catch (err) { console.error(err); }
-        };
 
         function renderAll() {
             const now = new Date(); const m = now.getMonth(); const y = now.getFullYear();
@@ -528,20 +544,29 @@
             safeHTML('expense-list', expenses.sort((a,b)=>b.date.localeCompare(a.date)).map(e=>`<div class="p-6 bg-slate-50/50 border border-slate-100 rounded-[40px] flex justify-between items-center italic-custom text-left shadow-inner group"><div><p class="text-[9px] font-black text-red-400 uppercase italic-custom mb-1 text-left leading-none">${e.cat}</p><p class="text-sm font-bold text-slate-800 italic-custom leading-none text-left leading-none">${e.desc}</p></div><span class="text-sm font-black text-red-500 italic-custom leading-none">-₺${e.amount.toLocaleString()}</span></div>`).join(''));
         }
 
-        function fillConfig() {
-            if(document.getElementById('conf-name')) {
-                document.getElementById('conf-name').value = config.name || "BAYINDIR MEDYA";
-                document.getElementById('conf-iban-name').value = config.ibanName || "";
-                document.getElementById('conf-iban').value = config.iban || "";
-                document.getElementById('conf-address').value = config.address || "";
-            }
-        }
+        const startAppInit = async () => {
+            try {
+                await signInAnonymously(auth);
+                safeText('user-uid', auth.currentUser.uid.substring(0,10) + '...');
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'clients'), snap => {
+                    clients = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                    renderAll();
+                    if(currentClientId) window.openClientDetail(currentClientId);
+                    const ldr = document.getElementById('loader'); if(ldr) ldr.style.display = 'none';
+                });
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'), snap => {
+                    expenses = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                    renderFinance();
+                });
+                onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'agency'), d => {
+                    if(d.exists()) { config = d.data(); fillConfig(); }
+                });
+                initChart();
+            } catch (err) { console.error(err); }
+        };
 
-        function initChart() {
-            const el = document.getElementById('mainChart'); if (!el) return;
-            chart = new Chart(el.getContext('2d'), { type: 'line', data: { labels: ['Oca','Şub','Mar','Nis','May','Haz'], datasets: [{ data: [0,0,0,0,0,0], borderColor: '#4f46e5', backgroundColor: 'rgba(79, 70, 229, 0.05)', fill: true, tension: 0.5, borderWidth: 5 }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#f8fafc' }, border: { display: false } }, x: { grid: { display: false } } } } });
-            window.updateChart();
-        }
+        function fillConfig() { if(document.getElementById('conf-name')) { document.getElementById('conf-name').value = config.name || "BAYINDIR MEDYA"; document.getElementById('conf-iban').value = config.iban || ""; document.getElementById('conf-address').value = config.address || ""; } }
+        function initChart() { const el = document.getElementById('mainChart'); if (!el) return; chart = new Chart(el.getContext('2d'), { type: 'line', data: { labels: ['Oca','Şub','Mar','Nis','May','Haz'], datasets: [{ data: [0,0,0,0,0,0], borderColor: '#4f46e5', backgroundColor: 'rgba(79, 70, 229, 0.05)', fill: true, tension: 0.5, borderWidth: 5 }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#f8fafc' }, border: { display: false } }, x: { grid: { display: false } } } } }); window.updateChart(); }
 
         window.addEventListener('DOMContentLoaded', () => {
             const safeSubmit = (id, fn) => { const el = document.getElementById(id); if(el) el.addEventListener('submit', async (e) => { e.preventDefault(); if(!auth.currentUser) return; await fn(e); }); };
