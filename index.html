@@ -19,7 +19,7 @@
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         .modal-bg { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(10px); }
         .italic-custom { font-style: italic; }
-        select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236366f1' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7' /%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1rem; }
+        select { appearance: none; background-image: url("logo.png"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1rem; }
     </style>
 </head>
 <body class="text-slate-900 flex flex-col md:flex-row min-h-screen overflow-hidden text-left">
@@ -36,7 +36,7 @@
             </div>
             <div>
                 <h2 class="text-white font-black tracking-widest uppercase text-lg italic-custom">BAYINDIR MEDYA ERP</h2>
-                <p id="loader-status" class="text-indigo-400 text-[10px] font-bold mt-1 animate-pulse italic-custom tracking-[2px]">GÜVENLİ VERİ BAĞLANTISI...</p>
+                <p id="loader-status" class="text-indigo-400 text-[10px] font-bold mt-1 animate-pulse italic-custom tracking-[2px]">BULUT VERİLERİ SENKRONİZE EDİLİYOR...</p>
             </div>
         </div>
     </div>
@@ -50,9 +50,10 @@
                 </div>
                 <h1 class="text-2xl font-black tracking-tighter text-left uppercase leading-none italic-custom text-slate-800">BAYINDIR<br><span class="text-indigo-600">MEDYA</span></h1>
             </div>
+            
             <nav class="space-y-1 text-left">
                 <button onclick="window.switchView('dashboard')" id="nav-dashboard" class="nav-item sidebar-item w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-slate-500 font-bold text-sm sidebar-active transition-all">
-                    <svg class="w-5 h-5 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"></path></svg> Dashboard
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"></path></svg> Dashboard
                 </button>
                 <button onclick="window.switchView('clients')" id="nav-clients" class="nav-item sidebar-item w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-slate-500 font-bold text-sm transition-all text-left">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7"></path></svg> Müşteriler
@@ -74,94 +75,94 @@
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left">
         <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 md:px-10 py-5 flex items-center justify-between shrink-0 z-40 text-left">
             <div>
-                <h2 id="view-title" class="text-xl font-black text-slate-800 italic-custom leading-none text-left uppercase tracking-tighter">Panel</h2>
-                <p id="view-subtitle" class="text-[10px] text-slate-400 font-black uppercase tracking-[2px] mt-1 italic-custom text-left">Bayındır Medya Operasyon Merkezi</p>
+                <h2 id="view-title" class="text-xl font-black text-slate-800 italic-custom leading-none text-left uppercase tracking-tighter italic">Panel</h2>
+                <p id="view-subtitle" class="text-[10px] text-slate-400 font-black uppercase tracking-[2px] mt-1 italic-custom text-left">Bayındır Medya Yönetim</p>
             </div>
-            <button onclick="window.openModal('clientModal')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-black shadow-lg hover:bg-indigo-700 transition-all active:scale-95 flex items-center gap-2 italic-custom">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M12 4v16m8-8H4"></path></svg>
-                Müşteri Ekle
+            <button onclick="window.openModal('clientModal')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-black shadow-lg hover:bg-indigo-700 transition-all active:scale-95 flex items-center gap-2 italic-custom leading-none uppercase">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M12 4v16m8-8H4"></path></svg>
+                Marka Ekle
             </button>
         </header>
 
-        <div class="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar bg-[#f8fafc] text-left">
+        <div class="flex-1 overflow-y-auto p-6 md:p-10 custom-scrollbar bg-[#f8fafc]">
             
             <!-- DASHBOARD VIEW -->
-            <div id="view-dashboard" class="view-content space-y-10 view-animate text-left">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center md:text-left">
-                    <div class="bg-indigo-600 p-8 rounded-[40px] text-white shadow-2xl relative overflow-hidden group text-left italic-custom">
-                        <p class="text-[10px] font-black uppercase opacity-60 mb-2 italic-custom tracking-widest">Aylık Tahsilat</p>
+            <div id="view-dashboard" class="view-content space-y-10 view-animate">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center md:text-left leading-none">
+                    <div class="bg-indigo-600 p-8 rounded-[40px] text-white shadow-2xl relative overflow-hidden group">
+                        <p class="text-[10px] font-black uppercase opacity-60 mb-2 tracking-widest italic-custom">Aylık Tahsilat</p>
                         <h3 class="text-4xl font-black tracking-tighter" id="stat-revenue">₺0</h3>
                     </div>
-                    <div class="bg-white p-8 rounded-[40px] border border-slate-100 shadow-sm text-left italic-custom">
-                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2 italic-custom tracking-widest">Giderler</p>
+                    <div class="bg-white p-8 rounded-[40px] border border-slate-100 shadow-sm italic-custom">
+                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2 tracking-widest">Giderler</p>
                         <h3 class="text-3xl font-black text-red-500" id="stat-expense">₺0</h3>
                     </div>
-                    <div class="bg-white p-8 rounded-[40px] border border-slate-100 shadow-sm text-left italic-custom">
-                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2 italic-custom tracking-widest">Müşteri Sayısı</p>
+                    <div class="bg-white p-8 rounded-[40px] border border-slate-100 shadow-sm italic-custom">
+                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2 tracking-widest">Müşteriler</p>
                         <h3 class="text-3xl font-black text-slate-800" id="stat-clients">0</h3>
                     </div>
-                    <div class="bg-slate-900 p-8 rounded-[40px] text-white shadow-xl text-left italic-custom">
-                        <p class="text-[10px] font-black text-slate-500 uppercase mb-2 italic-custom tracking-widest">Net Kazanç</p>
+                    <div class="bg-slate-900 p-8 rounded-[40px] text-white shadow-xl italic-custom">
+                        <p class="text-[10px] font-black text-slate-500 uppercase mb-2 tracking-widest">Net Durum</p>
                         <h3 class="text-3xl font-black text-emerald-400" id="stat-profit">₺0</h3>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 text-left italic-custom">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 italic-custom text-left">
                     <div class="lg:col-span-2 bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm relative text-left">
-                        <h4 class="font-black text-slate-800 mb-8 italic-custom text-sm uppercase text-left tracking-[2px]">Mali Akış Grafiği</h4>
+                        <h4 class="font-black text-slate-800 mb-8 italic-custom text-sm uppercase tracking-[2px]">Mali Analiz</h4>
                         <canvas id="mainChart" height="150"></canvas>
                     </div>
-                    <div class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm text-left overflow-hidden italic-custom">
-                        <h4 class="font-black text-slate-800 mb-8 italic-custom text-center uppercase tracking-widest text-[10px]">Ödeme Takvimi</h4>
+                    <div class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm overflow-hidden text-center">
+                        <h4 class="font-black text-slate-800 mb-8 italic-custom uppercase tracking-widest text-[10px]">Ödeme Takvimi</h4>
                         <div id="schedule-list" class="space-y-4"></div>
                     </div>
                 </div>
             </div>
 
             <!-- CLIENTS VIEW -->
-            <div id="view-clients" class="view-content hidden space-y-8 view-animate text-left italic-custom">
-                <div class="bg-white p-5 rounded-[25px] border border-slate-100 flex items-center gap-4 shadow-sm text-left group">
-                    <svg class="w-6 h-6 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <input type="text" onkeyup="window.searchClients(this.value)" placeholder="Hızlıca marka ara..." class="w-full bg-transparent border-none outline-none font-bold text-sm text-left italic-custom">
+            <div id="view-clients" class="view-content hidden space-y-8 view-animate">
+                <div class="bg-white p-5 rounded-[25px] border border-slate-100 flex items-center gap-4 shadow-sm group italic-custom">
+                    <svg class="w-6 h-6 text-slate-300 group-focus-within:text-indigo-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <input type="text" onkeyup="window.searchClients(this.value)" placeholder="Marka ara..." class="w-full bg-transparent border-none outline-none font-bold text-sm italic-custom">
                 </div>
-                <div id="client-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left italic-custom"></div>
+                <div id="client-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 italic-custom"></div>
             </div>
 
             <!-- WORKFLOW VIEW -->
-            <div id="view-workflow" class="view-content hidden space-y-10 view-animate text-left italic-custom">
-                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 text-center md:text-left italic-custom text-left italic-custom">
-                    <div class="space-y-4 italic-custom">
-                        <span class="text-[10px] font-black uppercase tracking-[2px] text-slate-400 italic px-2 italic-custom">Planlama</span>
+            <div id="view-workflow" class="view-content hidden space-y-10 view-animate">
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 text-center md:text-left italic-custom text-left">
+                    <div class="space-y-4">
+                        <span class="text-[10px] font-black uppercase tracking-[2px] text-slate-400 italic px-2">Planlama</span>
                         <div id="column-plan" class="space-y-4 min-h-[500px] bg-slate-100/30 rounded-[40px] p-4 italic-custom"></div>
                     </div>
-                    <div class="space-y-4 text-left italic-custom">
-                        <span class="text-[10px] font-black uppercase tracking-[2px] text-blue-500 italic px-2 italic-custom">Üretim</span>
+                    <div class="space-y-4">
+                        <span class="text-[10px] font-black uppercase tracking-[2px] text-blue-500 italic px-2">Üretim</span>
                         <div id="column-design" class="space-y-4 min-h-[500px] bg-blue-50/30 rounded-[40px] p-4 italic-custom"></div>
                     </div>
-                    <div class="space-y-4 text-left italic-custom">
-                        <span class="text-[10px] font-black uppercase tracking-[2px] text-amber-500 italic px-2 italic-custom">Onay</span>
+                    <div class="space-y-4">
+                        <span class="text-[10px] font-black uppercase tracking-[2px] text-amber-500 italic px-2">Onay</span>
                         <div id="column-review" class="space-y-4 min-h-[500px] bg-amber-50/30 rounded-[40px] p-4 italic-custom"></div>
                     </div>
-                    <div class="space-y-4 text-left italic-custom">
-                        <span class="text-[10px] font-black uppercase tracking-[2px] text-emerald-500 italic px-2 italic-custom">Yayında</span>
+                    <div class="space-y-4">
+                        <span class="text-[10px] font-black uppercase tracking-[2px] text-emerald-500 italic px-2">Yayında</span>
                         <div id="column-live" class="space-y-4 min-h-[500px] bg-emerald-50/30 rounded-[40px] p-4 italic-custom"></div>
                     </div>
                 </div>
             </div>
 
             <!-- FINANCE VIEW -->
-            <div id="view-finance" class="view-content hidden space-y-10 view-animate text-left">
+            <div id="view-finance" class="view-content hidden space-y-10 view-animate text-left italic-custom">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                    <div class="bg-white p-12 rounded-[50px] border border-slate-100 shadow-sm text-left italic-custom">
-                        <div class="flex justify-between items-center mb-10 text-left italic-custom">
-                            <h3 class="font-black text-2xl italic tracking-tighter text-left uppercase italic-custom">Gider Listesi</h3>
+                    <div class="bg-white p-12 rounded-[50px] border border-slate-100 shadow-sm text-left">
+                        <div class="flex justify-between items-center mb-10 text-left">
+                            <h3 class="font-black text-2xl italic tracking-tighter text-left uppercase">Gider Defteri</h3>
                             <button onclick="window.openModal('expenseModal')" class="bg-red-50 text-red-600 px-5 py-2 rounded-xl text-[10px] font-black uppercase italic transition-all italic-custom">Gider Ekle</button>
                         </div>
                         <div id="expense-list" class="space-y-4 max-h-[600px] overflow-y-auto custom-scrollbar pr-2 text-left italic-custom"></div>
                     </div>
                     <div class="bg-indigo-900 rounded-[60px] p-12 text-white shadow-2xl relative overflow-hidden italic-custom text-left italic-custom leading-none">
-                         <h3 class="text-xl font-black mb-12 uppercase tracking-widest text-left italic-custom leading-none">Bayındır Medya <br><span class="text-indigo-400">Mali Karnesi</span></h3>
-                         <div class="space-y-6 text-left italic-custom italic-custom">
+                         <h3 class="text-xl font-black mb-12 uppercase tracking-widest text-left italic-custom leading-none text-slate-100">Bayındır Medya <br><span class="text-indigo-400">Mali Karnesi</span></h3>
+                         <div class="space-y-6 text-left italic-custom">
                             <div class="flex justify-between items-center pb-6 border-b border-white/5 text-left italic-custom">
                                 <span class="text-slate-400 font-bold uppercase text-[10px]">Net Tahsilat</span>
                                 <span class="font-black text-2xl text-emerald-400" id="fin-revenue">₺0</span>
@@ -194,51 +195,48 @@
     </main>
 
     <!-- CLIENT DETAIL MODAL -->
-    <div id="clientDetailModal" class="fixed inset-0 z-[60] modal-bg hidden flex items-end md:items-center justify-center p-4 text-left italic-custom">
+    <div id="clientDetailModal" class="fixed inset-0 z-[60] modal-bg hidden flex items-end md:items-center justify-center p-4">
         <div class="bg-white w-full max-w-6xl rounded-t-[70px] md:rounded-[70px] p-12 md:p-16 shadow-2xl max-h-[94vh] overflow-y-auto custom-scrollbar border border-white/20 text-left italic-custom">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-16 italic text-left leading-none italic-custom">
-                <div class="text-left leading-none italic-custom">
-                    <h3 class="text-5xl font-black text-slate-900 tracking-tighter italic-custom text-left leading-none uppercase" id="det-name">Marka</h3>
-                    <div class="flex flex-wrap items-center gap-4 mt-8 text-left leading-none italic-custom italic-custom">
-                        <span class="text-[11px] font-black bg-indigo-600 text-white px-5 py-2 rounded-full shadow-lg text-left italic-custom italic-custom" id="det-start">--</span>
-                        <p id="det-person" class="text-[11px] font-black text-slate-400 bg-slate-50 px-5 py-2 rounded-full border border-slate-100 uppercase tracking-widest italic-custom text-left leading-none italic-custom italic-custom">--</p>
-                        <a id="det-wa-link" href="#" target="_blank" class="flex items-center gap-2 bg-emerald-50 text-emerald-600 px-5 py-2 rounded-full text-[11px] font-black uppercase hover:bg-emerald-600 hover:text-white transition-all shadow-md text-left leading-none italic-custom italic-custom">WhatsApp</a>
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-16 italic-custom leading-none">
+                <div class="leading-none text-left">
+                    <h3 class="text-5xl font-black text-slate-900 tracking-tighter italic-custom leading-none uppercase italic" id="det-name">Marka</h3>
+                    <div class="flex flex-wrap items-center gap-4 mt-8 leading-none">
+                        <span class="text-[11px] font-black bg-indigo-600 text-white px-5 py-2 rounded-full shadow-lg text-left italic-custom" id="det-start">--</span>
+                        <p id="det-person" class="text-[11px] font-black text-slate-400 bg-slate-50 px-5 py-2 rounded-full border border-slate-100 uppercase tracking-widest italic-custom text-left leading-none">--</p>
+                        <a id="det-wa-link" href="#" target="_blank" class="flex items-center gap-2 bg-emerald-50 text-emerald-600 px-5 py-2 rounded-full text-[11px] font-black uppercase hover:bg-emerald-600 hover:text-white transition-all shadow-md leading-none italic-custom">WhatsApp</a>
                     </div>
                 </div>
-                <button onclick="window.closeModal('clientDetailModal')" class="p-5 bg-slate-50 rounded-full hover:rotate-90 transition-transform duration-500 shadow-inner text-left active:scale-90 italic-custom"><svg class="w-8 h-8 text-slate-400 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                <button onclick="window.closeModal('clientDetailModal')" class="p-5 bg-slate-50 rounded-full hover:rotate-90 transition-transform duration-500 shadow-inner active:scale-90 leading-none"><svg class="w-8 h-8 text-slate-400 text-left" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 text-left italic leading-none italic-custom">
-                <div class="lg:col-span-3 space-y-12 text-left italic-custom">
-                    <section class="text-left italic leading-none italic-custom">
-                        <div class="flex justify-between items-center mb-8 border-b pb-4 text-left italic-custom italic-custom">
-                            <h4 class="text-[12px] font-black text-indigo-600 uppercase italic-custom text-left tracking-[4px] italic-custom">Hizmetler & Operasyon</h4>
-                            <button onclick="window.openModal('addServiceModal')" class="text-xs font-black bg-indigo-50 text-indigo-600 px-4 py-2 rounded-xl italic-custom transition-all italic-custom">+ Hizmet Ekle</button>
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 italic leading-none">
+                <div class="lg:col-span-3 space-y-12">
+                    <section class="italic-custom">
+                        <div class="flex justify-between items-center mb-8 border-b pb-4 text-left italic-custom">
+                            <h4 class="text-[12px] font-black text-indigo-600 uppercase italic-custom text-left tracking-[4px]">Hizmetler</h4>
+                            <button onclick="window.openModal('addServiceModal')" class="text-xs font-black bg-indigo-50 text-indigo-600 px-4 py-2 rounded-xl italic-custom transition-all">+ Hizmet</button>
                         </div>
-                        <div id="det-services" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left italic-custom"></div>
+                        <div id="det-services" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left"></div>
                     </section>
                     
-                    <section class="text-left italic leading-none italic-custom">
-                        <div class="flex justify-between items-center mb-8 border-b pb-4 text-left italic-custom italic-custom">
-                            <h4 class="text-[12px] font-black text-slate-400 uppercase italic-custom text-left tracking-[4px] italic-custom">Tahsilat Ekstresi & Teşekkür</h4>
-                            <button onclick="window.openPaymentModalFromDetail()" class="text-xs font-black bg-emerald-50 text-emerald-600 px-4 py-2 rounded-xl italic-custom transition-all italic-custom">+ Ödeme Girişi</button>
+                    <section class="italic-custom">
+                        <div class="flex justify-between items-center mb-8 border-b pb-4 text-left italic-custom">
+                            <h4 class="text-[12px] font-black text-slate-400 uppercase italic-custom text-left tracking-[4px]">Tahsilat Kayıtları</h4>
+                            <button onclick="window.openPaymentModalFromDetail()" class="text-xs font-black bg-emerald-50 text-emerald-600 px-4 py-2 rounded-xl italic-custom transition-all">+ Ödeme Girişi</button>
                         </div>
-                        <div id="det-payments" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left italic-custom italic-custom"></div>
+                        <div id="det-payments" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                     </section>
                 </div>
 
-                <div class="space-y-10 text-left italic-custom leading-none italic-custom">
-                    <section class="bg-slate-900 rounded-[50px] p-10 text-white shadow-2xl relative overflow-hidden text-left italic-custom leading-none italic-custom">
-                        <h4 class="text-[11px] font-black text-indigo-400 uppercase italic-custom mb-8 text-left tracking-[2px] italic-custom italic-custom">Arşiv</h4>
-                        <div class="space-y-6 text-left leading-none text-white italic-custom italic-custom">
-                            <div class="space-y-1 text-left italic-custom">
-                                <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest ml-1 italic-custom">Asset Link</label>
-                                <input type="text" id="det-asset-drive" onblur="window.saveAssets()" class="w-full bg-white/5 border-none rounded-2xl p-4 text-xs font-bold outline-none text-white focus:bg-white/10 text-left italic-custom leading-none italic-custom" placeholder="Drive Linki">
-                            </div>
+                <div class="space-y-10 italic-custom leading-none text-left">
+                    <section class="bg-slate-900 rounded-[50px] p-10 text-white shadow-2xl relative overflow-hidden leading-none italic-custom">
+                        <h4 class="text-[11px] font-black text-indigo-400 uppercase mb-8 tracking-[2px]">Arşiv</h4>
+                        <div class="space-y-6 text-white italic-custom">
+                            <input type="text" id="det-asset-drive" onblur="window.saveAssets()" class="w-full bg-white/5 border-none rounded-2xl p-4 text-xs font-bold outline-none text-white focus:bg-white/10 italic leading-none" placeholder="Drive Linki">
                         </div>
                     </section>
-                    <textarea id="det-notes" onblur="window.saveClientNotes()" class="w-full p-8 bg-white border border-slate-100 rounded-[50px] text-xs font-bold text-slate-600 h-64 shadow-sm outline-none italic-custom text-left italic-custom leading-relaxed italic-custom italic-custom" placeholder="Marka strateji notları..."></textarea>
-                    <button onclick="window.deleteClient()" class="w-full py-5 rounded-[30px] border-2 border-dashed border-red-100 text-[10px] font-black text-red-300 uppercase hover:bg-red-50 hover:text-red-600 transition-all italic-custom text-center italic-custom italic-custom">Markayı Kalıcı Olarak Sil</button>
+                    <textarea id="det-notes" onblur="window.saveClientNotes()" class="w-full p-8 bg-white border border-slate-100 rounded-[50px] text-xs font-bold text-slate-600 h-64 shadow-sm outline-none leading-relaxed italic" placeholder="Marka notları..."></textarea>
+                    <button onclick="window.deleteClient()" class="w-full py-5 rounded-[30px] border-2 border-dashed border-red-100 text-[10px] font-black text-red-300 uppercase hover:bg-red-50 hover:text-red-500 transition-all italic-custom text-center leading-none">Markayı Sil</button>
                 </div>
             </div>
         </div>
@@ -248,14 +246,14 @@
     <div id="clientModal" class="fixed inset-0 z-[70] modal-bg hidden flex items-center justify-center p-4 text-left italic-custom">
         <div class="bg-white w-full max-w-lg rounded-[60px] p-12 shadow-2xl view-animate italic-custom text-left leading-none uppercase italic-custom">
             <h3 class="text-3xl font-black mb-10 text-indigo-600 tracking-tighter text-left leading-none uppercase italic-custom">Yeni Marka Kaydı</h3>
-            <form id="clientForm" class="space-y-6 text-left italic-custom">
-                <input type="text" id="c_name" required placeholder="Marka Adı" class="w-full p-5 bg-slate-50 border-none rounded-[25px] font-bold shadow-inner outline-none text-left italic-custom">
-                <div class="grid grid-cols-2 gap-4 text-left italic-custom">
+            <form id="clientForm" class="space-y-6 text-left leading-none italic-custom">
+                <input type="text" id="c_name" required placeholder="Firma Adı" class="w-full p-5 bg-slate-50 border-none rounded-[25px] font-bold shadow-inner outline-none text-left italic-custom">
+                <div class="grid grid-cols-2 gap-4 text-left leading-none">
                     <input type="text" id="c_person" required placeholder="Yetkili" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold text-sm shadow-inner outline-none text-left italic-custom">
-                    <input type="date" id="c_start" required class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold text-sm shadow-inner outline-none text-left italic-custom">
+                    <input type="date" id="c_start" required class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold text-sm shadow-inner outline-none text-left italic-custom leading-none">
                 </div>
-                <input type="text" id="c_phone" required placeholder="Telefon (05XX...)" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold text-sm shadow-inner outline-none text-left italic-custom">
-                <button type="submit" class="w-full bg-indigo-600 text-white py-6 rounded-[35px] font-black text-lg uppercase italic active:scale-95 transition-all text-center italic-custom shadow-lg italic-custom">Kayıt Et</button>
+                <input type="text" id="c_phone" required placeholder="WhatsApp" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold text-sm shadow-inner outline-none text-left italic-custom leading-none">
+                <button type="submit" class="w-full bg-indigo-600 text-white py-6 rounded-[35px] font-black text-lg uppercase active:scale-95 transition-all text-center italic-custom shadow-lg">Ekle</button>
             </form>
         </div>
     </div>
@@ -322,7 +320,7 @@
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-        // CONFIG & DB
+        // FIREBASE CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyDkIprfe4Yu4cnL0FA7H0KjUBPQMZkAUUc",
             authDomain: "ajans-yonetimi.firebaseapp.com",
@@ -335,7 +333,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = "agency-ultra-bayindir-v21-prod-fixed";
+        const appId = "agency-ultra-bayindir-v21-prod-final";
 
         let clients = [], expenses = [], config = {}, currentClientId = null, chart = null;
 
@@ -344,7 +342,7 @@
         const safeHTML = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
         const safeVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
 
-        // 1. LOCAL FUNCTIONS DEFINED FIRST
+        // 1. LOCAL FUNCTIONS DEFINED FIRST (CORE LOGIC)
         function renderClients() {
             const cont = document.getElementById('client-cards');
             if (!cont) return;
@@ -354,7 +352,7 @@
                          <div class="w-16 h-16 bg-slate-50 rounded-[25px] flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 italic font-black shadow-inner">M</div>
                         <span class="text-[9px] font-black bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full uppercase tracking-widest italic shadow-sm text-left">İş Ortağı</span>
                     </div>
-                    <h3 class="text-2xl font-black text-slate-900 tracking-tighter italic-custom text-left leading-none uppercase">${c.name}</h3>
+                    <h3 class="text-2xl font-black text-slate-900 tracking-tighter italic-custom text-left leading-none uppercase italic">${c.name}</h3>
                 </div>`).join('');
         }
 
@@ -366,7 +364,7 @@
             safeText('fin-profit', `₺${(inc - exp).toLocaleString('tr-TR')}`);
             const list = document.getElementById('expense-list');
             if (list) {
-                list.innerHTML = expenses.sort((a,b)=>b.date.localeCompare(a.date)).map(e=>`<div class="p-6 bg-slate-50/50 border border-slate-100 rounded-[35px] flex justify-between items-center italic text-left shadow-inner"><div><p class="text-[9px] font-black text-red-400 uppercase mb-1 text-left">${e.cat}</p><p class="text-sm font-bold text-slate-800 leading-none text-left">${e.desc}</p></div><span class="text-sm font-black text-red-500">-₺${e.amount.toLocaleString()}</span></div>`).join('');
+                list.innerHTML = expenses.sort((a,b)=>b.date.localeCompare(a.date)).map(e=>`<div class="p-6 bg-slate-50/50 border border-slate-100 rounded-[35px] flex justify-between items-center italic text-left shadow-inner"><div><p class="text-[9px] font-black text-red-400 uppercase mb-1 text-left leading-none">${e.cat}</p><p class="text-sm font-bold text-slate-800 leading-none text-left italic-custom">${e.desc}</p></div><span class="text-sm font-black text-red-500">-₺${e.amount.toLocaleString()}</span></div>`).join('');
             }
         }
 
@@ -395,8 +393,8 @@
                     const paid = (clients.find(x => x.id === s.cId).payments || []).some(p => { const d = new Date(p.date); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear() && p.sid === s.sid; });
                     return `<div onclick="window.openClientDetail('${s.cId}')" class="flex items-center justify-between p-5 bg-slate-50/50 rounded-[25px] border ${paid ? 'border-emerald-200 bg-emerald-50' : 'border-slate-100'} cursor-pointer active:scale-95 transition-all italic leading-none">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-white border flex items-center justify-center font-black text-xs ${paid ? 'text-emerald-500' : 'text-indigo-600'} shadow-inner">${s.payDay}</div>
-                            <div class="text-left leading-none"><p class="text-[8px] font-black text-slate-400 uppercase mb-1">${s.cN}</p><p class="text-xs font-black text-slate-800 italic leading-none">${s.name}</p></div>
+                            <div class="w-10 h-10 rounded-xl bg-white border border-slate-100 flex items-center justify-center font-black text-xs ${paid ? 'text-emerald-500' : 'text-indigo-600'} shadow-inner leading-none">${s.payDay}</div>
+                            <div class="text-left leading-none italic-custom leading-none text-left italic"><p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 italic-custom leading-none text-left italic">${s.cN}</p><p class="text-xs font-black text-slate-800 italic-custom text-left leading-none text-left italic italic">${s.name}</p></div>
                         </div>
                     </div>`;
                 }).join('');
@@ -411,14 +409,14 @@
                 else if(s.status === 'Onay Bekliyor') cols.review.push(item);
                 else cols.live.push(item);
             }));
-            const crd = (i) => `<div onclick="window.openClientDetail('${i.cId}')" class="bg-white p-5 rounded-[30px] border border-slate-100 shadow-sm space-y-2 group hover:border-indigo-200 transition-all cursor-pointer italic text-left leading-none italic shadow-sm"><p class="text-[8px] font-black text-slate-300 uppercase leading-none">${i.cN}</p><h5 class="text-sm font-black text-slate-800 leading-tight italic-custom leading-none italic">${i.name}</h5></div>`;
+            const crd = (i) => `<div onclick="window.openClientDetail('${i.cId}')" class="bg-white p-5 rounded-[30px] border border-slate-100 shadow-sm space-y-2 group hover:border-indigo-200 transition-all cursor-pointer italic text-left leading-none italic shadow-sm leading-none"><p class="text-[8px] font-black text-slate-300 uppercase leading-none italic italic">${i.cN}</p><h5 class="text-sm font-black text-slate-800 leading-tight italic-custom leading-none italic italic leading-none italic">${i.name}</h5></div>`;
             safeHTML('column-plan', cols.plan.map(crd).join(''));
             safeHTML('column-design', cols.design.map(crd).join(''));
             safeHTML('column-review', cols.review.map(crd).join(''));
             safeHTML('column-live', cols.live.map(crd).join(''));
         }
 
-        // 2. WINDOW MAPPINGS
+        // 2. WINDOW MAPPINGS (MANDATORY FIX FOR REFERENCEERRORS)
         window.switchView = (v) => {
             document.querySelectorAll('.view-content').forEach(el => el.classList.add('hidden'));
             const target = document.getElementById('view-' + v); if(target) target.classList.remove('hidden');
@@ -431,27 +429,27 @@
         window.togglePayDay = (val) => { const box = document.getElementById('s_payday_box'); if(box) box.classList.toggle('hidden', val === 'onetime'); };
         window.renderAll = renderAll;
         window.updateChart = updateChart;
-        window.renderClients = renderClients;
         window.renderFinance = renderFinance;
+        window.renderClients = renderClients;
 
         window.openClientDetail = (id) => {
             currentClientId = id; const c = clients.find(x => x.id === id); if(!c) return;
-            safeText('det-name', c.name); safeText('det-start', `ANLAŞMA: ${c.start}`); safeText('det-person', c.person);
+            safeText('det-name', c.name); safeText('det-start', `BAŞL: ${c.start}`); safeText('det-person', c.person);
             const wa = document.getElementById('det-wa-link'); if(wa) wa.href = `https://wa.me/${c.phone.replace(/\D/g,'')}`;
             safeVal('det-notes', c.notes || ""); safeVal('det-asset-drive', c.assets?.drive || "");
             
             safeHTML('det-services', (c.services || []).map(s => {
                 const paid = (c.payments || []).filter(p => p.sid === s.sid).reduce((sum, p) => sum + p.amount, 0);
                 const percent = Math.min((paid / s.fee) * 100, 100);
-                return `<div class="p-8 bg-slate-50/50 rounded-[40px] border border-slate-100 space-y-6 italic text-left italic-custom leading-none">
-                    <div class="flex justify-between items-start leading-none italic-custom text-left">
-                        <div class="text-left leading-none"><p class="font-black text-slate-800 text-lg leading-none italic-custom text-left italic">${s.name}</p><span class="text-[9px] font-black uppercase text-slate-400 tracking-widest mt-2 block leading-none italic-custom text-left leading-none italic">${s.type === 'monthly' ? 'Duzenli' : 'Proje'}</span></div>
+                return `<div class="p-8 bg-slate-50/50 rounded-[40px] border border-slate-100 space-y-6 italic text-left italic-custom leading-none italic">
+                    <div class="flex justify-between items-start leading-none italic-custom text-left italic">
+                        <div class="text-left leading-none italic"><p class="font-black text-slate-800 text-lg leading-none italic-custom text-left italic">${s.name}</p><span class="text-[9px] font-black uppercase text-slate-400 tracking-widest mt-2 block leading-none italic-custom text-left leading-none italic">${s.type === 'monthly' ? 'Duzenli' : 'Proje'}</span></div>
                         <p class="font-black text-indigo-600 text-xl tracking-tighter leading-none italic-custom italic">₺${s.fee.toLocaleString()}</p>
                     </div>
-                    ${s.type === 'onetime' ? `<div class="space-y-2 italic-custom text-left leading-none italic"><div class="flex justify-between text-[8px] font-black uppercase text-slate-400 italic-custom leading-none italic"><span>Tahsilat</span><span>%${Math.round(percent)}</span></div><div class="w-full bg-white h-2 rounded-full overflow-hidden shadow-inner leading-none"><div class="bg-indigo-600 h-full transition-all duration-1000" style="width:${percent}%"></div></div></div>` : ''}
+                    ${s.type === 'onetime' ? `<div class="space-y-2 italic-custom text-left leading-none italic"><div class="flex justify-between text-[8px] font-black uppercase text-slate-400 italic-custom leading-none italic"><span>Tahsilat</span><span>%${Math.round(percent)}</span></div><div class="w-full bg-white h-2 rounded-full overflow-hidden shadow-inner leading-none italic"><div class="bg-indigo-600 h-full transition-all duration-1000 italic" style="width:${percent}%"></div></div></div>` : ''}
                     <div class="flex items-center gap-2 italic">
-                        <select onchange="window.updateWorkflowStatus('${c.id}', ${s.sid}, this.value)" class="bg-white border-none text-[9px] font-black uppercase rounded-lg px-2 py-1 shadow-sm italic outline-none leading-none italic-custom"><option ${s.status==='Planlanıyor'?'selected':''}>Planlanıyor</option><option ${s.status==='Tasarım & Üretim'?'selected':''}>Tasarım & Üretim</option><option ${s.status==='Onay Bekliyor'?'selected':''}>Onay Bekliyor</option><option ${s.status==='Tamamlandı'?'selected':''}>Tamamlandı</option></select>
-                        <button onclick="window.removeService('${c.id}', ${s.sid})" class="p-2.5 bg-red-50 text-red-200 hover:text-red-500 rounded-xl transition-all active:scale-90 leading-none"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                        <select onchange="window.updateWorkflowStatus('${c.id}', ${s.sid}, this.value)" class="bg-white border-none text-[9px] font-black uppercase rounded-lg px-2 py-1 shadow-sm italic outline-none leading-none italic-custom italic"><option ${s.status==='Planlanıyor'?'selected':''}>Planlanıyor</option><option ${s.status==='Tasarım & Üretim'?'selected':''}>Tasarım & Üretim</option><option ${s.status==='Onay Bekliyor'?'selected':''}>Onay Bekliyor</option><option ${s.status==='Tamamlandı'?'selected':''}>Tamamlandı</option></select>
+                        <button onclick="window.removeService('${c.id}', ${s.sid})" class="p-2.5 bg-red-50 text-red-200 hover:text-red-500 rounded-xl transition-all active:scale-90 leading-none italic"><svg class="w-4 h-4 italic" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
                     </div>
                 </div>`;
             }).join(''));
@@ -459,25 +457,15 @@
             safeHTML('det-payments', (c.payments || []).sort((a,b) => b.pid - a.pid).map((p, idx, arr) => {
                 const rNo = arr.length - idx; 
                 return `<div class="flex justify-between items-center p-5 bg-white border border-slate-100 rounded-[30px] group shadow-sm italic text-left leading-none italic">
-                    <div class="text-left italic leading-none text-left italic"><p class="text-[9px] font-black text-slate-400 italic mb-1 uppercase tracking-widest text-left leading-none">Makbuz: #${rNo}</p><p class="text-xs font-black text-slate-800 leading-none text-left italic leading-none italic">₺${p.amount.toLocaleString()} <span class="text-[8px] text-indigo-400 font-bold ml-1 italic-custom uppercase leading-none italic">[${p.month} ${p.year}]</span></p></div>
+                    <div class="text-left italic leading-none text-left italic"><p class="text-[9px] font-black text-slate-400 italic mb-1 uppercase tracking-widest text-left leading-none italic">No: #${rNo}</p><p class="text-xs font-black text-slate-800 leading-none text-left italic leading-none italic">₺${p.amount.toLocaleString()} <span class="text-[8px] text-indigo-400 font-bold ml-1 italic-custom uppercase leading-none italic">[${p.month} ${p.year}]</span></p></div>
                     <div class="flex gap-2 text-left italic">
-                        <button onclick="window.sendThankYouMessage('${c.id}', '${p.pid}', '${rNo}')" class="p-3 text-emerald-600 bg-emerald-50 rounded-2xl active:scale-90 transition-all shadow-sm italic" title="Teşekkür"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.551 4.197 1.594 6.039L0 24l6.105-1.597a11.826 11.826 0 005.945 1.598h.005c6.637 0 12.05-5.414 12.05-12.05a11.824 11.824 0 00-3.417-8.411z"/></svg></button>
-                        <button onclick="window.generateReceiptPDF('${p.pid}', '${rNo}')" class="p-3 text-indigo-400 bg-indigo-50/50 rounded-2xl active:scale-90 transition-all shadow-sm italic leading-none shadow-inner italic-custom"><svg class="w-4 h-4 text-left leading-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg></button>
-                        <button onclick="window.deletePayment('${c.id}', ${p.pid})" class="p-3 text-red-400 bg-red-50 rounded-2xl active:scale-90 transition-all shadow-sm italic leading-none"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                        <button onclick="window.sendThankYouMessage('${c.id}', '${p.pid}', '${rNo}')" class="p-3 text-emerald-600 bg-emerald-50 rounded-2xl active:scale-90 transition-all shadow-sm italic" title="Teşekkür"><svg class="w-4 h-4 italic" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.551 4.197 1.594 6.039L0 24l6.105-1.597a11.826 11.826 0 005.945 1.598h.005c6.637 0 12.05-5.414 12.05-12.05a11.824 11.824 0 00-3.417-8.411z"/></svg></button>
+                        <button onclick="window.generateReceiptPDF('${p.pid}', '${rNo}')" class="p-3 text-indigo-400 bg-indigo-50/50 rounded-2xl active:scale-90 transition-all shadow-sm italic leading-none shadow-inner italic-custom italic"><svg class="w-4 h-4 text-left leading-none italic" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg></button>
+                        <button onclick="window.deletePayment('${c.id}', ${p.pid})" class="p-3 text-red-400 bg-red-50 rounded-2xl active:scale-90 transition-all shadow-sm italic leading-none italic"><svg class="w-4 h-4 italic" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
                     </div>
                 </div>`;
             }).join(''));
             window.openModal('clientDetailModal');
-        };
-
-        window.openPaymentModalFromDetail = () => {
-            const c = clients.find(x => x.id === currentClientId); if(!c) return;
-            const sel = document.getElementById('p_service');
-            if(sel) {
-                sel.innerHTML = c.services.map(s => `<option value="${s.sid}">${s.name}</option>`).join('');
-                safeVal('p_date', new Date().toISOString().split('T')[0]);
-                window.openModal('paymentModal');
-            }
         };
 
         window.sendThankYouMessage = (cid, pid, rNo) => {
@@ -489,42 +477,114 @@
             window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, '_blank');
         };
 
+        // --- NEW CURATED RECEIPT PDF GENERATOR WITH UPDATED FONTS ---
         window.generateReceiptPDF = (pid, rNo) => {
             const client = clients.find(x => x.id === currentClientId);
             const pay = client.payments.find(x => x.pid === parseInt(pid));
             const { jsPDF } = window.jspdf;
             const docPdf = new jsPDF();
+            
+            // Branding Bar
             docPdf.setFillColor(79, 70, 229); docPdf.rect(0, 0, 210, 60, 'F');
+            
+            // Standard Helvetica is available, but hierarchy makes it look better
             const logoImg = document.getElementById('main-agency-logo');
             if (logoImg && logoImg.src) { try { docPdf.addImage(logoImg.src, 'PNG', 15, 10, 40, 40); } catch(e) {} }
-            docPdf.setTextColor(255, 255, 255); docPdf.setFontSize(8); docPdf.text("İŞBU BELGE MALİ DEĞER TAŞIMAZ.", 150, 10, { align: 'right' });
-            docPdf.setFontSize(22); docPdf.text("BAYINDIR MEDYA", 60, 25);
-            docPdf.setFontSize(10); docPdf.text("TAHSİLAT MAKBUZU", 60, 40);
-            docPdf.setFillColor(255, 255, 255); docPdf.roundedRect(150, 20, 45, 25, 2, 2, 'F');
-            docPdf.setTextColor(79, 70, 229); docPdf.text(`NO: #${rNo}`, 155, 28); docPdf.text(`TARİH: ${pay.date}`, 155, 38);
-            docPdf.setTextColor(50, 50, 50); docPdf.setFontSize(12); docPdf.text("MÜŞTERİ / MARKA:", 15, 75);
-            docPdf.setFontSize(14); docPdf.text(client.name.toUpperCase(), 15, 85);
-            docPdf.setFillColor(245, 247, 250); docPdf.rect(15, 110, 180, 10, 'F');
-            docPdf.setTextColor(100, 100, 100); docPdf.setFontSize(10); docPdf.text("HİZMET", 20, 117); docPdf.text("DÖNEM", 100, 117); docPdf.text("TUTAR", 160, 117);
-            docPdf.setTextColor(40, 40, 40); docPdf.text(pay.serviceName, 20, 130); docPdf.text(`${pay.month} ${pay.year}`, 100, 130); docPdf.text(`${pay.amount.toLocaleString('tr-TR')} TL`, 160, 130);
-            docPdf.setFillColor(79, 70, 229); docPdf.rect(130, 150, 65, 15, 'F');
-            docPdf.setTextColor(255, 255, 255); docPdf.text("TOPLAM:", 135, 160); docPdf.text(`${pay.amount.toLocaleString('tr-TR')} TL`, 160, 160);
-            docPdf.setTextColor(200, 0, 0); docPdf.text("BU BELGE MALİ DEĞER TAŞIMAZ. BİLGİLENDİRME AMAÇLIDIR.", 15, 280);
+            
+            // Header Typography
+            docPdf.setTextColor(255, 255, 255);
+            docPdf.setFont("helvetica", "bold");
+            docPdf.setFontSize(22);
+            docPdf.text("BAYINDIR MEDYA", 60, 25);
+            
+            docPdf.setFont("helvetica", "normal");
+            docPdf.setFontSize(8);
+            docPdf.text("İŞBU BELGE MALİ DEĞER TAŞIMAZ.", 150, 10, { align: 'right' });
+            
+            docPdf.setFontSize(10);
+            docPdf.text("STRATEJİK DİJİTAL MEDYA ÇÖZÜMLERİ", 60, 32);
+            docPdf.setFont("helvetica", "bold");
+            docPdf.text("RESMİ TAHSİLAT MAKBUZU", 60, 42);
+            
+            // Metadata Box
+            docPdf.setFillColor(255, 255, 255);
+            docPdf.roundedRect(150, 20, 45, 30, 2, 2, 'F');
+            docPdf.setTextColor(79, 70, 229);
+            docPdf.setFontSize(9);
+            docPdf.text(`MAKBUZ NO: #${rNo}`, 155, 30);
+            docPdf.text(`TARİH: ${pay.date}`, 155, 40);
+            
+            // Client Context
+            docPdf.setTextColor(100, 100, 100);
+            docPdf.setFont("helvetica", "bold");
+            docPdf.setFontSize(10);
+            docPdf.text("TAHSİLAT YAPILAN MARKA / FİRMA:", 15, 75);
+            
+            docPdf.setTextColor(40, 40, 40);
+            docPdf.setFontSize(16);
+            docPdf.text(client.name.toUpperCase(), 15, 87);
+            
+            docPdf.setFontSize(10);
+            docPdf.setFont("helvetica", "normal");
+            docPdf.text(`Yetkili: ${client.person}`, 15, 95);
+            
+            // Table Header
+            docPdf.setFillColor(245, 247, 250);
+            docPdf.rect(15, 110, 180, 12, 'F');
+            docPdf.setTextColor(120, 120, 120);
+            docPdf.setFont("helvetica", "bold");
+            docPdf.text("ÖDEME SEBEBİ / HİZMET", 20, 118);
+            docPdf.text("DÖNEM", 100, 118);
+            docPdf.text("TUTAR", 165, 118);
+            
+            // Table Content
+            docPdf.setTextColor(30, 41, 59);
+            docPdf.setFont("helvetica", "normal");
+            docPdf.setFontSize(11);
+            docPdf.text(pay.serviceName, 20, 135);
+            docPdf.text(`${pay.month} ${pay.year}`, 100, 135);
+            
+            docPdf.setFont("helvetica", "bold");
+            docPdf.setFontSize(13);
+            docPdf.text(`${pay.amount.toLocaleString('tr-TR')} TL`, 165, 135);
+            
+            // Total Highlight
+            docPdf.setFillColor(79, 70, 229);
+            docPdf.rect(130, 150, 65, 18, 'F');
+            docPdf.setTextColor(255, 255, 255);
+            docPdf.setFontSize(12);
+            docPdf.text("TOPLAM:", 135, 162);
+            docPdf.text(`${pay.amount.toLocaleString('tr-TR')} TL`, 160, 162);
+            
+            // Detailed Legal Disclaimer
+            docPdf.setTextColor(180, 180, 180);
+            docPdf.setFontSize(8);
+            docPdf.setFont("helvetica", "normal");
+            docPdf.text("İLETİŞİM BİLGİLERİ", 15, 260);
+            docPdf.text(config.address || "Bayındır Medya Genel Müdürlüğü", 15, 265, { maxWidth: 180 });
+            
+            docPdf.setTextColor(220, 38, 38); // Red-600
+            docPdf.setFont("helvetica", "bold");
+            docPdf.setFontSize(9);
+            docPdf.text("BU BELGE MALİ DEĞER TAŞIMAZ. SADECE BİLGİLENDİRME AMAÇLI TAHSİLAT TEYİDİDİR.", 15, 280);
+            docPdf.setDrawColor(220, 38, 38);
+            docPdf.line(15, 282, 165, 282);
+            
             docPdf.save(`Makbuz_#${rNo}_${client.name}.pdf`);
         };
 
+        // SHARED METHODS
         window.deletePayment = async (cid, pid) => { if(confirm('Sil?')) { const c = clients.find(x=>x.id===cid); const upd = c.payments.filter(p=>p.pid!==pid); await updateDoc(doc(db,'artifacts',appId,'public','data','clients',cid), {payments: upd}); } };
         window.deleteClient = async () => { if(confirm('Sil?')) { await deleteDoc(doc(db,'artifacts',appId,'public', 'data','clients',currentClientId)); window.closeModal('clientDetailModal'); } };
         window.updateWorkflowStatus = async (cid, sid, status) => { const c = clients.find(x => x.id === cid); const srvs = c.services.map(s => s.sid === sid ? {...s, status} : s); await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', cid), { services: srvs }); };
         window.saveAssets = async () => { if(currentClientId) await updateDoc(doc(db,'artifacts',appId, 'public','data','clients',currentClientId), {assets:{drive:document.getElementById('det-asset-drive').value}}); };
         window.saveClientNotes = async () => { if(currentClientId) await updateDoc(doc(db,'artifacts',appId, 'public','data','clients',currentClientId), {notes:document.getElementById('det-notes').value}); };
-        window.searchClients = (q) => { const filtered = clients.filter(c => c.name.toLowerCase().includes(q.toLowerCase())); safeHTML('client-cards', filtered.map(c => `<div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm active:scale-95 cursor-pointer italic transition-all hover:border-indigo-600 text-left uppercase leading-none italic"><h3>${c.name}</h3></div>`).join('')); };
+        window.searchClients = (q) => { const filtered = clients.filter(c => c.name.toLowerCase().includes(q.toLowerCase())); const container = document.getElementById('client-cards'); if (container) container.innerHTML = filtered.map(c => `<div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm active:scale-95 cursor-pointer italic transition-all hover:border-indigo-600 text-left uppercase leading-none italic"><h3>${c.name}</h3></div>`).join(''); };
 
         // 3. START APP & LISTENERS
         const startAppInit = async () => {
             try {
                 await signInAnonymously(auth);
-                safeText('user-uid', auth.currentUser.uid.substring(0,8));
                 onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'clients'), snap => {
                     clients = snap.docs.map(d => ({id: d.id, ...d.data()}));
                     window.renderAll();
