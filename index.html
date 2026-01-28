@@ -157,7 +157,7 @@
             </div>
 
             <!-- SETTINGS VIEW -->
-            <div id="view-settings" class="view-content hidden space-y-8 view-animate">
+            <div id="view-settings" class="view-content hidden space-y-8 view-animate text-left italic-custom leading-none">
                 <div class="bg-white p-12 rounded-[50px] border border-slate-100 shadow-sm max-w-2xl mx-auto italic-custom leading-none text-left">
                     <h3 class="text-3xl font-black mb-10 text-indigo-600 italic tracking-tighter uppercase leading-none italic-custom">Ajans Bilgileri</h3>
                     <form id="configForm" class="space-y-8">
@@ -197,8 +197,8 @@
                     
                     <section class="italic-custom">
                         <div class="flex justify-between items-center mb-8 border-b pb-4 text-left italic-custom">
-                            <h4 class="text-[12px] font-black text-slate-400 uppercase tracking-[4px] italic-custom">Tahsilat Arşivi & Teşekkür</h4>
-                            <button onclick="window.openPaymentModalFromDetail()" class="text-xs font-black bg-emerald-50 text-emerald-600 px-4 py-2 rounded-xl italic transition-all italic-custom">+ Ödeme Girişi</button>
+                            <h4 class="text-[12px] font-black text-slate-400 uppercase italic-custom text-left tracking-[4px] italic-custom">Tahsilat Arşivi & Teşekkür</h4>
+                            <button onclick="window.openPaymentModalFromDetail()" class="text-xs font-black bg-emerald-50 text-emerald-600 px-4 py-2 rounded-xl italic-custom transition-all italic-custom">+ Ödeme Girişi</button>
                         </div>
                         <div id="det-payments" class="grid grid-cols-1 md:grid-cols-2 gap-4 italic-custom"></div>
                     </section>
@@ -219,7 +219,7 @@
     </div>
 
     <!-- MODALS FORMS -->
-    <div id="clientModal" class="fixed inset-0 z-[70] modal-bg hidden flex items-center justify-center p-4 italic-custom">
+    <div id="clientModal" class="fixed inset-0 z-[70] modal-bg hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-[60px] p-12 shadow-2xl view-animate text-left leading-none uppercase italic-custom">
             <h3 class="text-3xl font-black mb-10 text-indigo-600 tracking-tighter text-left leading-none uppercase italic-custom">Yeni Müşteri</h3>
             <form id="clientForm" class="space-y-6 text-left leading-none italic-custom">
@@ -234,7 +234,6 @@
         </div>
     </div>
 
-    <!-- ÖDEME MODALI -->
     <div id="paymentModal" class="fixed inset-0 z-[70] modal-bg hidden flex items-end justify-center p-4 italic-custom">
         <div class="bg-white w-full max-w-lg rounded-t-[60px] p-12 shadow-2xl animate-slide-up leading-none text-left italic-custom">
             <h3 class="text-3xl font-black mb-10 italic text-indigo-600 text-left leading-none uppercase italic-custom">Ödeme Al</h3>
@@ -260,7 +259,6 @@
         </div>
     </div>
 
-    <!-- HİZMET MODALI -->
     <div id="addServiceModal" class="fixed inset-0 z-[80] modal-bg hidden flex items-center justify-center p-4 italic-custom">
         <div class="bg-white w-full max-w-md rounded-[50px] p-12 shadow-2xl text-left italic-custom leading-none">
             <h3 class="text-2xl font-black mb-8 text-indigo-600 uppercase italic-custom text-left leading-none uppercase italic-custom">Hizmet Tanımı</h3>
@@ -279,17 +277,16 @@
         </div>
     </div>
 
-    <!-- GİDER MODALI -->
     <div id="expenseModal" class="fixed inset-0 z-[70] modal-bg hidden flex items-center justify-center p-4 italic-custom">
         <div class="bg-white w-full max-w-sm rounded-[50px] p-10 shadow-2xl view-animate text-left leading-none italic-custom">
             <h3 class="text-xl font-black mb-8 text-red-600 uppercase text-left leading-none uppercase italic-custom italic">Gider Kaydı</h3>
             <form id="expenseForm" class="space-y-5 text-left leading-none italic-custom">
-                <select id="e_cat" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold italic outline-none appearance-none text-left leading-none italic-custom">
-                    <option>Yazılım</option><option>Maaş / Freelance</option><option>Ofis / Reklam</option>
+                <select id="e_cat" class="w-full p-4 bg-slate-50 border-none rounded-2xl font-bold outline-none italic shadow-inner text-left leading-none appearance-none italic-custom">
+                    <option>Yazılım</option><option>Maaş</option><option>Ofis</option>
                 </select>
-                <input type="text" id="e_desc" required placeholder="Harcama Açıklaması" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold outline-none text-left leading-none italic-custom">
-                <input type="number" id="e_amount" required placeholder="Tutar (₺)" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold outline-none text-left leading-none italic-custom">
-                <button type="submit" class="w-full bg-red-600 text-white py-6 rounded-[35px] font-black uppercase italic shadow-xl text-center leading-none italic-custom italic">Kaydet</button>
+                <input type="text" id="e_desc" required placeholder="Açıklama" class="w-full p-4 bg-slate-50 border-none rounded-2xl font-bold outline-none shadow-inner text-left leading-none italic-custom">
+                <input type="number" id="e_amount" required placeholder="Tutar (₺)" class="w-full p-4 bg-slate-50 border-none rounded-2xl font-bold outline-none shadow-inner text-left leading-none italic-custom">
+                <button type="submit" class="w-full bg-red-600 text-white py-5 rounded-[30px] font-black uppercase italic shadow-xl text-center leading-none italic-custom italic">Kaydet</button>
             </form>
         </div>
     </div>
@@ -299,7 +296,7 @@
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-        // CONFIG & DB
+        // --- GÜVENLİ BAĞLANTI KONTROLÜ ---
         let firebaseConfig;
         try {
             firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
@@ -324,7 +321,7 @@
         const safeHTML = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
         const safeVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
 
-        // 1. CORE FUNCTIONS
+        // 1. CORE FUNCTIONS (LOCAL FIRST)
         function renderClients() {
             const cont = document.getElementById('client-cards');
             if (cont) {
@@ -333,7 +330,7 @@
                 <div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm active:scale-98 transition-all flex flex-col group hover:shadow-2xl hover:shadow-indigo-500/5 cursor-pointer relative overflow-hidden italic text-left leading-none uppercase italic-custom">
                     <div class="flex justify-between items-start mb-8 relative z-10 text-left leading-none italic">
                          <div class="w-16 h-16 bg-slate-50 rounded-[25px] flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 italic font-black shadow-inner text-left leading-none italic-custom uppercase leading-none">M</div>
-                        <span class="text-[9px] font-black bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full uppercase tracking-widest italic shadow-sm text-left italic">İş Ortağı</span>
+                        <span class="text-[9px] font-black bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full uppercase tracking-widest shadow-sm text-left italic">İş Ortağı</span>
                     </div>
                     <h3 class="text-2xl font-black text-slate-900 tracking-tighter italic-custom text-left leading-none uppercase italic">${c.name}</h3>
                 </div>`).join('');
@@ -348,7 +345,7 @@
             safeText('fin-profit', `₺${(inc - exp).toLocaleString('tr-TR')}`);
             const list = document.getElementById('expense-list');
             if (list) {
-                list.innerHTML = expenses.sort((a,b)=>b.date.localeCompare(a.date)).map(e=>`<div class="p-6 bg-slate-50/50 border border-slate-100 rounded-[35px] flex justify-between items-center italic text-left shadow-inner group italic leading-none italic"><div><p class="text-[9px] font-black text-red-400 uppercase mb-1 text-left leading-none italic">${e.cat}</p><p class="text-sm font-bold text-slate-800 leading-none text-left italic-custom">${e.desc}</p></div><span class="text-sm font-black text-red-500">-₺${e.amount.toLocaleString()}</span></div>`).join('');
+                list.innerHTML = expenses.sort((a,b)=>b.date.localeCompare(a.date)).map(e=>`<div class="p-6 bg-slate-50/50 border border-slate-100 rounded-[35px] flex justify-between items-center italic text-left shadow-inner group italic leading-none italic"><div><p class="text-[9px] font-black text-red-400 uppercase mb-1 text-left leading-none italic">${e.cat}</p><p class="text-sm font-bold text-slate-800 leading-none text-left italic-custom">${e.desc}</p></div><span class="text-sm font-black text-red-500 italic leading-none italic">-₺${e.amount.toLocaleString()}</span></div>`).join('');
             }
         }
 
@@ -373,18 +370,19 @@
             const monthlyList = []; clients.forEach(c => (c.services || []).filter(s => s.type === 'monthly').forEach(s => monthlyList.push({cN: c.name, cId: c.id, ...s})));
             if(sch) sch.innerHTML = monthlyList.sort((a,b)=>a.payDay-b.payDay).slice(0,6).map(s => {
                 const paid = (clients.find(x => x.id === s.cId).payments || []).some(p => { const d = new Date(p.date); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear() && p.sid === s.sid; });
-                return `<div onclick="window.openClientDetail('${s.cId}')" class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border ${paid ? 'border-emerald-200 bg-emerald-50' : 'border-slate-100'} cursor-pointer active:scale-95 transition-all italic leading-none">
+                return `<div onclick="window.openClientDetail('${s.cId}')" class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border ${paid ? 'border-emerald-200 bg-emerald-50 shadow-none' : 'border-slate-100 shadow-sm'} cursor-pointer active:scale-95 transition-all italic leading-none">
                     <div class="flex items-center gap-3 italic text-left leading-none italic">
                         <div class="w-10 h-10 rounded-xl bg-white border flex items-center justify-center font-black text-xs ${paid ? 'text-emerald-500 border-emerald-200' : 'text-indigo-600 border-slate-100'} shadow-inner leading-none">${s.payDay}</div>
                         <div class="text-left leading-none italic text-left leading-none italic"><p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 italic leading-none text-left italic">${s.cN}</p><p class="text-xs font-black text-slate-800 italic-custom text-left leading-none text-left italic italic">${s.name}</p></div>
                     </div>
+                    <span class="text-[9px] font-black ${paid ? 'text-emerald-500' : 'text-amber-500'} italic-custom">${paid ? 'OK' : '...'}</span>
                 </div>`;
             }).join('');
             
             renderClients(); renderFinance(); updateChart();
         }
 
-        // 2. PUBLIC WINDOW BINDINGS
+        // 2. WINDOW MAPPINGS (MANDATORY FIX)
         window.switchView = (v) => {
             document.querySelectorAll('.view-content').forEach(el => el.classList.add('hidden'));
             const target = document.getElementById('view-' + v); if(target) target.classList.remove('hidden');
@@ -409,7 +407,7 @@
             safeHTML('det-services', (c.services || []).map(s => `
                 <div class="p-8 bg-slate-50/50 rounded-[40px] border border-slate-100 space-y-6 italic text-left italic-custom leading-none italic">
                     <div class="flex justify-between items-start leading-none italic-custom text-left italic">
-                        <div class="text-left leading-none italic"><p class="font-black text-slate-800 text-lg leading-none italic-custom text-left italic uppercase">${s.name}</p><span class="text-[9px] font-black uppercase text-slate-400 tracking-widest mt-2 block leading-none italic-custom text-left leading-none italic">${s.type === 'monthly' ? 'Duzenli' : 'Proje'}</span></div>
+                        <div class="text-left leading-none italic"><p class="font-black text-slate-800 text-lg leading-none italic-custom text-left italic uppercase leading-tight italic">${s.name}</p><span class="text-[9px] font-black uppercase text-slate-400 tracking-widest mt-2 block leading-none italic-custom text-left leading-none italic">${s.type === 'monthly' ? 'Duzenli' : 'Proje'}</span></div>
                         <p class="font-black text-indigo-600 text-xl tracking-tighter leading-none italic-custom italic">₺${s.fee.toLocaleString()}</p>
                     </div>
                     <button onclick="window.removeService('${c.id}', ${s.sid})" class="p-2.5 bg-red-50 text-red-200 hover:text-red-500 rounded-xl transition-all active:scale-90 leading-none italic"><svg class="w-4 h-4 italic" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"></path></svg></button>
@@ -417,7 +415,7 @@
 
             safeHTML('det-payments', (c.payments || []).sort((a,b) => b.pid - a.pid).map((p, idx, arr) => {
                 const rNo = arr.length - idx; 
-                return `<div class="flex justify-between items-center p-5 bg-white border border-slate-100 rounded-[30px] group shadow-sm italic text-left leading-none italic">
+                return `<div class="flex justify-between items-center p-5 bg-white border border-slate-100 rounded-[30px] group shadow-sm italic text-left leading-none italic italic">
                     <div class="text-left italic leading-none text-left italic"><p class="text-[9px] font-black text-slate-400 italic mb-1 uppercase tracking-widest text-left leading-none italic">Makbuz No: #${rNo}</p><p class="text-xs font-black text-slate-800 leading-none text-left italic leading-none italic">₺${p.amount.toLocaleString()} <span class="text-[8px] text-indigo-400 font-bold ml-1 italic-custom uppercase leading-none italic">[${p.month} ${p.year}]</span></p></div>
                     <div class="flex gap-2 text-left italic">
                         <button onclick="window.sendThankYouMessage('${c.id}', '${p.pid}', '${rNo}')" class="p-3 text-emerald-600 bg-emerald-50 rounded-2xl active:scale-90 transition-all shadow-sm italic" title="Teşekkür"><svg class="w-4 h-4 italic" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.551 4.197 1.594 6.039L0 24l6.105-1.597a11.826 11.826 0 005.945 1.598h.005c6.637 0 12.05-5.414 12.05-12.05a11.824 11.824 0 00-3.417-8.411z"/></svg></button>
@@ -455,10 +453,7 @@
             const { jsPDF } = window.jspdf;
             const docPdf = new jsPDF();
             
-            // 1. Header (Simple & Bold)
-            docPdf.setFillColor(30, 41, 59); // Slate-900 Style
-            docPdf.rect(0, 0, 210, 60, 'F');
-            
+            docPdf.setFillColor(30, 41, 59); docPdf.rect(0, 0, 210, 60, 'F');
             const logoImg = document.getElementById('main-agency-logo');
             if (logoImg && logoImg.src) { try { docPdf.addImage(logoImg.src, 'PNG', 15, 12, 40, 40); } catch(e) {} }
             
@@ -472,17 +467,15 @@
             docPdf.text("N.METE BAYINDIR", 60, 36);
             docPdf.text("SOCIAL MEDIA EXPERT", 60, 42);
             
-            // 2. Receipt Type & Disclaimer
             docPdf.setFont("helvetica", "bold");
             docPdf.setFontSize(14);
             docPdf.text("TAHSİLAT MAKBUZU", 20, 75);
             
             docPdf.setFont("helvetica", "bold");
             docPdf.setFontSize(9);
-            docPdf.setTextColor(220, 38, 38); // Red color for legal notice
+            docPdf.setTextColor(220, 38, 38);
             docPdf.text("BU BELGE MALİ DEĞER TAŞIMAZ.", 145, 75);
             
-            // 3. Info Boxes
             docPdf.setTextColor(60, 60, 60);
             docPdf.setFontSize(10);
             docPdf.setFont("helvetica", "bold");
@@ -500,7 +493,6 @@
             docPdf.setFont("helvetica", "normal");
             docPdf.text(`#${rNo}`, 145, 111);
 
-            // 4. Simple Table
             docPdf.setDrawColor(230, 230, 230);
             docPdf.setFillColor(248, 250, 252);
             docPdf.rect(15, 125, 180, 10, 'F');
@@ -515,12 +507,10 @@
             
             docPdf.line(15, 155, 195, 155);
 
-            // 5. Grand Total Section
             docPdf.setFontSize(18);
             docPdf.text("GENEL TOPLAM", 80, 175);
             docPdf.text(pay.amount.toLocaleString('tr-TR') + " TL", 160, 175);
             
-            // 6. Footer (Contact Info like the PDF)
             docPdf.setTextColor(100, 100, 100);
             docPdf.setFontSize(9);
             docPdf.setFont("helvetica", "normal");
@@ -536,14 +526,14 @@
         };
 
         window.deletePayment = async (cid, pid) => { if(confirm('Sil?')) { const c = clients.find(x=>x.id===cid); const upd = c.payments.filter(p=>p.pid!==pid); await updateDoc(doc(db,'artifacts',appId,'public','data','clients',cid), {payments: upd}); } };
-        window.deleteClient = async () => { if(confirm('Markayı kalıcı olarak silmek istediğinizden emin misiniz?')) { await deleteDoc(doc(db,'artifacts',appId,'public','data','clients',currentClientId)); window.closeModal('clientDetailModal'); currentClientId=null; } };
+        window.deleteClient = async () => { if(confirm('Sil?')) { await deleteDoc(doc(db,'artifacts',appId,'public', 'data','clients',currentClientId)); window.closeModal('clientDetailModal'); currentClientId=null; } };
         window.updateWorkflowStatus = async (cid, sid, status) => { const c = clients.find(x => x.id === cid); const srvs = c.services.map(s => s.sid === sid ? {...s, status} : s); await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', cid), { services: srvs }); };
         window.saveAssets = async () => { if(currentClientId) await updateDoc(doc(db,'artifacts',appId, 'public','data','clients',currentClientId), {assets:{drive:document.getElementById('det-asset-drive').value}}); };
         window.saveClientNotes = async () => { if(currentClientId) await updateDoc(doc(db,'artifacts',appId, 'public','data','clients',currentClientId), {notes:document.getElementById('det-notes').value}); };
         window.removeService = async (cid, sid) => { if(confirm('Hizmeti sil?')) { const c = clients.find(x=>x.id===cid); const upd = c.services.filter(s=>s.sid!==sid); await updateDoc(doc(db,'artifacts',appId,'public','data','clients',cid), {services:upd}); } };
         window.searchClients = (q) => { const filtered = clients.filter(c => c.name.toLowerCase().includes(q.toLowerCase())); const container = document.getElementById('client-cards'); if (container) container.innerHTML = filtered.map(c => `<div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm active:scale-95 cursor-pointer italic transition-all hover:border-indigo-600 text-left uppercase leading-none italic uppercase"><h3>${c.name}</h3></div>`).join(''); };
 
-        // --- INITIALIZATION ---
+        // --- START INITIALIZATION (RULE 3 COMPLIANT) ---
         const startAppInit = async () => {
             try {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -608,7 +598,7 @@
 
             safeSubmit('paymentForm', async (e) => {
                 const c = clients.find(x => x.id === currentClientId);
-                const sid = parseInt(document.getElementById('p_service_id').value || document.getElementById('p_service').value);
+                const sid = parseInt(document.getElementById('p_service').value); // ID HATASI DÜZELTİLDİ
                 const s = c.services.find(i => i.sid === sid);
                 const p = { pid: Date.now(), sid, serviceName: s.name, date: document.getElementById('p_date').value, amount: parseFloat(document.getElementById('p_amount').value), month: document.getElementById('p_month').value, year: document.getElementById('p_year').value };
                 await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { payments: [...(c.payments || []), p] });
