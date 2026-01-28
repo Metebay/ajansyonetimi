@@ -172,7 +172,7 @@
 
     <!-- CLIENT DETAIL MODAL -->
     <div id="clientDetailModal" class="fixed inset-0 z-[60] modal-bg hidden flex items-end md:items-center justify-center p-4 text-left italic-custom leading-none">
-        <div class="bg-white w-full max-w-6xl rounded-t-[70px] md:rounded-[70px] p-12 md:p-16 shadow-2xl max-h-[94vh] overflow-y-auto custom-scrollbar border border-white/20 text-left italic-custom">
+        <div class="bg-white w-full max-w-6xl rounded-t-[70px] md:rounded-[70px] p-12 md:p-16 shadow-2xl max-h-[94vh] overflow-y-auto custom-scrollbar border border-white/20 text-left italic-custom leading-none italic-custom">
             <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-16 italic-custom leading-none text-left">
                 <div class="text-left leading-none italic-custom">
                     <h3 class="text-5xl font-black text-slate-900 tracking-tighter leading-none uppercase italic" id="det-name">Marka</h3>
@@ -238,7 +238,7 @@
         <div class="bg-white w-full max-w-lg rounded-t-[60px] p-12 shadow-2xl animate-slide-up leading-none text-left italic-custom">
             <h3 class="text-3xl font-black mb-10 italic text-indigo-600 text-left leading-none uppercase italic-custom">Ödeme Al</h3>
             <form id="paymentForm" class="space-y-6 italic-custom leading-none text-left italic-custom">
-                <select id="p_service" required class="w-full p-5 bg-slate-100 border-none rounded-[30px] font-bold outline-none shadow-inner appearance-none leading-none text-left italic-custom"></select>
+                <select id="p_service_id" required class="w-full p-5 bg-slate-100 border-none rounded-[30px] font-bold outline-none shadow-inner appearance-none leading-none text-left italic-custom"></select>
                 <div class="grid grid-cols-2 gap-4 text-left leading-none italic-custom">
                     <select id="p_month" required class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold text-sm outline-none text-left appearance-none leading-none italic-custom">
                         <option value="Ocak">Ocak</option><option value="Şubat">Şubat</option><option value="Mart">Mart</option>
@@ -296,19 +296,8 @@
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-        // --- GÜVENLİ BAĞLANTI KONTROLÜ ---
-        let firebaseConfig;
-        try {
-            firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-                apiKey: "AIzaSyDkIprfe4Yu4cnL0FA7H0KjUBPQMZkAUUc",
-                authDomain: "ajans-yonetimi.firebaseapp.com",
-                projectId: "ajans-yonetimi",
-                storageBucket: "ajans-yonetimi.firebasestorage.app",
-                messagingSenderId: "945070876545",
-                appId: "1:945070876545:web:b18d4a549100937dd7aa80"
-            };
-        } catch (e) { console.error("Config Error"); }
-        
+        // CONFIG & DB SETUP
+        const firebaseConfig = JSON.parse(__firebase_config);
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -321,7 +310,14 @@
         const safeHTML = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
         const safeVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
 
-        // 1. CORE FUNCTIONS (LOCAL FIRST)
+        // 1. CORE FUNCTIONS (LOCAL DEFINITIONS)
+        function updateChart() {
+            if(!chart) return;
+            const rev = clients.reduce((a,c)=>a+(c.payments||[]).reduce((s,p)=>s+p.amount,0),0);
+            chart.data.datasets[0].data = [rev*0.2, rev*0.4, rev*0.3, rev*0.7, rev*0.8, rev];
+            chart.update();
+        }
+
         function renderClients() {
             const cont = document.getElementById('client-cards');
             if (cont) {
@@ -330,7 +326,7 @@
                 <div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm active:scale-98 transition-all flex flex-col group hover:shadow-2xl hover:shadow-indigo-500/5 cursor-pointer relative overflow-hidden italic text-left leading-none uppercase italic-custom">
                     <div class="flex justify-between items-start mb-8 relative z-10 text-left leading-none italic">
                          <div class="w-16 h-16 bg-slate-50 rounded-[25px] flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 italic font-black shadow-inner text-left leading-none italic-custom uppercase leading-none">M</div>
-                        <span class="text-[9px] font-black bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full uppercase tracking-widest shadow-sm text-left italic">İş Ortağı</span>
+                        <span class="text-[9px] font-black bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full uppercase tracking-widest italic shadow-sm text-left italic">İş Ortağı</span>
                     </div>
                     <h3 class="text-2xl font-black text-slate-900 tracking-tighter italic-custom text-left leading-none uppercase italic">${c.name}</h3>
                 </div>`).join('');
@@ -349,13 +345,6 @@
             }
         }
 
-        function updateChart() { 
-            if(!chart) return; 
-            const rev = clients.reduce((a,c)=>a+(c.payments||[]).reduce((s,p)=>s+p.amount,0),0); 
-            chart.data.datasets[0].data = [rev*0.2, rev*0.4, rev*0.3, rev*0.7, rev*0.8, rev]; 
-            chart.update(); 
-        }
-
         function renderAll() {
             const now = new Date(); const m = now.getMonth(); const y = now.getFullYear();
             const income = clients.reduce((acc, c) => acc + (c.payments || []).filter(p => { const d = new Date(p.date); return d.getMonth() === m && d.getFullYear() === y; }).reduce((s, p) => s + p.amount, 0), 0);
@@ -372,23 +361,22 @@
                 const paid = (clients.find(x => x.id === s.cId).payments || []).some(p => { const d = new Date(p.date); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear() && p.sid === s.sid; });
                 return `<div onclick="window.openClientDetail('${s.cId}')" class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border ${paid ? 'border-emerald-200 bg-emerald-50 shadow-none' : 'border-slate-100 shadow-sm'} cursor-pointer active:scale-95 transition-all italic leading-none">
                     <div class="flex items-center gap-3 italic text-left leading-none italic">
-                        <div class="w-10 h-10 rounded-xl bg-white border flex items-center justify-center font-black text-xs ${paid ? 'text-emerald-500 border-emerald-200' : 'text-indigo-600 border-slate-100'} shadow-inner leading-none">${s.payDay}</div>
+                        <div class="w-10 h-10 rounded-xl bg-white border flex items-center justify-center font-black text-xs ${paid ? 'text-emerald-500' : 'text-indigo-600'} shadow-inner leading-none">${s.payDay}</div>
                         <div class="text-left leading-none italic text-left leading-none italic"><p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 italic leading-none text-left italic">${s.cN}</p><p class="text-xs font-black text-slate-800 italic-custom text-left leading-none text-left italic italic">${s.name}</p></div>
                     </div>
-                    <span class="text-[9px] font-black ${paid ? 'text-emerald-500' : 'text-amber-500'} italic-custom">${paid ? 'OK' : '...'}</span>
                 </div>`;
             }).join('');
             
             renderClients(); renderFinance(); updateChart();
         }
 
-        // 2. WINDOW MAPPINGS (MANDATORY FIX)
+        // 2. WINDOW MAPPINGS
         window.switchView = (v) => {
             document.querySelectorAll('.view-content').forEach(el => el.classList.add('hidden'));
             const target = document.getElementById('view-' + v); if(target) target.classList.remove('hidden');
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('sidebar-active', 'text-white'));
             const nav = document.getElementById('nav-' + v); if(nav) nav.classList.add('sidebar-active');
-            if(v === 'dashboard') window.updateChart();
+            if(v === 'dashboard') updateChart();
         };
         window.openModal = (id) => { const el = document.getElementById(id); if(el) el.classList.remove('hidden'); };
         window.closeModal = (id) => { const el = document.getElementById(id); if(el) el.classList.add('hidden'); };
@@ -429,88 +417,89 @@
 
         window.openPaymentModalFromDetail = () => {
             const c = clients.find(x => x.id === currentClientId); if(!c) return;
-            const sel = document.getElementById('p_service');
+            const sel = document.getElementById('p_service_id');
             if(sel) {
                 sel.innerHTML = c.services.map(s => `<option value="${s.sid}">${s.name}</option>`).join('');
                 safeVal('p_date', new Date().toISOString().split('T')[0]);
+                if(c.services.length > 0) safeVal('p_amount', c.services[0].fee);
                 window.openModal('paymentModal');
             }
         };
 
-        window.sendThankYouMessage = (cid, pid, rNo) => {
-            const client = clients.find(x => x.id === cid); if(!client) return;
-            const pay = client.payments.find(x => x.pid === parseInt(pid)); if(!pay) return;
-            const msg = `Sayın ${client.person},\n\n#${rNo} nolu tahsilat makbuzunuz oluşturulmuştur.\n\n*${pay.serviceName}* hizmetine istinaden *${pay.month} ${pay.year}* dönemi için yapmış olduğunuz *${pay.amount.toLocaleString('tr-TR')} TL* tutarındaki ödemeniz başarıyla tahsil edilmiştir.\n\nBayındır Medya olarak iş birliğiniz için teşekkür ederiz. 🤝`;
-            let tel = client.phone.replace(/\D/g,'');
-            if(tel.length === 10) tel = '90' + tel; else if(tel.length === 11 && tel.startsWith('0')) tel = '90' + tel.substring(1);
-            window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, '_blank');
-        };
-
-        // --- UPDATED TAHSİLAT MAKBUZU DESIGN ---
+        // --- KURUMSAL PDF MAKBUZ (ÖZGÜVEN TEKLİF REFERANSIDIR) ---
         window.generateReceiptPDF = (pid, rNo) => {
             const client = clients.find(x => x.id === currentClientId);
             const pay = client.payments.find(x => x.pid === parseInt(pid));
             const { jsPDF } = window.jspdf;
             const docPdf = new jsPDF();
             
-            docPdf.setFillColor(30, 41, 59); docPdf.rect(0, 0, 210, 60, 'F');
+            // 1. Header (LOGO & AJANS BİLGİSİ)
             const logoImg = document.getElementById('main-agency-logo');
-            if (logoImg && logoImg.src) { try { docPdf.addImage(logoImg.src, 'PNG', 15, 12, 40, 40); } catch(e) {} }
+            if (logoImg && logoImg.src) { try { docPdf.addImage(logoImg.src, 'PNG', 15, 10, 45, 45); } catch(e) {} }
             
-            docPdf.setTextColor(255, 255, 255);
+            docPdf.setTextColor(30, 41, 59);
             docPdf.setFont("helvetica", "bold");
-            docPdf.setFontSize(24);
-            docPdf.text("BAYINDIR MEDYA", 60, 28);
+            docPdf.setFontSize(26);
+            docPdf.text("BAYINDIR", 65, 25);
+            docPdf.text("MEDYA", 65, 36);
             
-            docPdf.setFont("helvetica", "normal");
             docPdf.setFontSize(10);
-            docPdf.text("N.METE BAYINDIR", 60, 36);
-            docPdf.text("SOCIAL MEDIA EXPERT", 60, 42);
+            docPdf.setFont("helvetica", "normal");
+            docPdf.text("N.METE BAYINDIR", 65, 45);
+            docPdf.text("SOCIAL MEDIA EXPERT", 65, 50);
             
+            // 2. Belge Başlığı & Yasal Uyarı
             docPdf.setFont("helvetica", "bold");
             docPdf.setFontSize(14);
-            docPdf.text("TAHSİLAT MAKBUZU", 20, 75);
+            docPdf.text("TAHSİLAT MAKBUZU", 20, 80);
             
-            docPdf.setFont("helvetica", "bold");
-            docPdf.setFontSize(9);
-            docPdf.setTextColor(220, 38, 38);
-            docPdf.text("BU BELGE MALİ DEĞER TAŞIMAZ.", 145, 75);
+            docPdf.setTextColor(220, 38, 38); // Kırmızı uyarı
+            docPdf.setFontSize(8);
+            docPdf.text("İŞBU BELGE MALİ DEĞER TAŞIMAZ.", 150, 80, { align: 'right' });
             
-            docPdf.setTextColor(60, 60, 60);
+            docPdf.setDrawColor(230, 230, 230);
+            docPdf.line(15, 85, 195, 85);
+            
+            // 3. Müşteri & Tarih Bilgisi
+            docPdf.setTextColor(50, 50, 50);
             docPdf.setFontSize(10);
             docPdf.setFont("helvetica", "bold");
-            docPdf.text("MÜŞTERİ:", 20, 90);
+            docPdf.text("MÜŞTERİ:", 20, 95);
             docPdf.setFont("helvetica", "normal");
-            docPdf.text(client.name.toUpperCase(), 20, 96, { maxWidth: 100 });
+            docPdf.text(client.name.toUpperCase(), 20, 102, { maxWidth: 100 });
             
             docPdf.setFont("helvetica", "bold");
-            docPdf.text("TARİH:", 145, 90);
+            docPdf.text("TARİH:", 145, 95);
             docPdf.setFont("helvetica", "normal");
-            docPdf.text(pay.date, 145, 96);
+            docPdf.text(pay.date, 145, 102);
             
             docPdf.setFont("helvetica", "bold");
-            docPdf.text("MAKBUZ NO:", 145, 105);
+            docPdf.text("MAKBUZ NO:", 145, 110);
             docPdf.setFont("helvetica", "normal");
-            docPdf.text(`#${rNo}`, 145, 111);
+            docPdf.text(`#${rNo}`, 145, 117);
 
-            docPdf.setDrawColor(230, 230, 230);
+            // 4. Tahsilat Tablosu
             docPdf.setFillColor(248, 250, 252);
             docPdf.rect(15, 125, 180, 10, 'F');
             docPdf.setFont("helvetica", "bold");
-            docPdf.text("HİZMETLER", 20, 131);
+            docPdf.text("HİZMET TANIMI", 20, 131);
+            docPdf.text("DÖNEM", 100, 131);
             docPdf.text("TOPLAM", 165, 131);
             
             docPdf.setFont("helvetica", "normal");
-            docPdf.text(pay.serviceName + " (" + pay.month + " " + pay.year + ")", 20, 145);
+            docPdf.text(pay.serviceName, 20, 145);
+            docPdf.text(`${pay.month} ${pay.year}`, 100, 145);
             docPdf.setFont("helvetica", "bold");
             docPdf.text(pay.amount.toLocaleString('tr-TR') + " TL", 165, 145);
             
             docPdf.line(15, 155, 195, 155);
 
+            // 5. Genel Toplam
             docPdf.setFontSize(18);
             docPdf.text("GENEL TOPLAM", 80, 175);
             docPdf.text(pay.amount.toLocaleString('tr-TR') + " TL", 160, 175);
             
+            // 6. Footer (İletişim Bilgileri)
             docPdf.setTextColor(100, 100, 100);
             docPdf.setFontSize(9);
             docPdf.setFont("helvetica", "normal");
@@ -520,20 +509,21 @@
             
             docPdf.setTextColor(180, 180, 180);
             docPdf.setFontSize(8);
-            docPdf.text("Bu belge Bayindir Medya ERP uzerinden dijital olarak uretilmistir.", 105, 285, { align: "center" });
+            docPdf.text("Bu makbuz Bayindir Medya ERP uzerinden dijital olarak uretilmistir.", 105, 285, { align: "center" });
             
-            docPdf.save(`Bayindir_Medya_Makbuz_#${rNo}.pdf`);
+            docPdf.save(`Makbuz_#${rNo}_${client.name}.pdf`);
         };
 
+        // --- GENEL AKSİYONLAR ---
         window.deletePayment = async (cid, pid) => { if(confirm('Sil?')) { const c = clients.find(x=>x.id===cid); const upd = c.payments.filter(p=>p.pid!==pid); await updateDoc(doc(db,'artifacts',appId,'public','data','clients',cid), {payments: upd}); } };
-        window.deleteClient = async () => { if(confirm('Sil?')) { await deleteDoc(doc(db,'artifacts',appId,'public', 'data','clients',currentClientId)); window.closeModal('clientDetailModal'); currentClientId=null; } };
+        window.deleteClient = async () => { if(confirm('Markayı silmek üzeresiniz?')) { await deleteDoc(doc(db,'artifacts',appId,'public','data','clients',currentClientId)); window.closeModal('clientDetailModal'); currentClientId=null; } };
         window.updateWorkflowStatus = async (cid, sid, status) => { const c = clients.find(x => x.id === cid); const srvs = c.services.map(s => s.sid === sid ? {...s, status} : s); await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', cid), { services: srvs }); };
         window.saveAssets = async () => { if(currentClientId) await updateDoc(doc(db,'artifacts',appId, 'public','data','clients',currentClientId), {assets:{drive:document.getElementById('det-asset-drive').value}}); };
         window.saveClientNotes = async () => { if(currentClientId) await updateDoc(doc(db,'artifacts',appId, 'public','data','clients',currentClientId), {notes:document.getElementById('det-notes').value}); };
-        window.removeService = async (cid, sid) => { if(confirm('Hizmeti sil?')) { const c = clients.find(x=>x.id===cid); const upd = c.services.filter(s=>s.sid!==sid); await updateDoc(doc(db,'artifacts',appId,'public','data','clients',cid), {services:upd}); } };
+        window.removeService = async (cid, sid) => { if(confirm('Sil?')) { const c = clients.find(x=>x.id===cid); const upd = c.services.filter(s=>s.sid!==sid); await updateDoc(doc(db,'artifacts',appId,'public','data','clients',cid), {services:upd}); } };
         window.searchClients = (q) => { const filtered = clients.filter(c => c.name.toLowerCase().includes(q.toLowerCase())); const container = document.getElementById('client-cards'); if (container) container.innerHTML = filtered.map(c => `<div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm active:scale-95 cursor-pointer italic transition-all hover:border-indigo-600 text-left uppercase leading-none italic uppercase"><h3>${c.name}</h3></div>`).join(''); };
 
-        // --- START INITIALIZATION (RULE 3 COMPLIANT) ---
+        // --- INITIALIZATION ---
         const startAppInit = async () => {
             try {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -556,10 +546,6 @@
                     expenses = snap.docs.map(d => ({id: d.id, ...d.data()}));
                     window.renderFinance();
                 });
-
-                onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'agency'), d => { 
-                    if(d.exists()) { config = d.data(); fillConfig(); } 
-                });
                 
                 initChart();
             } catch (err) { 
@@ -568,7 +554,6 @@
             }
         };
 
-        function fillConfig() { if(document.getElementById('conf-name')) { document.getElementById('conf-name').value = config.name || "BAYINDIR MEDYA"; document.getElementById('conf-address').value = config.address || ""; } }
         function initChart() { const el = document.getElementById('mainChart'); if (!el) return; chart = new Chart(el.getContext('2d'), { type: 'line', data: { labels: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'], datasets: [{ data: [0, 0, 0, 0, 0, 0], borderColor: '#4f46e5', backgroundColor: 'rgba(79, 70, 229, 0.05)', fill: true, tension: 0.4, borderWidth: 5 }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#f8fafc' }, border: { display: false } }, x: { grid: { display: false } } } } }); window.updateChart(); }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -598,9 +583,15 @@
 
             safeSubmit('paymentForm', async (e) => {
                 const c = clients.find(x => x.id === currentClientId);
-                const sid = parseInt(document.getElementById('p_service').value); // ID HATASI DÜZELTİLDİ
+                const sid = parseInt(document.getElementById('p_service_id').value);
                 const s = c.services.find(i => i.sid === sid);
-                const p = { pid: Date.now(), sid, serviceName: s.name, date: document.getElementById('p_date').value, amount: parseFloat(document.getElementById('p_amount').value), month: document.getElementById('p_month').value, year: document.getElementById('p_year').value };
+                const p = { 
+                    pid: Date.now(), sid, serviceName: s.name, 
+                    date: document.getElementById('p_date').value, 
+                    amount: parseFloat(document.getElementById('p_amount').value), 
+                    month: document.getElementById('p_month').value, 
+                    year: document.getElementById('p_year').value 
+                };
                 await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { payments: [...(c.payments || []), p] });
                 window.closeModal('paymentModal');
             });
@@ -611,11 +602,6 @@
                     amount: parseFloat(document.getElementById('e_amount').value), date: new Date().toISOString().split('T')[0]
                 });
                 window.closeModal('expenseModal'); e.target.reset();
-            });
-
-            safeSubmit('configForm', async (e) => {
-                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'agency'), { name: document.getElementById('conf-name').value, address: document.getElementById('conf-address').value });
-                alert('Ayarlar Kaydedildi.');
             });
 
             startAppInit();
