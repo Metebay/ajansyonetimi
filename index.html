@@ -36,9 +36,9 @@
             </div>
             <div>
                 <h2 class="text-white font-black tracking-widest uppercase text-lg italic-custom">BAYINDIR MEDYA ERP</h2>
-                <p id="loader-status" class="text-indigo-400 text-[10px] font-bold mt-1 animate-pulse italic-custom tracking-[2px]">GÜVENLİ VERİ BAĞLANTISI...</p>
-                <div id="connection-error" class="hidden mt-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-[10px] font-bold max-w-xs text-left">
-                    BAĞLANTI HATASI: Veritabanı konfigürasyonu eksik. Lütfen sayfayı yenileyin.
+                <p id="loader-status" class="text-indigo-400 text-[10px] font-bold mt-1 animate-pulse italic-custom tracking-[2px]">GÜVENLİ VERİ BAĞLANTISI KURULUYOR...</p>
+                <div id="connection-error-hint" class="hidden mt-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-[10px] font-bold max-w-xs text-left">
+                    BAĞLANTI HATASI: Veritabanı yapılandırması yüklenemedi. Lütfen sayfayı yenileyin.
                 </div>
             </div>
         </div>
@@ -74,10 +74,10 @@
     <main class="flex-1 flex flex-col h-screen overflow-hidden text-left leading-none italic-custom">
         <header class="bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 md:px-10 py-5 flex items-center justify-between shrink-0 z-40 text-left">
             <div>
-                <h2 id="view-title" class="text-xl font-black text-slate-800 uppercase tracking-tighter">Panel</h2>
+                <h2 id="view-title" class="text-xl font-black text-slate-800 uppercase tracking-tighter italic">Panel</h2>
                 <p id="view-subtitle" class="text-[10px] text-slate-400 mt-1 uppercase italic-custom">Yönetim Merkezi</p>
             </div>
-            <button onclick="window.openModal('clientModal')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-black shadow-lg hover:bg-indigo-700 transition-all active:scale-95 flex items-center gap-2 uppercase italic-custom">
+            <button onclick="window.openModal('clientModal')" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl text-sm font-black shadow-lg hover:bg-indigo-700 transition-all active:scale-95 flex items-center gap-2 uppercase italic-custom leading-none">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M12 4v16m8-8H4"></path></svg>
                 Müşteri Ekle
             </button>
@@ -107,7 +107,7 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 text-left leading-none italic-custom">
                     <div class="lg:col-span-2 bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm relative italic-custom">
-                        <h4 class="font-black text-slate-800 mb-8 text-sm uppercase tracking-[2px] italic-custom">Mali Analiz Grafiği</h4>
+                        <h4 class="font-black text-slate-800 mb-8 text-sm uppercase tracking-[2px] italic-custom">Mali Performans Grafiği</h4>
                         <canvas id="mainChart" height="150"></canvas>
                     </div>
                     <div class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm overflow-hidden text-center italic-custom">
@@ -123,7 +123,7 @@
                     <svg class="w-6 h-6 text-slate-300 group-focus-within:text-indigo-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     <input type="text" onkeyup="window.searchClients(this.value)" placeholder="Marka ara..." class="w-full bg-transparent border-none outline-none font-bold text-sm italic-custom">
                 </div>
-                <div id="client-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                <div id="client-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 italic-custom"></div>
             </div>
 
             <!-- FINANCE VIEW -->
@@ -131,13 +131,13 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     <div class="bg-white p-12 rounded-[50px] border border-slate-100 shadow-sm text-left italic-custom leading-none">
                         <div class="flex justify-between items-center mb-10 italic-custom">
-                            <h3 class="font-black text-2xl italic tracking-tighter uppercase italic-custom">Gider Kayıtları</h3>
+                            <h3 class="font-black text-2xl italic tracking-tighter uppercase italic-custom">Gider Listesi</h3>
                             <button onclick="window.openModal('expenseModal')" class="bg-red-50 text-red-600 px-5 py-2 rounded-xl text-[10px] font-black uppercase italic transition-all italic-custom">Gider Ekle</button>
                         </div>
                         <div id="expense-list" class="space-y-4 max-h-[600px] overflow-y-auto custom-scrollbar pr-2 italic-custom"></div>
                     </div>
                     <div class="bg-indigo-900 rounded-[60px] p-12 text-white shadow-2xl relative overflow-hidden text-left leading-none italic-custom">
-                         <h3 class="text-xl font-black mb-12 uppercase tracking-widest text-left leading-none italic-custom">Bayındır Medya <br><span class="text-indigo-400">Mali Özet</span></h3>
+                         <h3 class="text-xl font-black mb-12 uppercase tracking-widest text-left leading-none italic-custom text-indigo-400">Bayındır Medya <br><span class="text-white">Mali Karnesi</span></h3>
                          <div class="space-y-6 text-left italic-custom leading-none">
                             <div class="flex justify-between items-center pb-6 border-b border-white/5 text-left italic-custom leading-none">
                                 <span class="text-slate-400 font-bold uppercase text-[10px] italic-custom">Net Tahsilat</span>
@@ -148,7 +148,7 @@
                                 <span class="font-black text-2xl text-red-400" id="fin-expense">₺0</span>
                             </div>
                             <div class="pt-8 text-left leading-none italic-custom">
-                                <p class="text-emerald-400 font-black uppercase text-[12px] tracking-[6px] mb-2 italic text-left leading-none italic-custom">Ajans Net Kârı</p>
+                                <p class="text-emerald-400 font-black uppercase text-[12px] tracking-[6px] mb-2 italic text-left leading-none italic-custom">Net Kar Durumu</p>
                                 <h2 class="text-7xl font-black text-left tracking-tighter italic-custom leading-none" id="fin-profit">₺0</h2>
                             </div>
                          </div>
@@ -159,11 +159,11 @@
             <!-- SETTINGS VIEW -->
             <div id="view-settings" class="view-content hidden space-y-8 view-animate text-left italic-custom leading-none">
                 <div class="bg-white p-12 rounded-[50px] border border-slate-100 shadow-sm max-w-2xl mx-auto italic-custom leading-none text-left">
-                    <h3 class="text-3xl font-black mb-10 text-indigo-600 italic tracking-tighter uppercase leading-none italic-custom">Ajans Bilgileri</h3>
+                    <h3 class="text-3xl font-black mb-10 text-indigo-600 italic tracking-tighter uppercase leading-none italic-custom">Kurumsal Bilgiler</h3>
                     <form id="configForm" class="space-y-8">
                         <input type="text" id="conf-name" placeholder="Resmi Ajans İsmi" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold shadow-inner text-sm outline-none italic-custom">
-                        <textarea id="conf-address" placeholder="İletişim & Adres Detayı" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold h-32 resize-none shadow-inner text-sm outline-none italic-custom leading-relaxed italic-custom"></textarea>
-                        <button type="submit" class="w-full bg-indigo-600 text-white py-6 rounded-[35px] font-black shadow-2xl transition-all uppercase italic text-center leading-none italic-custom">Kaydet</button>
+                        <textarea id="conf-address" placeholder="İletişim & Adres Bilgileri" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold h-32 resize-none shadow-inner text-sm outline-none italic-custom leading-relaxed italic-custom"></textarea>
+                        <button type="submit" class="w-full bg-indigo-600 text-white py-6 rounded-[35px] font-black shadow-2xl transition-all uppercase italic text-center leading-none italic-custom">Ayarları Kaydet</button>
                     </form>
                 </div>
             </div>
@@ -171,9 +171,9 @@
     </main>
 
     <!-- CLIENT DETAIL MODAL -->
-    <div id="clientDetailModal" class="fixed inset-0 z-[60] modal-bg hidden flex items-end md:items-center justify-center p-4 text-left italic-custom leading-none">
-        <div class="bg-white w-full max-w-6xl rounded-t-[70px] md:rounded-[70px] p-12 md:p-16 shadow-2xl max-h-[94vh] overflow-y-auto custom-scrollbar border border-white/20 text-left italic-custom leading-none italic-custom">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-16 italic-custom leading-none text-left">
+    <div id="clientDetailModal" class="fixed inset-0 z-[60] modal-bg hidden flex items-end md:items-center justify-center p-4">
+        <div class="bg-white w-full max-w-6xl rounded-t-[70px] md:rounded-[70px] p-12 md:p-16 shadow-2xl max-h-[94vh] overflow-y-auto custom-scrollbar border border-white/20 text-left italic-custom">
+            <div class="flex justify-between items-start mb-16 italic-custom leading-none text-left">
                 <div class="text-left leading-none italic-custom">
                     <h3 class="text-5xl font-black text-slate-900 tracking-tighter leading-none uppercase italic" id="det-name">Marka</h3>
                     <div class="flex flex-wrap items-center gap-4 mt-8 leading-none italic-custom">
@@ -189,7 +189,7 @@
                 <div class="lg:col-span-3 space-y-12">
                     <section class="italic-custom">
                         <div class="flex justify-between items-center mb-8 border-b pb-4 text-left italic-custom">
-                            <h4 class="text-[12px] font-black text-indigo-600 uppercase tracking-[4px] italic-custom">Hizmetler & Operasyon</h4>
+                            <h4 class="text-[12px] font-black text-indigo-600 uppercase tracking-[4px] italic-custom">Hizmetler & İşlemler</h4>
                             <button onclick="window.openModal('addServiceModal')" class="text-xs font-black bg-indigo-50 text-indigo-600 px-4 py-2 rounded-xl italic transition-all italic-custom">+ Hizmet</button>
                         </div>
                         <div id="det-services" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left italic-custom leading-none"></div>
@@ -211,8 +211,8 @@
                             <input type="text" id="det-asset-drive" onblur="window.saveAssets()" class="w-full bg-white/5 border-none rounded-2xl p-4 text-xs font-bold outline-none text-white focus:bg-white/10 text-left leading-none italic-custom" placeholder="Drive Linki">
                         </div>
                     </section>
-                    <textarea id="det-notes" onblur="window.saveClientNotes()" class="w-full p-8 bg-white border border-slate-100 rounded-[50px] text-xs font-bold text-slate-600 h-64 shadow-sm outline-none leading-relaxed text-left italic-custom" placeholder="Strateji notları..."></textarea>
-                    <button onclick="window.deleteClient()" class="w-full py-5 rounded-[30px] border-2 border-dashed border-red-100 text-[10px] font-black text-red-300 uppercase hover:bg-red-50 hover:text-red-500 transition-all text-center leading-none italic-custom">Markayı Sil</button>
+                    <textarea id="det-notes" onblur="window.saveClientNotes()" class="w-full p-8 bg-white border border-slate-100 rounded-[50px] text-xs font-bold text-slate-600 h-64 shadow-sm outline-none leading-relaxed text-left italic-custom" placeholder="Marka strateji notları..."></textarea>
+                    <button onclick="window.deleteClient()" class="w-full py-5 rounded-[30px] border-2 border-dashed border-red-100 text-[10px] font-black text-red-300 uppercase hover:bg-red-50 hover:text-red-600 transition-all text-center leading-none italic-custom">Markayı Sil</button>
                 </div>
             </div>
         </div>
@@ -221,9 +221,9 @@
     <!-- MODALS FORMS -->
     <div id="clientModal" class="fixed inset-0 z-[70] modal-bg hidden flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-[60px] p-12 shadow-2xl view-animate text-left leading-none uppercase italic-custom">
-            <h3 class="text-3xl font-black mb-10 text-indigo-600 tracking-tighter text-left leading-none uppercase italic-custom">Yeni Müşteri</h3>
+            <h3 class="text-3xl font-black mb-10 text-indigo-600 tracking-tighter text-left leading-none uppercase italic-custom">Yeni Marka</h3>
             <form id="clientForm" class="space-y-6 text-left leading-none italic-custom">
-                <input type="text" id="c_name" required placeholder="Marka Adı" class="w-full p-5 bg-slate-50 border-none rounded-[25px] font-bold shadow-inner outline-none text-left italic-custom">
+                <input type="text" id="c_name" required placeholder="Firma Adı" class="w-full p-5 bg-slate-50 border-none rounded-[25px] font-bold shadow-inner outline-none text-left italic-custom">
                 <div class="grid grid-cols-2 gap-4 text-left leading-none italic-custom">
                     <input type="text" id="c_person" required placeholder="Yetkili" class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold text-sm shadow-inner outline-none text-left italic-custom">
                     <input type="date" id="c_start" required class="w-full p-5 bg-slate-50 border-none rounded-[30px] font-bold text-sm shadow-inner outline-none text-left italic-custom">
@@ -294,28 +294,42 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, setDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-        // CONFIG & DB SETUP
-        const firebaseConfig = JSON.parse(__firebase_config);
+        // CONFIG & DB
+        let firebaseConfig;
+        try {
+            firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+                apiKey: "AIzaSyDkIprfe4Yu4cnL0FA7H0KjUBPQMZkAUUc",
+                authDomain: "ajans-yonetimi.firebaseapp.com",
+                projectId: "ajans-yonetimi",
+                storageBucket: "ajans-yonetimi.firebasestorage.app",
+                messagingSenderId: "945070876545",
+                appId: "1:945070876545:web:b18d4a549100937dd7aa80"
+            };
+        } catch (e) { 
+            console.error("Config load error"); 
+            document.getElementById('connection-error-hint').classList.remove('hidden');
+        }
+        
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'bayindir-medya-final-v32-stable';
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'bayindir-medya-final-stable-v2';
 
         let clients = [], expenses = [], config = {}, currentClientId = null, chart = null;
 
-        // HELPER FUNCTIONS (CORE)
+        // --- HELPER FUNCTIONS ---
         const safeText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
         const safeHTML = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
         const safeVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
 
-        // 1. CORE FUNCTIONS (LOCAL DEFINITIONS)
-        function updateChart() {
-            if(!chart) return;
-            const rev = clients.reduce((a,c)=>a+(c.payments||[]).reduce((s,p)=>s+p.amount,0),0);
-            chart.data.datasets[0].data = [rev*0.2, rev*0.4, rev*0.3, rev*0.7, rev*0.8, rev];
-            chart.update();
+        // --- RENDER LOGIC ---
+        function updateChart() { 
+            if(!chart) return; 
+            const rev = clients.reduce((a,c)=>a+(c.payments||[]).reduce((s,p)=>s+p.amount,0),0); 
+            chart.data.datasets[0].data = [rev*0.1, rev*0.4, rev*0.3, rev*0.7, rev*0.8, rev]; 
+            chart.update(); 
         }
 
         function renderClients() {
@@ -326,7 +340,7 @@
                 <div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm active:scale-98 transition-all flex flex-col group hover:shadow-2xl hover:shadow-indigo-500/5 cursor-pointer relative overflow-hidden italic text-left leading-none uppercase italic-custom">
                     <div class="flex justify-between items-start mb-8 relative z-10 text-left leading-none italic">
                          <div class="w-16 h-16 bg-slate-50 rounded-[25px] flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 italic font-black shadow-inner text-left leading-none italic-custom uppercase leading-none">M</div>
-                        <span class="text-[9px] font-black bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full uppercase tracking-widest italic shadow-sm text-left italic">İş Ortağı</span>
+                        <span class="text-[9px] font-black bg-emerald-50 text-emerald-600 px-4 py-1.5 rounded-full uppercase tracking-widest shadow-sm text-left italic">İş Ortağı</span>
                     </div>
                     <h3 class="text-2xl font-black text-slate-900 tracking-tighter italic-custom text-left leading-none uppercase italic">${c.name}</h3>
                 </div>`).join('');
@@ -359,7 +373,7 @@
             const monthlyList = []; clients.forEach(c => (c.services || []).filter(s => s.type === 'monthly').forEach(s => monthlyList.push({cN: c.name, cId: c.id, ...s})));
             if(sch) sch.innerHTML = monthlyList.sort((a,b)=>a.payDay-b.payDay).slice(0,6).map(s => {
                 const paid = (clients.find(x => x.id === s.cId).payments || []).some(p => { const d = new Date(p.date); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear() && p.sid === s.sid; });
-                return `<div onclick="window.openClientDetail('${s.cId}')" class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border ${paid ? 'border-emerald-200 bg-emerald-50 shadow-none' : 'border-slate-100 shadow-sm'} cursor-pointer active:scale-95 transition-all italic leading-none">
+                return `<div onclick="window.openClientDetail('${s.cId}')" class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border ${paid ? 'border-emerald-200 bg-emerald-50 shadow-none' : 'border-slate-100'} cursor-pointer active:scale-95 transition-all italic leading-none">
                     <div class="flex items-center gap-3 italic text-left leading-none italic">
                         <div class="w-10 h-10 rounded-xl bg-white border flex items-center justify-center font-black text-xs ${paid ? 'text-emerald-500' : 'text-indigo-600'} shadow-inner leading-none">${s.payDay}</div>
                         <div class="text-left leading-none italic text-left leading-none italic"><p class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1 italic leading-none text-left italic">${s.cN}</p><p class="text-xs font-black text-slate-800 italic-custom text-left leading-none text-left italic italic">${s.name}</p></div>
@@ -370,7 +384,7 @@
             renderClients(); renderFinance(); updateChart();
         }
 
-        // 2. WINDOW MAPPINGS
+        // --- ATTACH TO WINDOW ---
         window.switchView = (v) => {
             document.querySelectorAll('.view-content').forEach(el => el.classList.add('hidden'));
             const target = document.getElementById('view-' + v); if(target) target.classList.remove('hidden');
@@ -384,7 +398,6 @@
         window.renderAll = renderAll;
         window.renderFinance = renderFinance;
         window.updateChart = updateChart;
-        window.renderClients = renderClients;
 
         window.openClientDetail = (id) => {
             currentClientId = id; const c = clients.find(x => x.id === id); if(!c) return;
@@ -426,14 +439,22 @@
             }
         };
 
-        // --- KURUMSAL PDF MAKBUZ (ÖZGÜVEN TEKLİF REFERANSIDIR) ---
+        window.sendThankYouMessage = (cid, pid, rNo) => {
+            const client = clients.find(x => x.id === cid); if(!client) return;
+            const pay = client.payments.find(x => x.pid === parseInt(pid)); if(!pay) return;
+            const msg = `Sayın ${client.person},\n\n#${rNo} nolu tahsilat makbuzunuz oluşturulmuştur.\n\n*${pay.serviceName}* hizmetine istinaden *${pay.month} ${pay.year}* dönemi için yapmış olduğunuz *${pay.amount.toLocaleString('tr-TR')} TL* tutarındaki ödemeniz başarıyla tahsil edilmiştir.\n\nBayındır Medya olarak iş birliğiniz için teşekkür ederiz. 🤝`;
+            let tel = client.phone.replace(/\D/g,'');
+            if(tel.length === 10) tel = '90' + tel; else if(tel.length === 11 && tel.startsWith('0')) tel = '90' + tel.substring(1);
+            window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`, '_blank');
+        };
+
         window.generateReceiptPDF = (pid, rNo) => {
             const client = clients.find(x => x.id === currentClientId);
             const pay = client.payments.find(x => x.pid === parseInt(pid));
             const { jsPDF } = window.jspdf;
             const docPdf = new jsPDF();
             
-            // 1. Header (LOGO & AJANS BİLGİSİ)
+            // LOGO & HEADER (Referans PDF gibi)
             const logoImg = document.getElementById('main-agency-logo');
             if (logoImg && logoImg.src) { try { docPdf.addImage(logoImg.src, 'PNG', 15, 10, 45, 45); } catch(e) {} }
             
@@ -448,23 +469,21 @@
             docPdf.text("N.METE BAYINDIR", 65, 45);
             docPdf.text("SOCIAL MEDIA EXPERT", 65, 50);
             
-            // 2. Belge Başlığı & Yasal Uyarı
             docPdf.setFont("helvetica", "bold");
             docPdf.setFontSize(14);
             docPdf.text("TAHSİLAT MAKBUZU", 20, 80);
             
-            docPdf.setTextColor(220, 38, 38); // Kırmızı uyarı
+            docPdf.setTextColor(220, 38, 38);
             docPdf.setFontSize(8);
             docPdf.text("İŞBU BELGE MALİ DEĞER TAŞIMAZ.", 150, 80, { align: 'right' });
             
             docPdf.setDrawColor(230, 230, 230);
             docPdf.line(15, 85, 195, 85);
             
-            // 3. Müşteri & Tarih Bilgisi
             docPdf.setTextColor(50, 50, 50);
             docPdf.setFontSize(10);
             docPdf.setFont("helvetica", "bold");
-            docPdf.text("MÜŞTERİ:", 20, 95);
+            docPdf.text("MÜŞTERİ / MARKA:", 20, 95);
             docPdf.setFont("helvetica", "normal");
             docPdf.text(client.name.toUpperCase(), 20, 102, { maxWidth: 100 });
             
@@ -478,7 +497,6 @@
             docPdf.setFont("helvetica", "normal");
             docPdf.text(`#${rNo}`, 145, 117);
 
-            // 4. Tahsilat Tablosu
             docPdf.setFillColor(248, 250, 252);
             docPdf.rect(15, 125, 180, 10, 'F');
             docPdf.setFont("helvetica", "bold");
@@ -494,12 +512,10 @@
             
             docPdf.line(15, 155, 195, 155);
 
-            // 5. Genel Toplam
             docPdf.setFontSize(18);
             docPdf.text("GENEL TOPLAM", 80, 175);
             docPdf.text(pay.amount.toLocaleString('tr-TR') + " TL", 160, 175);
             
-            // 6. Footer (İletişim Bilgileri)
             docPdf.setTextColor(100, 100, 100);
             docPdf.setFontSize(9);
             docPdf.setFont("helvetica", "normal");
@@ -507,50 +523,47 @@
             docPdf.setFont("helvetica", "bold");
             docPdf.text("bayindirmedya.com.tr", 105, 272, { align: "center" });
             
-            docPdf.setTextColor(180, 180, 180);
-            docPdf.setFontSize(8);
-            docPdf.text("Bu makbuz Bayindir Medya ERP uzerinden dijital olarak uretilmistir.", 105, 285, { align: "center" });
-            
             docPdf.save(`Makbuz_#${rNo}_${client.name}.pdf`);
         };
 
-        // --- GENEL AKSİYONLAR ---
         window.deletePayment = async (cid, pid) => { if(confirm('Sil?')) { const c = clients.find(x=>x.id===cid); const upd = c.payments.filter(p=>p.pid!==pid); await updateDoc(doc(db,'artifacts',appId,'public','data','clients',cid), {payments: upd}); } };
-        window.deleteClient = async () => { if(confirm('Markayı silmek üzeresiniz?')) { await deleteDoc(doc(db,'artifacts',appId,'public','data','clients',currentClientId)); window.closeModal('clientDetailModal'); currentClientId=null; } };
+        window.deleteClient = async () => { if(confirm('Markayı silmek istediğinizden emin misiniz?')) { await deleteDoc(doc(db,'artifacts',appId,'public','data','clients',currentClientId)); window.closeModal('clientDetailModal'); currentClientId=null; } };
         window.updateWorkflowStatus = async (cid, sid, status) => { const c = clients.find(x => x.id === cid); const srvs = c.services.map(s => s.sid === sid ? {...s, status} : s); await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', cid), { services: srvs }); };
         window.saveAssets = async () => { if(currentClientId) await updateDoc(doc(db,'artifacts',appId, 'public','data','clients',currentClientId), {assets:{drive:document.getElementById('det-asset-drive').value}}); };
         window.saveClientNotes = async () => { if(currentClientId) await updateDoc(doc(db,'artifacts',appId, 'public','data','clients',currentClientId), {notes:document.getElementById('det-notes').value}); };
-        window.removeService = async (cid, sid) => { if(confirm('Sil?')) { const c = clients.find(x=>x.id===cid); const upd = c.services.filter(s=>s.sid!==sid); await updateDoc(doc(db,'artifacts',appId,'public','data','clients',cid), {services:upd}); } };
-        window.searchClients = (q) => { const filtered = clients.filter(c => c.name.toLowerCase().includes(q.toLowerCase())); const container = document.getElementById('client-cards'); if (container) container.innerHTML = filtered.map(c => `<div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm active:scale-95 cursor-pointer italic transition-all hover:border-indigo-600 text-left uppercase leading-none italic uppercase"><h3>${c.name}</h3></div>`).join(''); };
+        window.removeService = async (cid, sid) => { if(confirm('Hizmeti sil?')) { const c = clients.find(x=>x.id===cid); const upd = c.services.filter(s=>s.sid!==sid); await updateDoc(doc(db,'artifacts',appId,'public','data','clients',cid), {services:upd}); } };
+        window.searchClients = (q) => { const filtered = clients.filter(c => c.name.toLowerCase().includes(q.toLowerCase())); const container = document.getElementById('client-cards'); if (container) container.innerHTML = filtered.map(c => `<div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm active:scale-95 cursor-pointer transition-all hover:border-indigo-600 text-left"><h3>${c.name}</h3></div>`).join(''); };
 
-        // --- INITIALIZATION ---
+        // --- START APP & LISTENERS (SENKRONİZASYON GARANTİLİ) ---
         const startAppInit = async () => {
             try {
+                // Rule 3: Auth FIRST
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
                 } else {
                     await signInAnonymously(auth);
                 }
 
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'clients'), (snap) => {
+                // Snapshots only AFTER Auth
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'clients'), snap => {
                     clients = snap.docs.map(d => ({id: d.id, ...d.data()}));
                     window.renderAll();
                     if(currentClientId) window.openClientDetail(currentClientId);
                     document.getElementById('loader').style.display = 'none';
-                }, (err) => {
-                    console.error("Firestore Error:", err);
-                    document.getElementById('connection-error').classList.remove('hidden');
+                }, err => { 
+                    console.error("Client listener error:", err);
+                    document.getElementById('connection-error-hint').classList.remove('hidden');
                 });
 
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'), (snap) => {
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'), snap => {
                     expenses = snap.docs.map(d => ({id: d.id, ...d.data()}));
                     window.renderFinance();
                 });
-                
+
                 initChart();
             } catch (err) { 
                 console.error("Critical Start Error:", err); 
-                document.getElementById('connection-error').classList.remove('hidden');
+                document.getElementById('connection-error-hint').classList.remove('hidden');
             }
         };
 
@@ -585,13 +598,7 @@
                 const c = clients.find(x => x.id === currentClientId);
                 const sid = parseInt(document.getElementById('p_service_id').value);
                 const s = c.services.find(i => i.sid === sid);
-                const p = { 
-                    pid: Date.now(), sid, serviceName: s.name, 
-                    date: document.getElementById('p_date').value, 
-                    amount: parseFloat(document.getElementById('p_amount').value), 
-                    month: document.getElementById('p_month').value, 
-                    year: document.getElementById('p_year').value 
-                };
+                const p = { pid: Date.now(), sid, serviceName: s.name, date: document.getElementById('p_date').value, amount: parseFloat(document.getElementById('p_amount').value), month: document.getElementById('p_month').value, year: document.getElementById('p_year').value };
                 await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { payments: [...(c.payments || []), p] });
                 window.closeModal('paymentModal');
             });
