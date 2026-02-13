@@ -66,13 +66,13 @@
         }
 
         .tab-btn { transition: all 0.3s ease; }
-        .tab-btn.active { @apply bg-indigo-600 text-white shadow-lg shadow-indigo-100; }
+        .tab-btn.active { background-color: #4f46e5; color: white; box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.2); }
     </style>
 </head>
 <body class="text-slate-900 flex flex-col md:flex-row min-h-screen overflow-hidden text-left">
 
     <!-- LOGO KAYNAĞI -->
-    <img id="main-agency-logo" src="https://via.placeholder.com/200x80?text=BAYINDIR+MEDYA" class="hidden" crossOrigin="anonymous">
+    <img id="main-agency-logo" src="https://via.placeholder.com/200x80?text=BAYINDIR+MEDYA" class="hidden" crossorigin="anonymous">
 
     <!-- LOADER -->
     <div id="loader" class="fixed inset-0 bg-slate-950 z-[100] flex items-center justify-center text-center">
@@ -380,204 +380,737 @@
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-analytics.js";
+        import { 
+            getFirestore, 
+            collection, 
+            addDoc, 
+            onSnapshot, 
+            doc, 
+            updateDoc, 
+            deleteDoc, 
+            setDoc,
+            query,
+            orderBy
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+        import { 
+            getAuth, 
+            signInAnonymously,
+            onAuthStateChanged
+        } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
 
-        // FIREBASE SETUP
-        const firebaseConfig = JSON.parse(__firebase_config);
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDkIprfe4Yu4cnL0FA7H0KjUBPQMZkAUUc",
+            authDomain: "ajans-yonetimi.firebaseapp.com",
+            projectId: "ajans-yonetimi",
+            storageBucket: "ajans-yonetimi.firebasestorage.app",
+            messagingSenderId: "945070876545",
+            appId: "1:945070876545:web:b18d4a549100937dd7aa80",
+            measurementId: "G-W4L43EB37V"
+        };
+
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = "bayindir-medya-erp-pro-v16"; // BELİRTTİĞİNİZ SABİT DİZİN ADI
+        const appId = "bayindir-medya-erp";
 
-        let clients = [], expenses = [], config = {}, currentClientId = null, chart = null;
+        // Global variables
+        let clients = [];
+        let expenses = [];
+        let currentClientId = null;
+        let chart = null;
         let clientFilter = 'active';
+        let unsubscribeClients = null;
+        let unsubscribeExpenses = null;
 
-        // HELPERS
+        // Helper functions
         const safeText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
         const safeHTML = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
         const safeVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
 
-        // --- RENDER LOGIC ---
+        // UI Functions
+        window.openModal = (id) => document.getElementById(id)?.classList.remove('hidden');
+        window.closeModal = (id) => document.getElementById(id)?.classList.add('hidden');
+
+        window.switchView = (v) => {
+            document.querySelectorAll('.view-content').forEach(el => el.classList.add('hidden'));
+            const viewEl = document.getElementById('view-' + v);
+            if (viewEl) viewEl.classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('sidebar-active'));
+            const navEl = document.getElementById('nav-' + v);
+            if (navEl) navEl.classList.add('sidebar-active');
+            
+            if (v === 'dashboard' && chart) updateChart();
+        };
+
+        window.togglePayDay = (val) => { 
+            const box = document.getElementById('s_payday_box'); 
+            if (box) box.style.display = val === 'onetime' ? 'none' : 'block'; 
+        };
+
+        window.setClientFilter = (val) => { 
+            clientFilter = val; 
+            document.querySelectorAll('.tab-btn').forEach(b => { 
+                b.classList.remove('active'); 
+            }); 
+            const btn = document.getElementById('filter-' + val);
+            if (btn) btn.classList.add('active'); 
+            renderClients(); 
+        };
+
+        window.searchClients = (term) => {
+            // Implement client search
+            console.log('Searching:', term);
+        };
+
+        // Chart functions
         function updateChart() { 
-            if(!chart) return; 
-            const rev = clients.reduce((a,c)=>a+(c.payments||[]).reduce((s,p)=>s+p.amount,0),0); 
-            chart.data.datasets[0].data = [rev*0.1, rev*0.4, rev*0.3, rev*0.7, rev*0.8, rev]; 
+            if (!chart) return; 
+            const months = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'];
+            const monthlyData = months.map((_, index) => {
+                return clients.reduce((total, client) => {
+                    return total + (client.payments || []).filter(p => {
+                        const date = new Date(p.date || 0);
+                        return date.getMonth() === index;
+                    }).reduce((sum, p) => sum + (p.amount || 0), 0);
+                }, 0);
+            });
+            chart.data.datasets[0].data = monthlyData; 
             chart.update(); 
         }
 
+        // Render functions
         function renderClients() {
             const cont = document.getElementById('client-cards');
             if (!cont) return;
-            const filtered = clients.filter(c => clientFilter === 'active' ? (c.status !== 'passive') : (c.status === 'passive'));
-            const sorted = [...filtered].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+            
+            const filtered = clients.filter(c => 
+                clientFilter === 'active' ? (c.status !== 'passive') : (c.status === 'passive')
+            );
+            
+            const sorted = [...filtered].sort((a, b) => 
+                new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
+            );
+            
+            if (sorted.length === 0) {
+                cont.innerHTML = `<div class="col-span-full py-20 text-center text-slate-400 italic">Kayıt bulunamadı.</div>`;
+                return;
+            }
+            
             cont.innerHTML = sorted.map(c => `
                 <div onclick="window.openClientDetail('${c.id}')" class="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm active:scale-98 transition-all flex flex-col group hover:shadow-2xl hover:shadow-indigo-500/10 cursor-pointer relative overflow-hidden italic-custom text-left leading-none">
                     <div class="flex justify-between items-start mb-8 relative z-10 text-left leading-none italic">
-                         <div class="w-16 h-16 bg-slate-50 rounded-[2rem] flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 font-black shadow-inner uppercase leading-none italic-custom text-left italic">M</div>
-                        <span class="text-[9px] font-black ${c.status === 'passive' ? 'bg-red-50 text-red-600' : 'bg-emerald-50 text-emerald-600'} px-4 py-1.5 rounded-full uppercase italic shadow-sm text-left leading-none italic">İş Ortağı</span>
+                        <div class="w-16 h-16 bg-slate-50 rounded-[2rem] flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 font-black shadow-inner uppercase leading-none italic-custom text-left italic">M</div>
+                        <span class="text-[9px] font-black ${c.status === 'passive' ? 'bg-red-50 text-red-600' : 'bg-emerald-50 text-emerald-600'} px-4 py-1.5 rounded-full uppercase italic shadow-sm text-left leading-none italic">${c.status === 'passive' ? 'ARŞİV' : 'AKTİF'}</span>
                     </div>
-                    <h3 class="text-2xl font-black text-slate-900 tracking-tighter italic-custom leading-none uppercase italic text-left">${c.name}</h3>
-                </div>`).join('');
-            if (sorted.length === 0) cont.innerHTML = `<div class="col-span-full py-20 text-center text-slate-400 italic">Kayıt bulunamadı.</div>`;
+                    <h3 class="text-2xl font-black text-slate-900 tracking-tighter italic-custom leading-none uppercase italic text-left">${c.name || 'İsimsiz'}</h3>
+                    <p class="text-xs text-slate-400 mt-2">${c.person || ''}</p>
+                </div>
+            `).join('');
         }
 
         function renderFinance() {
-            const inc = clients.reduce((a,c)=>a+(c.payments||[]).reduce((s,p)=>s+p.amount,0),0);
-            const exp = expenses.reduce((a,e)=>a+e.amount,0);
+            const inc = clients.reduce((a, c) => a + (c.payments || []).reduce((s, p) => s + (p.amount || 0), 0), 0);
+            const exp = expenses.reduce((a, e) => a + (e.amount || 0), 0);
+            
             safeText('fin-revenue', `₺${inc.toLocaleString('tr-TR')}`);
             safeText('fin-expense', `₺${exp.toLocaleString('tr-TR')}`);
             safeText('fin-profit', `₺${(inc - exp).toLocaleString('tr-TR')}`);
-            safeHTML('expense-list', expenses.sort((a,b)=>b.date.localeCompare(a.date)).map(e=>`<div class="p-6 bg-slate-50 border border-slate-100 rounded-[2.5rem] flex justify-between items-center italic-custom text-left shadow-inner group italic leading-none italic"><div><p class="text-[9px] font-black text-red-400 uppercase italic mb-1 text-left leading-none italic">${e.cat}</p><p class="text-sm font-bold text-slate-800 italic leading-none text-left leading-none italic">${e.desc}</p></div><span class="text-sm font-black text-red-500 italic leading-none italic">-₺${e.amount.toLocaleString()}</span></div>`).join(''));
+            
+            const expenseList = document.getElementById('expense-list');
+            if (expenseList) {
+                expenseList.innerHTML = expenses.sort((a, b) => (b.date || '').localeCompare(a.date || '')).map(e => 
+                    `<div class="p-6 bg-slate-50 border border-slate-100 rounded-[2.5rem] flex justify-between items-center italic-custom text-left shadow-inner group italic leading-none italic">
+                        <div>
+                            <p class="text-[9px] font-black text-red-400 uppercase italic mb-1 text-left leading-none italic">${e.cat || 'Kategori'}</p>
+                            <p class="text-sm font-bold text-slate-800 italic leading-none text-left leading-none italic">${e.desc || 'Açıklama'}</p>
+                        </div>
+                        <span class="text-sm font-black text-red-500 italic leading-none italic">-₺${(e.amount || 0).toLocaleString()}</span>
+                    </div>`
+                ).join('') || '<p class="text-center text-slate-400">Gider bulunamadı</p>';
+            }
+        }
+
+        function renderDashboard() {
+            const now = new Date();
+            
+            const activeClients = clients.filter(c => c.status !== 'passive');
+            
+            const monthlyIncome = clients.reduce((acc, c) => 
+                acc + (c.payments || []).filter(p => {
+                    const d = new Date(p.date || 0);
+                    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+                }).reduce((s, p) => s + (p.amount || 0), 0), 0
+            );
+            
+            const monthlyExpense = expenses.filter(e => {
+                const d = new Date(e.date || 0);
+                return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+            }).reduce((s, e) => s + (e.amount || 0), 0);
+            
+            safeText('stat-revenue', `₺${monthlyIncome.toLocaleString('tr-TR')}`);
+            safeText('stat-expense', `₺${monthlyExpense.toLocaleString('tr-TR')}`);
+            safeText('stat-profit', `₺${(monthlyIncome - monthlyExpense).toLocaleString('tr-TR')}`);
+            safeText('stat-clients', activeClients.length);
+
+            // Schedule list
+            const sch = document.getElementById('schedule-list');
+            if (sch) {
+                const monthlyList = [];
+                activeClients.forEach(c => 
+                    (c.services || []).filter(s => s.type === 'monthly').forEach(s => {
+                        monthlyList.push({
+                            cN: c.name || 'İsimsiz', 
+                            cId: c.id, 
+                            ...s
+                        });
+                    })
+                );
+                
+                sch.innerHTML = monthlyList.sort((a, b) => (a.payDay || 0) - (b.payDay || 0)).slice(0, 6).map(s => {
+                    const paid = (clients.find(x => x.id === s.cId)?.payments || []).some(p => {
+                        const d = new Date(p.date || 0);
+                        return d.getMonth() === now.getMonth() && 
+                               d.getFullYear() === now.getFullYear() && 
+                               p.sid === s.sid;
+                    });
+                    return `<div onclick="window.openClientDetail('${s.cId}')" class="flex items-center justify-between p-5 bg-slate-50 rounded-2xl border ${paid ? 'border-emerald-100 bg-emerald-50 shadow-none' : 'border-slate-100 shadow-sm'} cursor-pointer active:scale-95 transition-all italic leading-none text-left italic">
+                        <div class="flex items-center gap-4 text-left italic">
+                            <div class="w-10 h-10 rounded-xl bg-white border flex items-center justify-center font-black text-xs ${paid ? 'text-emerald-500 border-emerald-100' : 'text-indigo-600 border-slate-100'} shadow-inner leading-none">${s.payDay || '??'}</div>
+                            <div class="text-left leading-none italic text-left leading-none italic">
+                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 leading-none text-left italic">${s.cN}</p>
+                                <p class="text-xs font-black text-slate-800 leading-none text-left italic italic">${s.name || 'Hizmet'}</p>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('') || '<p class="text-center text-slate-400">Ödeme takvimi boş</p>';
+            }
         }
 
         function renderAll() {
-            const now = new Date(); const m = now.getMonth(); const y = now.getFullYear();
-            const activeClients = clients.filter(c => c.status !== 'passive');
-            const income = clients.reduce((acc, c) => acc + (c.payments || []).filter(p => { const d = new Date(p.date); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); }).reduce((s, p) => s + p.amount, 0), 0);
-            const expense = expenses.filter(e => { const d = new Date(e.date); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); }).reduce((s, e) => s + e.amount, 0);
-            safeText('stat-revenue', `₺${income.toLocaleString('tr-TR')}`);
-            safeText('stat-expense', `₺${expense.toLocaleString('tr-TR')}`);
-            safeText('stat-profit', `₺${(income - expense).toLocaleString('tr-TR')}`);
-            safeText('stat-clients', activeClients.length);
-
-            const sch = document.getElementById('schedule-list');
-            const monthlyList = []; activeClients.forEach(c => (c.services || []).filter(s => s.type === 'monthly').forEach(s => monthlyList.push({cN: c.name, cId: c.id, ...s})));
-            if(sch) sch.innerHTML = monthlyList.sort((a,b)=>a.payDay-b.payDay).slice(0,6).map(s => {
-                const paid = (clients.find(x => x.id === s.cId).payments || []).some(p => { const d = new Date(p.date); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear() && p.sid === s.sid; });
-                return `<div onclick="window.openClientDetail('${s.cId}')" class="flex items-center justify-between p-5 bg-slate-50 rounded-2xl border ${paid ? 'border-emerald-100 bg-emerald-50 shadow-none' : 'border-slate-100 shadow-sm'} cursor-pointer active:scale-95 transition-all italic leading-none text-left italic">
-                    <div class="flex items-center gap-4 text-left italic">
-                        <div class="w-10 h-10 rounded-xl bg-white border flex items-center justify-center font-black text-xs ${paid ? 'text-emerald-500 border-emerald-100' : 'text-indigo-600 border-slate-100'} shadow-inner leading-none">${s.payDay}</div>
-                        <div class="text-left leading-none italic text-left leading-none italic"><p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 leading-none text-left italic">${s.cN}</p><p class="text-xs font-black text-slate-800 leading-none text-left italic italic">${s.name}</p></div>
-                    </div>
-                </div>`;
-            }).join('');
-            
-            renderClients(); renderFinance(); updateChart();
+            renderDashboard();
+            renderClients();
+            renderFinance();
+            updateChart();
         }
 
-        // --- PUBLIC WINDOW BINDINGS (FIX FOR ERRORS) ---
-        window.switchView = (v) => {
-            document.querySelectorAll('.view-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById('view-' + v).classList.remove('hidden');
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('sidebar-active', 'text-white'));
-            document.getElementById('nav-' + v).classList.add('sidebar-active');
-            if(v === 'dashboard') window.updateChart();
-        };
-        window.openModal = (id) => document.getElementById(id).classList.remove('hidden');
-        window.closeModal = (id) => document.getElementById(id).classList.add('hidden');
-        window.togglePayDay = (val) => { const box = document.getElementById('s_payday_box'); if(box) box.classList.toggle('hidden', val === 'onetime'); };
-        window.updateChart = () => { if(!chart) return; const rev = clients.reduce((a,c)=>a+(c.payments||[]).reduce((s,p)=>s+p.amount,0),0); chart.data.datasets[0].data = [rev*0.1, rev*0.4, rev*0.3, rev*0.7, rev*0.8, rev]; chart.update(); };
-        window.setClientFilter = (val) => { clientFilter = val; document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active', 'bg-indigo-600', 'text-white'); b.classList.add('text-slate-400'); }); const btn = document.getElementById('filter-' + val); btn.classList.add('active', 'bg-indigo-600', 'text-white'); btn.classList.remove('text-slate-400'); renderClients(); };
-        window.renderClients = renderClients;
-        window.renderFinance = renderFinance;
-        window.renderAll = renderAll;
-
+        // Client Detail Functions
         window.openClientDetail = (id) => {
-            currentClientId = id; const c = clients.find(x => x.id === id); if(!c) return;
-            safeText('det-name', c.name); safeText('det-start', `BAŞL: ${c.start}`); safeText('det-person', c.person);
+            currentClientId = id; 
+            const c = clients.find(x => x.id === id); 
+            if (!c) return;
             
-            const b = document.getElementById('det-status-badge'); const sBtn = document.getElementById('det-status-btn'); const termBox = document.getElementById('termination-box');
-            if(c.status === 'passive') { b.className="px-4 py-1.5 rounded-full text-[10px] font-black uppercase bg-red-100 text-red-600 italic"; b.textContent="ARŞİVDE"; sBtn.textContent="YENİDEN AKTİF ET"; termBox.classList.remove('hidden'); safeText('det-termination-reason', c.terminationReason || 'Belirtilmedi.'); }
-            else { b.className="px-4 py-1.5 rounded-full text-[10px] font-black uppercase bg-emerald-100 text-emerald-600 italic"; b.textContent="ŞU AN AKTİF"; sBtn.textContent="ÇALIŞMAYI BİTİR (ARŞİVLE)"; termBox.classList.add('hidden'); }
+            safeText('det-name', c.name || 'İsimsiz'); 
+            safeText('det-start', `BAŞL: ${c.start || '--'}`); 
+            safeText('det-person', c.person || '--');
+            
+            const b = document.getElementById('det-status-badge'); 
+            const sBtn = document.getElementById('det-status-btn'); 
+            const termBox = document.getElementById('termination-box');
+            
+            if (c.status === 'passive') { 
+                if (b) {
+                    b.className = "px-4 py-1.5 rounded-full text-[10px] font-black uppercase bg-red-100 text-red-600 italic"; 
+                    b.textContent = "ARŞİVDE"; 
+                }
+                if (sBtn) sBtn.textContent = "YENİDEN AKTİF ET"; 
+                if (termBox) {
+                    termBox.classList.remove('hidden'); 
+                    safeText('det-termination-reason', c.terminationReason || 'Belirtilmedi.');
+                }
+            } else { 
+                if (b) {
+                    b.className = "px-4 py-1.5 rounded-full text-[10px] font-black uppercase bg-emerald-100 text-emerald-600 italic"; 
+                    b.textContent = "ŞU AN AKTİF"; 
+                }
+                if (sBtn) sBtn.textContent = "ÇALIŞMAYI BİTİR (ARŞİVLE)"; 
+                if (termBox) termBox.classList.add('hidden'); 
+            }
 
-            document.getElementById('det-wa-link').href = `https://wa.me/${c.phone.replace(/\D/g,'')}`;
-            safeVal('det-notes', c.notes || ""); safeVal('det-asset-drive', c.assets?.drive || "");
+            const waLink = document.getElementById('det-wa-link');
+            if (waLink && c.phone) {
+                waLink.href = `https://wa.me/${c.phone.replace(/\D/g, '')}`;
+            }
             
-            safeHTML('det-services', (c.services || []).map(s => `<div class="p-8 bg-slate-50 border border-slate-100 flex justify-between items-center italic text-left"><div><p class="font-black text-slate-800 text-lg uppercase italic">${s.name}</p><p class="text-[10px] font-bold text-indigo-600 italic">₺${s.fee.toLocaleString()}</p></div><button onclick="window.removeService('${c.id}', ${s.sid})" class="p-3 bg-red-50 text-red-500 rounded-2xl active:scale-90 leading-none italic"><svg class="w-5 h-5 italic" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2.5"></path></svg></button></div>`).join(''));
-            safeHTML('det-payments', (c.payments || []).sort((a,b) => b.pid - a.pid).map((p, idx, arr) => `<div class="flex justify-between items-center p-6 bg-slate-50 border border-white rounded-[2.5rem] shadow-sm italic text-left"><div><p class="text-[9px] font-black text-slate-400 uppercase italic">NO: #${arr.length - idx}</p><p class="text-base font-black italic">₺${p.amount.toLocaleString()}</p></div><div class="flex gap-2 leading-none"><button onclick="window.sendThankYouMessage('${c.id}', '${p.pid}', '${arr.length - idx}')" class="p-3 bg-emerald-50 text-emerald-600 rounded-2xl active:scale-90 transition-all"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.551 4.197 1.594 6.039L0 24l6.105-1.597a11.826 11.826 0 005.945 1.598h.005c6.637 0 12.05-5.414 12.05-12.05a11.824 11.824 0 00-3.417-8.411z"/></svg></button><button onclick="window.generateReceiptPDF('${p.pid}', '${arr.length - idx}')" class="p-3 bg-indigo-50 text-indigo-400 rounded-2xl active:scale-90 transition-all shadow-sm leading-none italic-custom italic uppercase leading-none italic"><svg class="w-5 h-5 text-left leading-none italic uppercase italic" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg></button></div></div>`).join(''));
+            safeVal('det-notes', c.notes || ""); 
+            safeVal('det-asset-drive', c.assets?.drive || "");
+            
+            // Render services
+            const servicesEl = document.getElementById('det-services');
+            if (servicesEl) {
+                servicesEl.innerHTML = (c.services || []).map(s => 
+                    `<div class="p-8 bg-slate-50 border border-slate-100 flex justify-between items-center italic text-left">
+                        <div>
+                            <p class="font-black text-slate-800 text-lg uppercase italic">${s.name || 'Hizmet'}</p>
+                            <p class="text-[10px] font-bold text-indigo-600 italic">₺${(s.fee || 0).toLocaleString()}</p>
+                        </div>
+                        <button onclick="window.removeService('${c.id}', ${s.sid})" class="p-3 bg-red-50 text-red-500 rounded-2xl active:scale-90 leading-none italic">
+                            <svg class="w-5 h-5 italic" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M6 18L18 6M6 6l12 12" stroke-width="2.5"></path>
+                            </svg>
+                        </button>
+                    </div>`
+                ).join('') || '<p class="text-slate-400">Hizmet bulunamadı</p>';
+            }
+            
+            // Render payments
+            const paymentsEl = document.getElementById('det-payments');
+            if (paymentsEl) {
+                paymentsEl.innerHTML = (c.payments || []).sort((a, b) => (b.pid || 0) - (a.pid || 0)).map((p, idx, arr) => 
+                    `<div class="flex justify-between items-center p-6 bg-slate-50 border border-white rounded-[2.5rem] shadow-sm italic text-left">
+                        <div>
+                            <p class="text-[9px] font-black text-slate-400 uppercase italic">NO: #${arr.length - idx}</p>
+                            <p class="text-base font-black italic">₺${(p.amount || 0).toLocaleString()}</p>
+                        </div>
+                        <div class="flex gap-2 leading-none">
+                            <button onclick="window.sendThankYouMessage('${c.id}', '${p.pid}', '${arr.length - idx}')" class="p-3 bg-emerald-50 text-emerald-600 rounded-2xl active:scale-90 transition-all">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 0 5.414 0 12.05c0 2.123.551 4.197 1.594 6.039L0 24l6.105-1.597a11.826 11.826 0 005.945 1.598h.005c6.637 0 12.05-5.414 12.05-12.05a11.824 11.824 0 00-3.417-8.411z"></path>
+                                </svg>
+                            </button>
+                            <button onclick="window.generateReceiptPDF('${p.pid}', '${arr.length - idx}')" class="p-3 bg-indigo-50 text-indigo-400 rounded-2xl active:scale-90 transition-all shadow-sm leading-none italic-custom italic uppercase leading-none italic">
+                                <svg class="w-5 h-5 text-left leading-none italic uppercase italic" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>`
+                ).join('') || '<p class="text-slate-400">Tahsilat bulunamadı</p>';
+            }
+                
             window.openModal('clientDetailModal');
         };
 
-        window.toggleClientStatus = async () => { const client = clients.find(x => x.id === currentClientId); if (!client) return; if(client.status !== 'passive') { window.openModal('terminationModal'); } else { await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { status: 'active', terminationReason: null }); window.closeModal('clientDetailModal'); } };
-        window.openPaymentModalFromDetail = () => { const c = clients.find(x => x.id === currentClientId); if(!c || !c.services.length) return; const sel = document.getElementById('p_service_id'); sel.innerHTML = c.services.map(s => `<option value="${s.sid}">${s.name}</option>`).join(''); safeVal('p_date', new Date().toISOString().split('T')[0]); safeVal('p_amount', c.services[0].fee); window.openModal('paymentModal'); };
-        window.removeService = async (cid, sid) => { if(confirm('Sil?')) { const c = clients.find(x=>x.id===cid); const upd = c.services.filter(s=>s.sid!==sid); await updateDoc(doc(db,'artifacts',appId,'public','data','clients',cid), {services:upd}); } };
-        window.deletePayment = async (cid, pid) => { if(confirm('Sil?')) { const c = clients.find(x=>x.id===cid); const upd = c.payments.filter(p=>p.pid!==pid); await updateDoc(doc(db,'artifacts',appId,'public','data','clients',cid), {payments: upd}); } };
-        window.deleteClient = async () => { if(confirm('Markayı tamamen silmek istediğinizden emin misiniz?')) { await deleteDoc(doc(db,'artifacts',appId,'public', 'data','clients',currentClientId)); window.closeModal('clientDetailModal'); } };
-        window.saveAssets = async () => { if(currentClientId) await updateDoc(doc(db,'artifacts',appId, 'public','data','clients',currentClientId), {assets:{drive:document.getElementById('det-asset-drive').value}}); };
-        window.saveClientNotes = async () => { if(currentClientId) await updateDoc(doc(db,'artifacts',appId, 'public','data','clients',currentClientId), {notes:document.getElementById('det-notes').value}); };
+        window.toggleClientStatus = async () => { 
+            const client = clients.find(x => x.id === currentClientId); 
+            if (!client) return; 
+            
+            if (client.status !== 'passive') { 
+                window.openModal('terminationModal'); 
+            } else { 
+                if (confirm('Markayı aktif etmek istediğinize emin misiniz?')) {
+                    try {
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { 
+                            status: 'active', 
+                            terminationReason: null 
+                        });
+                        window.closeModal('clientDetailModal');
+                    } catch (error) {
+                        console.error('Error updating client:', error);
+                        alert('Güncelleme sırasında hata oluştu!');
+                    }
+                }
+            } 
+        };
+
+        window.openPaymentModalFromDetail = () => { 
+            const c = clients.find(x => x.id === currentClientId); 
+            if (!c || !c.services || !c.services.length) {
+                alert('Önce hizmet ekleyin');
+                return;
+            } 
+            
+            const sel = document.getElementById('p_service_id'); 
+            if (sel) {
+                sel.innerHTML = c.services.map(s => 
+                    `<option value="${s.sid}">${s.name || 'Hizmet'}</option>`
+                ).join(''); 
+            }
+            
+            safeVal('p_date', new Date().toISOString().split('T')[0]); 
+            safeVal('p_amount', c.services[0]?.fee || 0); 
+            window.openModal('paymentModal'); 
+        };
+
+        window.removeService = async (cid, sid) => { 
+            if (confirm('Hizmeti silmek istediğinize emin misiniz?')) { 
+                const c = clients.find(x => x.id === cid); 
+                const updatedServices = (c.services || []).filter(s => s.sid !== sid); 
+                try {
+                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', cid), { 
+                        services: updatedServices 
+                    });
+                } catch (error) {
+                    console.error('Error removing service:', error);
+                    alert('Hizmet silinirken hata oluştu!');
+                }
+            } 
+        };
+
+        window.deleteClient = async () => { 
+            if (confirm('Markayı tamamen silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!')) { 
+                try {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId)); 
+                    window.closeModal('clientDetailModal'); 
+                } catch (error) {
+                    console.error('Error deleting client:', error);
+                    alert('Silme işlemi sırasında hata oluştu!');
+                }
+            } 
+        };
+
+        window.saveAssets = async () => { 
+            if (currentClientId) {
+                const driveValue = document.getElementById('det-asset-drive')?.value || '';
+                try {
+                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { 
+                        assets: { drive: driveValue } 
+                    });
+                } catch (error) {
+                    console.error('Error saving assets:', error);
+                    alert('Drive bilgisi kaydedilirken hata oluştu!');
+                }
+            }
+        };
+
+        window.saveClientNotes = async () => { 
+            if (currentClientId) {
+                const notesValue = document.getElementById('det-notes')?.value || '';
+                try {
+                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { 
+                        notes: notesValue 
+                    });
+                } catch (error) {
+                    console.error('Error saving notes:', error);
+                    alert('Notlar kaydedilirken hata oluştu!');
+                }
+            }
+        };
 
         window.generateReceiptPDF = (pid, rNo) => {
             const client = clients.find(x => x.id === currentClientId);
-            const pay = client.payments.find(x => x.pid === parseInt(pid));
-            const { jsPDF } = window.jspdf; const docPdf = new jsPDF();
-            docPdf.setFillColor(30, 41, 59); docPdf.rect(0, 0, 210, 60, 'F');
+            if (!client) return;
+            
+            const pay = client.payments?.find(x => x.pid == pid);
+            if (!pay) return;
+            
+            const { jsPDF } = window.jspdf; 
+            const docPdf = new jsPDF();
+            
+            docPdf.setFillColor(30, 41, 59); 
+            docPdf.rect(0, 0, 210, 60, 'F');
+            
             const logoImg = document.getElementById('main-agency-logo');
-            if (logoImg && logoImg.src) { try { docPdf.addImage(logoImg.src, 'PNG', 15, 12, 40, 40); } catch(e) {} }
-            docPdf.setTextColor(255, 255, 255); docPdf.setFont("helvetica", "bold"); docPdf.setFontSize(24); docPdf.text("BAYINDIR MEDYA", 60, 28);
-            docPdf.setFontSize(10); docPdf.setFont("helvetica", "normal"); docPdf.text("N.METE BAYINDIR | SOCIAL MEDIA EXPERT", 60, 36);
-            docPdf.setTextColor(30, 41, 59); docPdf.setFontSize(14); docPdf.setFont("helvetica", "bold"); docPdf.text("TAHSİLAT MAKBUZU", 20, 75);
-            docPdf.setTextColor(220, 38, 38); docPdf.setFontSize(8); docPdf.text("BU BELGE MALİ DEĞER TAŞIMAZ.", 150, 75, { align: 'right' });
-            docPdf.setTextColor(60, 60, 60); docPdf.setFontSize(10); docPdf.text("MÜŞTERİ:", 20, 90); docPdf.text(client.name.toUpperCase(), 20, 96);
-            docPdf.text("TARİH:", 145, 90); docPdf.text(pay.date, 145, 96);
-            docPdf.setFillColor(248, 250, 252); docPdf.rect(15, 125, 180, 10, 'F'); docPdf.setFont("helvetica", "bold"); docPdf.text("HİZMET", 20, 131); docPdf.text("TUTAR", 165, 131);
-            docPdf.setFont("helvetica", "normal"); docPdf.text(pay.serviceName + " (" + (pay.month || '') + ")", 20, 145); docPdf.setFont("helvetica", "bold"); docPdf.text(pay.amount.toLocaleString('tr-TR') + " TL", 165, 145);
-            docPdf.setTextColor(100, 100, 100); docPdf.setFontSize(9); docPdf.text("+90 542 408 1899   bayindirmedya.com.tr", 105, 275, { align: "center" });
+            if (logoImg && logoImg.src) { 
+                try { 
+                    docPdf.addImage(logoImg.src, 'PNG', 15, 12, 40, 40); 
+                } catch(e) {} 
+            }
+            
+            docPdf.setTextColor(255, 255, 255); 
+            docPdf.setFont("helvetica", "bold"); 
+            docPdf.setFontSize(24); 
+            docPdf.text("BAYINDIR MEDYA", 60, 28);
+            
+            docPdf.setFontSize(10); 
+            docPdf.setFont("helvetica", "normal"); 
+            docPdf.text("N.METE BAYINDIR | SOCIAL MEDIA EXPERT", 60, 36);
+            
+            docPdf.setTextColor(30, 41, 59); 
+            docPdf.setFontSize(14); 
+            docPdf.setFont("helvetica", "bold"); 
+            docPdf.text("TAHSİLAT MAKBUZU", 20, 75);
+            
+            docPdf.setTextColor(220, 38, 38); 
+            docPdf.setFontSize(8); 
+            docPdf.text("BU BELGE MALİ DEĞER TAŞIMAZ.", 150, 75, { align: 'right' });
+            
+            docPdf.setTextColor(60, 60, 60); 
+            docPdf.setFontSize(10); 
+            docPdf.text("MÜŞTERİ:", 20, 90); 
+            docPdf.text((client.name || '').toUpperCase(), 20, 96);
+            docPdf.text("TARİH:", 145, 90); 
+            docPdf.text(pay.date || '', 145, 96);
+            
+            docPdf.setFillColor(248, 250, 252); 
+            docPdf.rect(15, 125, 180, 10, 'F'); 
+            docPdf.setFont("helvetica", "bold"); 
+            docPdf.text("HİZMET", 20, 131); 
+            docPdf.text("TUTAR", 165, 131);
+            
+            docPdf.setFont("helvetica", "normal"); 
+            docPdf.text((pay.serviceName || 'Hizmet') + " (" + (pay.month || '') + ")", 20, 145); 
+            docPdf.setFont("helvetica", "bold"); 
+            docPdf.text((pay.amount || 0).toLocaleString('tr-TR') + " TL", 165, 145);
+            
+            docPdf.setTextColor(100, 100, 100); 
+            docPdf.setFontSize(9); 
+            docPdf.text("+90 542 408 1899   bayindirmedya.com.tr", 105, 275, { align: "center" });
+            
             docPdf.save(`Makbuz_#${rNo}.pdf`);
         };
 
         window.sendThankYouMessage = (cid, pid, rNo) => {
-            const client = clients.find(x => x.id === cid); if(!client) return;
-            const pay = client.payments.find(x => x.pid === parseInt(pid)); if(!pay) return;
-            const msg = `Sayın ${client.person},\n\n#${rNo} nolu tahsilat makbuzunuz oluşturulmuştur.\n\n*${pay.serviceName}* hizmetine istinaden yapmış olduğunuz *${pay.amount.toLocaleString('tr-TR')} TL* tutarındaki ödemeniz tahsil edilmiştir.\n\nBayındır Medya olarak teşekkür ederiz. 🤝`;
-            window.open(`https://wa.me/${client.phone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
+            const client = clients.find(x => x.id === cid); 
+            if (!client || !client.phone) return;
+            
+            const pay = client.payments?.find(x => x.pid == pid); 
+            if (!pay) return;
+            
+            const msg = `Sayın ${client.person || 'Yetkili'},\n\n#${rNo} nolu tahsilat makbuzunuz oluşturulmuştur.\n\n*${pay.serviceName || 'Hizmet'}* hizmetine istinaden yapmış olduğunuz *${(pay.amount || 0).toLocaleString('tr-TR')} TL* tutarındaki ödemeniz tahsil edilmiştir.\n\nBayındır Medya olarak teşekkür ederiz. 🤝`;
+            
+            window.open(`https://wa.me/${client.phone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
         };
 
-        // --- START APP & SYNC ---
-        const startAppInit = async () => {
+        // Initialize Firebase listeners and app
+        async function initializeApp() {
             try {
-                // Rule 3: Auth FIRST and Await
-                let user;
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    const cred = await signInWithCustomToken(auth, __initial_auth_token);
-                    user = cred.user;
-                } else {
-                    const cred = await signInAnonymously(auth);
-                    user = cred.user;
-                }
+                // Hide loader initially
+                const loader = document.getElementById('loader');
+                
+                // Sign in anonymously
+                await signInAnonymously(auth);
+                console.log('Signed in anonymously');
 
-                if (!user) throw new Error("Oturum açılamadı.");
-
-                // Listeners ONLY after user is confirmed
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'clients'), (snap) => {
-                    clients = snap.docs.map(d => ({id: d.id, ...d.data()}));
-                    window.renderAll();
-                    if(currentClientId) window.openClientDetail(currentClientId);
-                    document.getElementById('loader').style.display = 'none';
-                }, (err) => { 
-                    console.error(err); 
-                    document.getElementById('connection-error-hint').classList.remove('hidden'); 
+                // Set up clients listener
+                const clientsQuery = query(
+                    collection(db, 'artifacts', appId, 'public', 'data', 'clients')
+                );
+                
+                unsubscribeClients = onSnapshot(clientsQuery, (snapshot) => {
+                    clients = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+                    renderAll();
+                    if (loader) loader.style.display = 'none';
+                }, (error) => {
+                    console.error('Clients listener error:', error);
+                    document.getElementById('connection-error-hint')?.classList.remove('hidden');
                 });
 
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'), (snap) => {
-                    expenses = snap.docs.map(d => ({id: d.id, ...d.data()}));
-                    window.renderFinance();
+                // Set up expenses listener
+                const expensesQuery = query(
+                    collection(db, 'artifacts', appId, 'public', 'data', 'expenses')
+                );
+                
+                unsubscribeExpenses = onSnapshot(expensesQuery, (snapshot) => {
+                    expenses = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        ...doc.data()
+                    }));
+                    renderFinance();
+                }, (error) => {
+                    console.error('Expenses listener error:', error);
                 });
 
-                // Init Chart
-                const el = document.getElementById('mainChart');
-                if (el) chart = new Chart(el.getContext('2d'), { type: 'line', data: { labels: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'], datasets: [{ data: [0, 0, 0, 0, 0, 0], borderColor: '#4f46e5', backgroundColor: 'rgba(79, 70, 229, 0.05)', fill: true, tension: 0.4, borderWidth: 5 }] }, options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#f8fafc' }, border: { display: false } }, x: { grid: { display: false } } } } });
-                window.updateChart();
-
-            } catch (err) { 
-                console.error("Start Error:", err); 
-                document.getElementById('connection-error-hint').classList.remove('hidden');
+            } catch (error) {
+                console.error('Initialization error:', error);
+                document.getElementById('connection-error-hint')?.classList.remove('hidden');
+                document.getElementById('loader').style.display = 'none';
             }
-        };
+        }
 
+        // Form submissions
+        function setupFormHandlers() {
+            // Client form
+            const clientForm = document.getElementById('clientForm');
+            if (clientForm) {
+                clientForm.addEventListener('submit', async (e) => { 
+                    e.preventDefault(); 
+                    try {
+                        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'clients'), { 
+                            name: document.getElementById('c_name')?.value || '',
+                            person: document.getElementById('c_person')?.value || '',
+                            start: document.getElementById('c_start')?.value || '',
+                            phone: document.getElementById('c_phone')?.value || '',
+                            status: 'active', 
+                            notes: "", 
+                            assets: { drive: "" }, 
+                            services: [], 
+                            payments: [], 
+                            createdAt: new Date().toISOString() 
+                        });
+                        window.closeModal('clientModal'); 
+                        e.target.reset(); 
+                    } catch (error) {
+                        console.error('Error adding client:', error);
+                        alert('Müşteri eklenirken hata oluştu!');
+                    }
+                });
+            }
+
+            // Service form
+            const serviceForm = document.getElementById('serviceForm');
+            if (serviceForm) {
+                serviceForm.addEventListener('submit', async (e) => { 
+                    e.preventDefault(); 
+                    const c = clients.find(x => x.id === currentClientId);
+                    if (!c) return;
+                    
+                    const s = { 
+                        sid: Date.now(), 
+                        type: document.getElementById('s_type')?.value || 'monthly', 
+                        name: document.getElementById('s_name')?.value || '',
+                        payDay: document.getElementById('s_type')?.value === 'monthly' ? 
+                            parseInt(document.getElementById('s_payday')?.value) : null, 
+                        fee: parseFloat(document.getElementById('s_fee')?.value || 0), 
+                        status: 'Planlanıyor' 
+                    };
+                    
+                    try {
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { 
+                            services: [...(c.services || []), s] 
+                        });
+                        window.closeModal('addServiceModal'); 
+                        e.target.reset(); 
+                    } catch (error) {
+                        console.error('Error adding service:', error);
+                        alert('Hizmet eklenirken hata oluştu!');
+                    }
+                });
+            }
+
+            // Payment form
+            const paymentForm = document.getElementById('paymentForm');
+            if (paymentForm) {
+                paymentForm.addEventListener('submit', async (e) => { 
+                    e.preventDefault(); 
+                    const c = clients.find(x => x.id === currentClientId);
+                    if (!c) return;
+                    
+                    const sid = parseInt(document.getElementById('p_service_id')?.value);
+                    const s = (c.services || []).find(i => i.sid === sid);
+                    
+                    const p = { 
+                        pid: Date.now(), 
+                        sid, 
+                        serviceName: s?.name || '',
+                        date: document.getElementById('p_date')?.value || '',
+                        amount: parseFloat(document.getElementById('p_amount')?.value || 0), 
+                        month: document.getElementById('p_month')?.value || '',
+                        year: document.getElementById('p_year')?.value || '' 
+                    };
+                    
+                    try {
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { 
+                            payments: [...(c.payments || []), p] 
+                        });
+                        window.closeModal('paymentModal'); 
+                    } catch (error) {
+                        console.error('Error adding payment:', error);
+                        alert('Ödeme eklenirken hata oluştu!');
+                    }
+                });
+            }
+
+            // Expense form
+            const expenseForm = document.getElementById('expenseForm');
+            if (expenseForm) {
+                expenseForm.addEventListener('submit', async (e) => { 
+                    e.preventDefault(); 
+                    try {
+                        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'), { 
+                            cat: document.getElementById('e_cat')?.value || '',
+                            desc: document.getElementById('e_desc')?.value || '',
+                            amount: parseFloat(document.getElementById('e_amount')?.value || 0), 
+                            date: new Date().toISOString().split('T')[0] 
+                        });
+                        window.closeModal('expenseModal'); 
+                        e.target.reset(); 
+                    } catch (error) {
+                        console.error('Error adding expense:', error);
+                        alert('Gider eklenirken hata oluştu!');
+                    }
+                });
+            }
+
+            // Config form
+            const configForm = document.getElementById('configForm');
+            if (configForm) {
+                configForm.addEventListener('submit', async (e) => { 
+                    e.preventDefault(); 
+                    try {
+                        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'agency'), { 
+                            name: document.getElementById('conf-name')?.value || '',
+                            address: document.getElementById('conf-address')?.value || '' 
+                        });
+                        alert('Ayarlar Kaydedildi.');
+                    } catch (error) {
+                        console.error('Error saving config:', error);
+                        alert('Ayarlar kaydedilirken hata oluştu!');
+                    }
+                });
+            }
+
+            // Termination form
+            const terminationForm = document.getElementById('terminationForm');
+            if (terminationForm) {
+                terminationForm.addEventListener('submit', async (e) => { 
+                    e.preventDefault(); 
+                    const reason = document.getElementById('term_reason')?.value || '';
+                    
+                    try {
+                        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { 
+                            status: 'passive', 
+                            terminationReason: reason 
+                        });
+                        window.closeModal('terminationModal'); 
+                        window.closeModal('clientDetailModal'); 
+                        e.target.reset(); 
+                    } catch (error) {
+                        console.error('Error terminating client:', error);
+                        alert('Arşivleme sırasında hata oluştu!');
+                    }
+                });
+            }
+        }
+
+        // Initialize chart
+        function initChart() {
+            const el = document.getElementById('mainChart');
+            if (el) {
+                chart = new Chart(el.getContext('2d'), { 
+                    type: 'line', 
+                    data: { 
+                        labels: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz'], 
+                        datasets: [{ 
+                            data: [0, 0, 0, 0, 0, 0], 
+                            borderColor: '#4f46e5', 
+                            backgroundColor: 'rgba(79, 70, 229, 0.05)', 
+                            fill: true, 
+                            tension: 0.4, 
+                            borderWidth: 5 
+                        }] 
+                    }, 
+                    options: { 
+                        responsive: true, 
+                        plugins: { 
+                            legend: { display: false } 
+                        }, 
+                        scales: { 
+                            y: { 
+                                beginAtZero: true, 
+                                grid: { color: '#f8fafc' }, 
+                                border: { display: false } 
+                            }, 
+                            x: { 
+                                grid: { display: false } 
+                            } 
+                        } 
+                    } 
+                });
+            }
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (unsubscribeClients) unsubscribeClients();
+            if (unsubscribeExpenses) unsubscribeExpenses();
+        });
+
+        // Start the application
         window.addEventListener('DOMContentLoaded', () => {
-            const safeSubmit = (id, fn) => { const el = document.getElementById(id); if(el) el.addEventListener('submit', async (e) => { e.preventDefault(); if(!auth.currentUser) return; await fn(e); }); };
-            
-            safeSubmit('clientForm', async (e) => { await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'clients'), { name: document.getElementById('c_name').value, person: document.getElementById('c_person').value, start: document.getElementById('c_start').value, phone: document.getElementById('c_phone').value, status: 'active', notes: "", assets: { drive: "" }, services: [], payments: [], createdAt: new Date().toISOString() }); window.closeModal('clientModal'); e.target.reset(); });
-            safeSubmit('serviceForm', async (e) => { const c = clients.find(x => x.id === currentClientId); const s = { sid: Date.now(), type: document.getElementById('s_type').value, name: document.getElementById('s_name').value, payDay: document.getElementById('s_type').value === 'monthly' ? parseInt(document.getElementById('s_payday').value) : null, fee: parseFloat(document.getElementById('s_fee').value), status: 'Planlanıyor' }; await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { services: [...(c.services || []), s] }); window.closeModal('addServiceModal'); e.target.reset(); });
-            safeSubmit('paymentForm', async (e) => { const c = clients.find(x => x.id === currentClientId); const sid = parseInt(document.getElementById('p_service_id').value); const s = c.services.find(i => i.sid === sid); const p = { pid: Date.now(), sid, serviceName: s.name, date: document.getElementById('p_date').value, amount: parseFloat(document.getElementById('p_amount').value), month: document.getElementById('p_month').value, year: document.getElementById('p_year').value }; await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { payments: [...(c.payments || []), p] }); window.closeModal('paymentModal'); });
-            safeSubmit('expenseForm', async (e) => { await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'), { cat: document.getElementById('e_cat').value, desc: document.getElementById('e_desc').value, amount: parseFloat(document.getElementById('e_amount').value), date: new Date().toISOString().split('T')[0] }); window.closeModal('expenseModal'); e.target.reset(); });
-            safeSubmit('configForm', async (e) => { await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'config', 'agency'), { name: document.getElementById('conf-name').value, address: document.getElementById('conf-address').value }); alert('Ayarlar Kaydedildi.'); });
-            safeSubmit('terminationForm', async (e) => { const reason = document.getElementById('term_reason').value; await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'clients', currentClientId), { status: 'passive', terminationReason: reason }); window.closeModal('terminationModal'); window.closeModal('clientDetailModal'); e.target.reset(); });
-            
-            startAppInit();
+            initChart();
+            setupFormHandlers();
+            initializeApp();
         });
     </script>
 </body>
-</html>
+</html>s
