@@ -3,216 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bayındır Medya | Derya Klinik İşitme Cihazları Dijital Strateji Belgesi</title>
+    <title>Bayındır Medya | Odyoloji Hizmet Teklifi</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@300;400;600&display=swap');
         
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #ffffff;
-            color: #0f172a;
-            scroll-behavior: smooth;
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #111827;
         }
 
-        .hero-bg {
-            background: radial-gradient(circle at 0% 0%, #f8fafc 0%, #f1f5f9 100%);
-        }
-
-        .card-premium {
+        .brand-font { font-family: 'Montserrat', sans-serif; }
+        
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 20px auto;
             background: white;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.03);
-            transition: all 0.3s ease;
-        }
-
-        .card-premium:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.06);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
         }
 
         @media print {
-            .no-print { display: none !important; }
-            body { background: white; }
-            .page-break { page-break-before: always; }
-            .card-premium { box-shadow: none; border: 1px solid #eee; margin-bottom: 2rem; }
-            .hero-bg { background: white; }
+            body { background: none; }
+            .page { margin: 0; box-shadow: none; page-break-after: always; }
+            .no-print { display: none; }
         }
 
-        .logo-img {
-            max-width: 320px;
-            height: auto;
-            object-fit: contain;
+        .header-logo-text {
+            font-size: 2.5rem;
+            line-height: 0.9;
+            font-weight: 800;
+            letter-spacing: -1px;
         }
 
-        .highlight-border {
-            border-left: 4px solid #3b82f6;
-        }
+        .border-brand { border-color: #000; }
+        
+        table { width: 100%; border-collapse: collapse; }
+        th { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; text-align: left; font-size: 0.85rem; text-transform: uppercase; }
+        td { border: 1px solid #e2e8f0; padding: 12px; font-size: 0.9rem; }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- Navigasyon (Mobil Uyumlu) -->
-    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 no-print">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-black rounded-lg flex items-center justify-center text-white font-bold text-xs">BM</div>
-                <span class="font-extrabold text-lg tracking-tighter">BAYINDIR <span class="text-blue-600">MEDYA</span></span>
+    <!-- Yazdırma Butonu -->
+    <div class="no-print fixed bottom-8 right-8 z-50">
+        <button onclick="window.print()" class="bg-black text-white px-8 py-4 rounded-full font-bold shadow-2xl flex items-center gap-3 hover:scale-105 transition-transform">
+            <i class="fas fa-print"></i> Teklifi PDF Olarak Yazdır
+        </button>
+    </div>
+
+    <!-- SAYFA 1: BİLGİLENDİRME -->
+    <div class="page">
+        <!-- Logo Section -->
+        <div class="flex flex-col items-center mb-12">
+            <div class="text-center">
+                <div class="header-logo-text brand-font mb-2">SIA</div>
+                <div class="text-2xl font-bold tracking-[0.3em] brand-font">BAYINDIR</div>
+                <div class="text-xl font-light tracking-[0.5em] brand-font mb-4 italic">MEDYA</div>
+                <div class="h-[2px] w-48 bg-black mb-2"></div>
+                <div class="text-sm font-bold tracking-widest uppercase">N. METE BAYINDIR</div>
+                <div class="text-xs tracking-[0.2em] text-gray-500 uppercase">Social Media Expert</div>
             </div>
-            <button onclick="window.print()" class="bg-blue-600 text-white px-6 py-2.5 rounded-full text-xs font-bold flex items-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 active:scale-95">
-                <i class="fas fa-file-pdf"></i> PDF OLARAK İNDİR
-            </button>
         </div>
-    </nav>
 
-    <!-- Header / Giriş Bölümü -->
-    <header class="hero-bg pt-40 pb-20 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <!-- Derya Klinik Logo -->
-            <div class="mb-12 flex justify-center">
-                <img src="https://ajansyonetimi.vercel.app/Ads%C4%B1z%20(Sunum%20(43))%20kopyas%C4%B1.png" 
-                     alt="Derya Klinik İşitme Cihazları Logo" 
-                     class="logo-img">
-            </div>
+        <!-- Başlık -->
+        <div class="mb-10">
+            <h2 class="text-2xl font-bold border-b-2 border-black pb-2 inline-block">BİLGİLENDİRME</h2>
+        </div>
 
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-100/50 text-blue-700 rounded-full text-[10px] font-black uppercase tracking-[0.2em] mb-8">
-                Stratejik İş Ortaklığı Teklifi
-            </div>
-
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-8 leading-tight tracking-tight text-slate-900">
-                Dijitalde Güven, <br><span class="text-blue-600">Kliniğinizde Dönüşüm.</span>
-            </h1>
+        <!-- İçerik -->
+        <div class="space-y-6 text-gray-800 leading-relaxed text-justify">
+            <p class="font-bold">Sayın Yetkili,</p>
             
-            <p class="text-slate-500 text-lg md:text-xl max-w-3xl mx-auto font-medium leading-relaxed italic">
-                "İşitme sağlığı, sadece cihaz satışı değil; bir güven inşa etme sürecidir. Bayındır Medya olarak bu güveni dijital dünyada sizin adınıza yönetiyoruz."
+            <p>
+                Hazırladığımız bu hizmet paketi, <strong>Odyolog Kliniğinizin</strong> dijital ortamdaki görünürlüğünü artırarak yeni danışan kazanımını hızlandırmak, aynı zamanda tıbbi uzmanlığınızın güvenilirliğini güçlendirmek için oluşturulmuştur.
             </p>
-        </div>
-    </header>
 
-    <!-- Detaylı Bilgilendirme Metni -->
-    <section class="py-20 px-6">
-        <div class="max-w-4xl mx-auto">
-            <div class="space-y-12 text-slate-700 leading-relaxed text-lg">
-                
-                <div class="highlight-border pl-6 space-y-4">
-                    <h3 class="text-2xl font-extrabold text-slate-900 uppercase tracking-tight">Sayın Derya Klinik Yetkilisi,</h3>
-                    <p>
-                        Günümüzde bir işitme merkezi için dijital varlık, sadece bir "sayfa" sahibi olmaktan çok daha öte bir anlam taşımaktadır. Potansiyel danışanlarınız, hayat kalitelerini doğrudan etkileyecek olan işitme cihazı kararını vermeden önce; kliniğinizin uzmanlığını, teknolojik altyapısını ve sizin bu alandaki otoritenizi dijital mecralar üzerinden sorgulamaktadır.
-                    </p>
-                </div>
+            <p>
+                Günümüzde danışanlar işitme testi, cihaz seçimi veya denge terapisi almadan önce Google yorumlarına, hekim/uzman hakkındaki dijital geri bildirimlere ve işletmenin internetteki kurumsal görünümüne bakıyor. Bu nedenle oluşturduğumuz paket, sadece sosyal medya paylaşımı yapmak değil; danışanın karar verme aşamasında sizi rakiplerinizin önüne taşıyacak bir <strong>dijital itibar sistemi</strong> kurmayı hedeflemektedir.
+            </p>
 
-                <p>
-                    Bayındır Medya olarak hazırladığımız bu özel paket, **Derya Klinik İşitme Cihazları**'nın dijital itibarını korumak ve doğrudan "randevu odaklı" bir büyüme sağlamak için kurgulanmıştır. Biz, paylaşım sayılarına veya kalıplaşmış paketlere inanmıyoruz. Bizim odağımız; kliniğinizin o anki ihtiyacı neyse (bir kampanya duyurusu, bir hasta başarı hikayesi veya yeni bir cihaz teknolojisinin tanıtımı), o ihtiyaca yönelik **kesintisiz ve sınırsız tasarım desteği** sunmaktır.
-                </p>
+            <p class="font-semibold">Paket kapsamındaki hizmetlerle;</p>
+            <ul class="space-y-4 ml-4">
+                <li class="flex items-start gap-3">
+                    <i class="fas fa-check-square mt-1 text-black"></i>
+                    <span><strong>Google Haritalar:</strong> İşletmeniz doğrulanacak, odyoloji uzmanlığınız vurgulanacak ve yorumlara profesyonel yanıt verilerek güven artırılacaktır.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <i class="fas fa-check-square mt-1 text-black"></i>
+                    <span><strong>İtibar Yönetimi:</strong> Sağlık platformlarındaki varlığınız ve olası şikayet durumları kontrol altına alınarak "Güvenilir Uzman" algısı korunacaktır.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <i class="fas fa-check-square mt-1 text-black"></i>
+                    <span><strong>Kurumsal Görsel Dil:</strong> Hazırlanacak reklam ve bilgilendirme görselleriyle kliniğiniz daha profesyonel ve modern bir algıya sahip olacaktır.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <i class="fas fa-check-square mt-1 text-black"></i>
+                    <span><strong>SEO Katkısı:</strong> Google yorum desteği sayesinde "Bölgenizdeki Odyolog" aramalarında üst sıralarda çıkma şansınız artacaktır.</span>
+                </li>
+            </ul>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 py-8">
-                    <div class="card-premium p-8 rounded-[2.5rem]">
-                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6">
-                            <i class="fas fa-fingerprint text-xl"></i>
-                        </div>
-                        <h4 class="font-extrabold text-xl mb-4">Dijital Kimlik Yönetimi</h4>
-                        <p class="text-sm text-slate-500">Sayfanızın sadece güzel görünmesini değil, bir uzmanlık merkezi gibi konuşmasını sağlıyoruz. Bio düzenlemesinden öne çıkan hikaye kapaklarına kadar her detay kurumsal kimliğinizi yansıtır.</p>
-                    </div>
-                    <div class="card-premium p-8 rounded-[2.5rem]">
-                        <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6">
-                            <i class="fas fa-chart-line text-xl"></i>
-                        </div>
-                        <h4 class="font-extrabold text-xl mb-4">Meta Ads Stratejisi</h4>
-                        <p class="text-sm text-slate-500">Reklam bütçenizi boşa harcamıyoruz. Doğrudan lokasyonunuzdaki işitme kaybı yaşayan kitleyi ve yakınlarını hedefleyerek, telefonlarınızın ve WhatsApp hattınızın çalmasını sağlıyoruz.</p>
-                    </div>
-                </div>
+            <p>
+                Ayrıca <strong>logo tasarımı ve sosyal medya sayfa analizi</strong> tarafımızdan ücretsiz hediye edilmiştir. Bu hediyeler, kliniğinizin dijital vitrinini güçlendirecek ve başlangıç maliyetinizi azaltacaktır.
+            </p>
 
-                <p>
-                    Bu teklif, Derya Klinik'in dijital dünyada sadece "var olması" için değil; rakiplerinden ayrışması ve tercih edilmesi için hazırlanmıştır. <strong>Logo modernizasyonu ve detaylı sayfa analizi</strong> gibi başlangıç kalemlerini ajansımızın hediyesi olarak kurgulayarak, iş birliğimizin temelini sağlam bir vizyon üzerine oturtuyoruz.
-                </p>
+            <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-black mt-8">
+                <h4 class="font-bold mb-2">Sonuç:</h4>
+                <p class="italic">Dijitalde güven kazanırsınız. Google'da yükselirsiniz. Daha çok danışan sizi tercih eder.</p>
             </div>
         </div>
-    </section>
 
-    <!-- Stratejik Kalemler (Detaylı Liste) -->
-    <section class="py-20 px-6 bg-slate-900 text-white rounded-[3rem] mx-4 md:mx-10 mb-20 page-break">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-16 uppercase tracking-tighter">Hizmet Kapsamı ve Detaylar</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12 text-sm md:text-base">
-                <div class="space-y-4">
-                    <h4 class="text-blue-400 font-bold uppercase tracking-widest text-xs">01. Sosyal Medya & Sayfa Düzenleme</h4>
-                    <p class="text-slate-400">Instagram ve Facebook hesaplarınızın kurumsal bir kimliğe bürünmesi sürecidir. Biyografi yazımı, öne çıkanların tasarımı ve düzenli içerik akışı ile danışanlarınıza profesyonel bir karşılama sunulur.</p>
-                </div>
-                <div class="space-y-4">
-                    <h4 class="text-blue-400 font-bold uppercase tracking-widest text-xs">02. İhtiyaç Odaklı Sınırsız Tasarım</h4>
-                    <p class="text-slate-400">Belirli bir post sayısı sınırı yoktur. Kliniğinizin kampanyaları, önemli duyuruları veya içerik planımızdaki paylaşımlar için ihtiyaç duyulan tüm görsel/video tasarımlar tarafımızdan anında üretilir.</p>
-                </div>
-                <div class="space-y-4">
-                    <h4 class="text-blue-400 font-bold uppercase tracking-widest text-xs">03. Meta Ads (Reklam) Yönetimi</h4>
-                    <p class="text-slate-400">Instagram ve Facebook algoritmalarını kullanarak randevu odaklı kampanyalar yönetilir. Haftalık performans takibi ile bütçenin en verimli şekilde randevuya dönüşmesi hedeflenir.</p>
-                </div>
-                <div class="space-y-4">
-                    <h4 class="text-blue-400 font-bold uppercase tracking-widest text-xs">04. Kapsamlı Sayfa Analizi (Hediye)</h4>
-                    <p class="text-slate-400">Rakiplerinizin analizi, sektördeki trendler ve mevcut hesabınızın eksiklerinin raporlanması sürecidir. Yol haritamız bu analize göre şekillenir.</p>
-                </div>
+        <!-- Footer -->
+        <div class="absolute bottom-10 left-20 right-20 border-t pt-4 flex justify-between text-xs text-gray-500">
+            <div>+90 542 408 1899</div>
+            <div>bayindirmedya@gmail.com</div>
+            <div>bayindirmedya.com.tr</div>
+        </div>
+    </div>
+
+    <!-- SAYFA 2: FİYAT TEKLİFİ -->
+    <div class="page">
+        <!-- Logo Section (Aynısı) -->
+        <div class="flex flex-col items-center mb-12">
+            <div class="text-center">
+                <div class="header-logo-text brand-font mb-2 text-xl">SIA</div>
+                <div class="text-xl font-bold tracking-[0.3em] brand-font uppercase">BAYINDIR MEDYA</div>
             </div>
         </div>
-    </section>
 
-    <!-- Fiyatlandırma (Tek Toplam Fiyat) -->
-    <section class="py-20 px-6">
-        <div class="max-w-3xl mx-auto">
-            <div class="card-premium rounded-[3rem] overflow-hidden border-2 border-slate-900">
-                <div class="p-10 bg-slate-900 text-white text-center">
-                    <h3 class="text-2xl font-extrabold uppercase tracking-widest mb-2">Kurumsal Paket Bedeli</h3>
-                    <p class="text-slate-400 text-sm font-medium">Sosyal Medya Yönetimi + Reklam Yönetimi + Analiz + Tasarım Desteği</p>
-                </div>
-                <div class="p-12 text-center">
-                    <div class="mb-8">
-                        <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Aylık Toplam Hizmet Bedeli</span>
-                        <div class="text-6xl font-black italic tracking-tighter mt-2">10.000,00 ₺</div>
-                    </div>
-                    
-                    <div class="space-y-4 mb-10 text-slate-600 font-medium text-sm">
-                        <div class="flex items-center justify-center gap-3"><i class="fas fa-check text-emerald-500"></i> Sınırsız Görsel & Video Tasarım Desteği</div>
-                        <div class="flex items-center justify-center gap-3"><i class="fas fa-check text-emerald-500"></i> Meta Ads Profesyonel Kampanya Yönetimi</div>
-                        <div class="flex items-center justify-center gap-3"><i class="fas fa-check text-emerald-500"></i> Kurumsal Sayfa Düzenleme & Optimizasyon</div>
-                        <div class="flex items-center justify-center gap-3 font-bold text-emerald-600"><i class="fas fa-plus"></i> Logo Modernizasyonu (HEDİYE)</div>
-                    </div>
+        <div class="mb-10">
+            <h2 class="text-2xl font-bold border-b-2 border-black pb-2 inline-block uppercase">FİYAT TEKLİFİ</h2>
+        </div>
 
-                    <div class="pt-8 border-t border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-                        <div class="space-y-1">
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Ödeme Adresi</p>
-                            <p class="font-bold text-sm italic">Enpara / Nurettin Mete Bayındır</p>
-                            <p class="font-mono text-[11px] font-bold text-blue-600">TR59 0015 7000 0000 0142 5514 20</p>
-                        </div>
-                        <div class="space-y-1 md:text-right">
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Destek & İletişim</p>
-                            <p class="font-bold text-sm">+90 542 408 1899</p>
-                            <p class="font-bold text-sm text-slate-500">bayindirmedya@gmail.com</p>
-                        </div>
-                    </div>
-                </div>
+        <!-- Müşteri Bilgisi -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="border p-4">
+                <span class="text-xs text-gray-400 block uppercase">Müşteri</span>
+                <span class="font-bold">ODYOLOG KLİNİĞİ</span>
             </div>
-            
-            <div class="mt-12 text-center text-[10px] text-slate-400 uppercase font-black tracking-[0.2em] space-y-2">
-                <p>* REKLAM BÜTÇESİ (META ADS HARCAMASI) KLİNİK TARAFINDAN AYRICA KARŞILANIR.</p>
-                <p>* BU TEKLİF HAZIRLANAN STRATEJİ BELGESİYLE BİRLİKTE 15 GÜN GEÇERLİDİR.</p>
+            <div class="border p-4">
+                <span class="text-xs text-gray-400 block uppercase">Tarih</span>
+                <span class="font-bold">02 Kasım, 2025</span>
             </div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="py-24 border-t border-slate-100 text-center px-6 no-print">
-        <div class="max-w-4xl mx-auto space-y-8">
-            <div class="text-3xl font-black tracking-tighter">BAYINDIR <span class="text-blue-600">MEDYA</span></div>
-            <p class="text-slate-400 text-sm max-w-sm mx-auto font-bold uppercase tracking-[0.3em] italic">"Dijitalde İz Bırakan Stratejiler"</p>
-            <div class="flex justify-center gap-6">
-                <a href="#" class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all"><i class="fab fa-whatsapp"></i></a>
+        <!-- Tablo -->
+        <table class="mb-8">
+            <thead>
+                <tr>
+                    <th class="w-1/2">Hizmetler</th>
+                    <th>Birim Fiyat</th>
+                    <th>Adet</th>
+                    <th>Toplam</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Google İşletme Profilinin Doğrulanması ve Yönetimi</td>
+                    <td>1500.00 ₺</td>
+                    <td>1</td>
+                    <td>1500.00 ₺</td>
+                </tr>
+                <tr>
+                    <td>Sağlık Platformları & Şikayet Takip Yönetimi</td>
+                    <td>1500.00 ₺</td>
+                    <td>1</td>
+                    <td>1500.00 ₺</td>
+                </tr>
+                <tr>
+                    <td>İnformasyonel Reklam Görseli Hazırlanması</td>
+                    <td>250.00 ₺</td>
+                    <td>4</td>
+                    <td>1000.00 ₺</td>
+                </tr>
+                <tr>
+                    <td>Google Danışan Yorum Hizmeti (SEO Odaklı)</td>
+                    <td>80.00 ₺</td>
+                    <td>50</td>
+                    <td>4000.00 ₺</td>
+                </tr>
+                <tr>
+                    <td>Hedefli Sosyal Medya Reklam Yönetimi</td>
+                    <td>500.00 ₺</td>
+                    <td>4</td>
+                    <td>2000.00 ₺</td>
+                </tr>
+                <tr class="text-green-600 font-bold">
+                    <td>Kapsamlı Sayfa Analizi (HEDİYE)</td>
+                    <td>0.00 ₺</td>
+                    <td>1</td>
+                    <td>0.00 ₺</td>
+                </tr>
+                <tr class="text-green-600 font-bold">
+                    <td>Klinik Logo Tasarımı / Revizyonu (HEDİYE)</td>
+                    <td>0.00 ₺</td>
+                    <td>1</td>
+                    <td>0.00 ₺</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="bg-black text-white">
+                    <td colspan="3" class="text-right font-bold uppercase py-4">GENEL TOPLAM</td>
+                    <td class="font-bold text-lg py-4">10.000,00 ₺</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!-- Ödeme Bilgileri -->
+        <div class="border p-6 bg-gray-50 rounded-lg">
+            <h4 class="font-bold text-sm uppercase mb-4 border-b pb-2">ÖDEME BİLGİLERİ</h4>
+            <div class="grid grid-cols-2 gap-y-2 text-sm">
+                <div class="text-gray-500">Banka:</div>
+                <div class="font-semibold">Enpara</div>
+                <div class="text-gray-500">Hesap Adı:</div>
+                <div class="font-semibold">Nurettin Mete Bayındır</div>
+                <div class="text-gray-500">IBAN:</div>
+                <div class="font-semibold tracking-tighter">TR59 0015 7000 0000 0142 5514 20</div>
             </div>
-            <p class="text-[10px] text-slate-300 font-bold uppercase tracking-widest">© 2026 BAYINDIR MEDYA - N. METE BAYINDIR</p>
         </div>
-    </footer>
+
+        <!-- Footer (Aynısı) -->
+        <div class="absolute bottom-10 left-20 right-20 border-t pt-4 flex justify-between text-xs text-gray-500">
+            <div>+90 542 408 1899</div>
+            <div>bayindirmedya@gmail.com</div>
+            <div>bayindirmedya.com.tr</div>
+        </div>
+    </div>
 
 </body>
 </html>
 
-      
